@@ -818,6 +818,53 @@
                 grid-template-columns: 1fr 1fr;
                 gap: 13px;
             }
+            /* Complete dark treatment for operational data, controls and vault states. */
+            body[data-theme="dark"] .card,
+            body[data-theme="dark"] .panel { background: #2a2827; border-color: #4d4844; }
+            body[data-theme="dark"] .toolbar { background: linear-gradient(180deg, #322f2d, #2a2827); border-color: #4d4844; }
+            body[data-theme="dark"] .search input,
+            body[data-theme="dark"] .field input,
+            body[data-theme="dark"] .field select,
+            body[data-theme="dark"] .toolbar select,
+            body[data-theme="dark"] .safe-date { background-color: #363230; border-color: #5a534d; color: #fffaf4; box-shadow: none; }
+            body[data-theme="dark"] .search input::placeholder { color: #aaa098; }
+            body[data-theme="dark"] .field input:hover,
+            body[data-theme="dark"] .field select:hover,
+            body[data-theme="dark"] .toolbar select:hover,
+            body[data-theme="dark"] .search input:hover { background-color: #403b38; border-color: #927829; }
+            body[data-theme="dark"] .field select option,
+            body[data-theme="dark"] .toolbar select option { background: #363230; color: #fffaf4; }
+            body[data-theme="dark"] .safe-date--readonly { background: #302d2b; color: #c5bab0; }
+            body[data-theme="dark"] .safe-calendar { background: #302d2b; border-color: #514a44; box-shadow: 0 18px 40px rgb(0 0 0 / .38); }
+            body[data-theme="dark"] .safe-calendar__nav { background: #3b3734; border-color: #5a534d; color: #f7f0e9; }
+            body[data-theme="dark"] .safe-calendar__week { color: #c5bab0; }
+            body[data-theme="dark"] .safe-calendar__day { color: #f7f0e9; }
+            body[data-theme="dark"] .safe-calendar__day--muted { color: #827a73; }
+            body[data-theme="dark"] .safe-calendar__day:hover { background: #554617; color: #fff4c8; }
+            body[data-theme="dark"] .outline { background: #393532; border-color: #5a534d; color: #fffaf4; }
+            body[data-theme="dark"] .outline:hover { background: #47413c; border-color: #d3a400; }
+            body[data-theme="dark"] .primary { background: #ffca01; color: #302900; box-shadow: 0 7px 16px rgb(255 202 1 / .16); }
+            body[data-theme="dark"] th { background: #383431; color: #d6cbc1; border-color: #514a44; }
+            body[data-theme="dark"] th,
+            body[data-theme="dark"] td { border-color: #48433f; }
+            body[data-theme="dark"] tbody tr:hover { background: #34312f; }
+            body[data-theme="dark"] .bar { background: #494440; }
+            body[data-theme="dark"] .box-grid { background: #242220; }
+            body[data-theme="dark"] .box-card,
+            body[data-theme="dark"] .box-card:disabled { opacity: 1; background: linear-gradient(145deg, #3a3735, #302e2c); border-color: #59534e; color: #f7f0e9; box-shadow: 0 3px 8px rgb(0 0 0 / .12); }
+            body[data-theme="dark"] .box-card.available { background: linear-gradient(145deg, #173e34, #12352d); border-color: #2f9c79; }
+            body[data-theme="dark"] .box-card.available:hover { background: linear-gradient(145deg, #1c4a3e, #164238); border-color: #68d2aa; }
+            body[data-theme="dark"] .box-card.chosen { outline-color: #ffdc57; border-color: var(--gold); }
+            body[data-theme="dark"] .box-card .muted { color: #d4cbc4; }
+            body[data-theme="dark"] .green { background: #173f34; color: #8be0bd; }
+            body[data-theme="dark"] .amber { background: #4a3a16; color: #ffd66c; }
+            body[data-theme="dark"] .blue { background: #263b4a; color: #add9f3; }
+            body[data-theme="dark"] .slate { background: #3b4145; color: #d1dbe2; }
+            body[data-theme="dark"] .notice { background: linear-gradient(135deg, #514118, #3e3216); color: #ffe29a; }
+            body[data-theme="dark"] .selected { background: #163d32; border-color: #318564; }
+            body[data-theme="dark"] .field label { color: #d9d0c8; }
+            body[data-theme="dark"] .form-group summary::before { background: #45403c; color: #f4eade; }
+            body[data-theme="dark"] .invoice { background: #302d2b; color: #fffaf4; }
             @media (max-width: 1050px) {
                 .side {
                     width: 70px;
