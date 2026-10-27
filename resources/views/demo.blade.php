@@ -204,16 +204,26 @@
             .profile {
                 display: flex;
                 align-items: center;
-                gap: 9px;
+                gap: 10px;
                 font-size: 12px;
                 color: var(--ink);
                 margin-left: auto;
-                padding: 4px 0 4px 14px;
-                border-left: 1px solid #eadfd3;
+                padding: 5px 11px 5px 6px;
+                border: 1px solid #eadfd3;
+                border-radius: 14px;
+                background: rgb(255 255 255 / .72);
+                box-shadow: 0 2px 8px rgb(54 52 52 / .035);
+                text-align: left;
+                transition: background .16s ease, border-color .16s ease, box-shadow .16s ease;
+            }
+            .profile:hover {
+                background: #fff;
+                border-color: #e5c75d;
+                box-shadow: 0 6px 15px rgb(54 52 52 / .08);
             }
             .avatar {
-                width: 34px;
-                height: 34px;
+                width: 38px;
+                height: 38px;
                 border-radius: 50%;
                 background: #fff1bc;
                 color: var(--blue);
@@ -221,6 +231,67 @@
                 place-items: center;
                 font-weight: 800;
             }
+            .top-tools {
+                display: flex;
+                align-items: center;
+                gap: 9px;
+                margin-left: auto;
+            }
+            .top-search {
+                display: flex;
+                align-items: center;
+                width: clamp(195px, 18vw, 290px);
+                height: 39px;
+                gap: 8px;
+                padding: 0 7px 0 11px;
+                border: 1px solid #e7ddd3;
+                border-radius: 12px;
+                background: rgb(255 255 255 / .62);
+                color: #827972;
+                transition: border-color .16s ease, background .16s ease, box-shadow .16s ease;
+            }
+            .top-search:focus-within {
+                border-color: #d4a400;
+                background: #fff;
+                box-shadow: 0 0 0 4px rgb(255 202 1 / .18);
+            }
+            .top-search svg { width: 16px; height: 16px; flex: none; }
+            .top-search input {
+                min-width: 0;
+                width: 100%;
+                border: 0;
+                outline: 0;
+                background: transparent;
+                color: var(--ink);
+                font: inherit;
+                font-size: 12px;
+            }
+            .top-search input::placeholder { color: #999087; }
+            .top-search kbd {
+                padding: 3px 5px;
+                border: 1px solid #e6ddd5;
+                border-radius: 5px;
+                background: #fffaf5;
+                color: #8e857c;
+                font: 700 9px Montserrat, sans-serif;
+                white-space: nowrap;
+            }
+            .top-divider { width: 1px; height: 26px; margin: 0 2px; background: #e6ddd5; }
+            .utility-button {
+                position: relative;
+                display: grid;
+                width: 38px;
+                height: 38px;
+                place-items: center;
+                border: 1px solid transparent;
+                border-radius: 11px;
+                background: transparent;
+                color: #5f5954;
+                transition: background .16s ease, border-color .16s ease, color .16s ease;
+            }
+            .utility-button:hover { border-color: #ead9a0; background: #fff4cc; color: #5c4800; }
+            .utility-button svg { width: 18px; height: 18px; }
+            .notification-dot { position: absolute; top: 8px; right: 8px; width: 6px; height: 6px; border: 1.5px solid #fffaf5; border-radius: 50%; background: #d39f00; }
             .content {
                 max-width: 1480px;
                 margin: auto;
@@ -840,6 +911,8 @@
                 .profile span {
                     display: none;
                 }
+                .top-search { width: 38px; padding: 0; justify-content: center; }
+                .top-search input, .top-search kbd, .top-divider { display: none; }
             }
         </style>
     </head>
@@ -905,13 +978,22 @@
                     <span class="crumb">SafeRoom · Centro Mérida</span
                     ><strong id="pageTitle">Vista general</strong>
                 </div>
-                <div class="profile">
-                    ⌕　🔔　 <i class="avatar">AC</i
-                    ><span
-                        ><b>Andrea Castillo</b><br /><small
-                            >Administración</small
-                        ></span
-                    >
+                <div class="top-tools">
+                    <label class="top-search" for="headerSearch">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="10.8" cy="10.8" r="5.8"></circle><path d="m16 16 4 4"></path></svg>
+                        <input id="headerSearch" type="search" placeholder="Buscar en SafeRoom" aria-label="Buscar en SafeRoom" onkeydown="if(event.key === 'Enter') { document.getElementById('requestSearch').value = this.value; showView('requests'); renderRequests(); }" />
+                        <kbd>⌘ K</kbd>
+                    </label>
+                    <span class="top-divider" aria-hidden="true"></span>
+                    <button class="utility-button" type="button" onclick="flash('No hay notificaciones pendientes.')" aria-label="Ver notificaciones" title="Notificaciones">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 22h4"></path></svg>
+                        <span class="notification-dot" aria-hidden="true"></span>
+                    </button>
+                    <span class="top-divider" aria-hidden="true"></span>
+                    <button class="profile" type="button" onclick="flash('Sesión de Andrea Castillo · Administración')" aria-label="Perfil de Andrea Castillo">
+                        <i class="avatar">AC</i>
+                        <span><b>Andrea Castillo</b><br /><small>Administración</small></span>
+                    </button>
                 </div>
             </header>
             <div class="content" id="contenido-principal" tabindex="-1">
