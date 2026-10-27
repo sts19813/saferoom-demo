@@ -62,12 +62,13 @@
                 flex-direction: column;
             }
             .brand {
-                height: 118px;
-                padding: 0 25px;
+                height: 60px;
+                padding: 0 18px;
                 display: flex;
                 align-items: center;
                 gap: 12px;
                 border-bottom: 1px solid #eee6df;
+                overflow: hidden;
             }
             .logo {
                 width: 38px;
@@ -88,9 +89,11 @@
                 display: block;
                 width: 200px;
                 height: auto;
-                max-height: 88px;
+                max-height: none;
                 object-fit: contain;
                 object-position: left center;
+                transform: scale(1.58);
+                transform-origin: left center;
             }
             .brand small {
                 display: block;
@@ -881,6 +884,7 @@
                     height: 38px;
                     object-fit: cover;
                     object-position: left center;
+                    transform: none;
                 }
                 .side .nav {
                     justify-content: center;
