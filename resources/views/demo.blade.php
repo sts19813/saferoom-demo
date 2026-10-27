@@ -237,46 +237,8 @@
                 gap: 9px;
                 margin-left: auto;
             }
-            .top-search {
-                display: flex;
-                align-items: center;
-                width: clamp(195px, 18vw, 290px);
-                height: 39px;
-                gap: 8px;
-                padding: 0 7px 0 11px;
-                border: 1px solid #e7ddd3;
-                border-radius: 12px;
-                background: rgb(255 255 255 / .62);
-                color: #827972;
-                transition: border-color .16s ease, background .16s ease, box-shadow .16s ease;
-            }
-            .top-search:focus-within {
-                border-color: #d4a400;
-                background: #fff;
-                box-shadow: 0 0 0 4px rgb(255 202 1 / .18);
-            }
-            .top-search svg { width: 16px; height: 16px; flex: none; }
-            .top-search input {
-                min-width: 0;
-                width: 100%;
-                border: 0;
-                outline: 0;
-                background: transparent;
-                color: var(--ink);
-                font: inherit;
-                font-size: 12px;
-            }
-            .top-search input::placeholder { color: #999087; }
-            .top-search kbd {
-                padding: 3px 5px;
-                border: 1px solid #e6ddd5;
-                border-radius: 5px;
-                background: #fffaf5;
-                color: #8e857c;
-                font: 700 9px Montserrat, sans-serif;
-                white-space: nowrap;
-            }
             .top-divider { width: 1px; height: 26px; margin: 0 2px; background: #e6ddd5; }
+            .header-popover-wrap { position: relative; }
             .utility-button {
                 position: relative;
                 display: grid;
@@ -292,6 +254,43 @@
             .utility-button:hover { border-color: #ead9a0; background: #fff4cc; color: #5c4800; }
             .utility-button svg { width: 18px; height: 18px; }
             .notification-dot { position: absolute; top: 8px; right: 8px; width: 6px; height: 6px; border: 1.5px solid #fffaf5; border-radius: 50%; background: #d39f00; }
+            .top-popover {
+                position: absolute;
+                top: calc(100% + 14px);
+                right: 0;
+                z-index: 12;
+                width: 330px;
+                overflow: hidden;
+                border: 1px solid #e9ded2;
+                border-radius: 16px;
+                background: #fffdfb;
+                box-shadow: 0 20px 44px rgb(54 52 52 / .17), 0 3px 10px rgb(54 52 52 / .06);
+                text-align: left;
+            }
+            .top-popover[hidden] { display: none; }
+            .top-popover__head { display: flex; align-items: center; justify-content: space-between; padding: 15px 16px 12px; border-bottom: 1px solid #eee5de; }
+            .top-popover__head b { color: var(--ink); font-size: 13px; }
+            .top-popover__head span { color: #987400; font-size: 10px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
+            .notification-item { display: flex; gap: 10px; padding: 13px 16px; border-bottom: 1px solid #f1eae4; }
+            .notification-item:last-child { border-bottom: 0; }
+            .notification-icon { display: grid; width: 30px; height: 30px; flex: none; place-items: center; border-radius: 9px; background: #fff1bc; color: #765b00; font-size: 14px; }
+            .notification-item b { display: block; color: var(--ink); font-size: 11px; }
+            .notification-item p { margin: 3px 0 0; color: var(--muted); font-size: 10px; line-height: 1.45; }
+            .profile-popover { width: 278px; }
+            .profile-summary { display: flex; align-items: center; gap: 10px; padding: 15px 16px; border-bottom: 1px solid #eee5de; }
+            .profile-summary .avatar { width: 36px; height: 36px; }
+            .profile-summary b { display: block; color: var(--ink); font-size: 12px; }.profile-summary span { color: var(--muted); font-size: 10px; }
+            .theme-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; }
+            .theme-row b { display: block; color: var(--ink); font-size: 11px; }.theme-row span { color: var(--muted); font-size: 10px; }
+            .theme-switch { position: relative; width: 42px; height: 24px; flex: none; cursor: pointer; }.theme-switch input { position: absolute; opacity: 0; }.theme-switch__track { display: block; height: 100%; border-radius: 999px; background: #e5ddd5; transition: background .18s ease; }.theme-switch__track::after { position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: #fff; box-shadow: 0 1px 4px rgb(54 52 52 / .25); content: ""; transition: transform .18s ease; }.theme-switch input:checked + .theme-switch__track { background: #363434; }.theme-switch input:checked + .theme-switch__track::after { transform: translateX(18px); }
+            body[data-theme="dark"] { --bg: #201e1d; --surface: #2a2827; --ink: #f7f0e9; --muted: #c5bab0; --line: #4a4541; --shadow: 0 1px 2px rgb(0 0 0 / .18), 0 10px 28px rgb(0 0 0 / .2); }
+            body[data-theme="dark"] .side { background: linear-gradient(180deg, #2a2827, #211f1e); color: #c5bab0; }
+            body[data-theme="dark"] .brand { border-color: #4a4541; } body[data-theme="dark"] .nav:hover { background: #383431; color: #fff; } body[data-theme="dark"] .nav.on { background: #554617; color: #fff0b6; }
+            body[data-theme="dark"] .top { background: linear-gradient(90deg, #292625, #35312e); border-color: #4d463e; } body[data-theme="dark"] .crumb { color: #c5bab0; } body[data-theme="dark"] .top strong { color: #fffaf4; }
+            body[data-theme="dark"] .profile, body[data-theme="dark"] .top-popover { border-color: #514a44; background: #302d2b; } body[data-theme="dark"] .profile:hover { background: #393532; } body[data-theme="dark"] .top-divider { background: #514a44; }
+            body[data-theme="dark"] .utility-button { color: #eee3da; } body[data-theme="dark"] .utility-button:hover { background: #4a3d18; } body[data-theme="dark"] .top-popover__head, body[data-theme="dark"] .profile-summary, body[data-theme="dark"] .notification-item { border-color: #4b4540; }
+            body[data-theme="dark"] .notification-item b, body[data-theme="dark"] .top-popover__head b, body[data-theme="dark"] .profile-summary b, body[data-theme="dark"] .theme-row b { color: #fffaf4; }
+            body[data-theme="dark"] .field input, body[data-theme="dark"] .field select, body[data-theme="dark"] .search input, body[data-theme="dark"] .safe-date { background-color: #302d2b; color: #fffaf4; border-color: #514a44; }
             .content {
                 max-width: 1480px;
                 margin: auto;
@@ -911,8 +910,8 @@
                 .profile span {
                     display: none;
                 }
-                .top-search { width: 38px; padding: 0; justify-content: center; }
-                .top-search input, .top-search kbd, .top-divider { display: none; }
+                .top-divider { display: none; }
+                .top-popover { position: fixed; top: 70px; right: 16px; left: 16px; width: auto; }
             }
         </style>
     </head>
@@ -979,21 +978,28 @@
                     ><strong id="pageTitle">Vista general</strong>
                 </div>
                 <div class="top-tools">
-                    <label class="top-search" for="headerSearch">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="10.8" cy="10.8" r="5.8"></circle><path d="m16 16 4 4"></path></svg>
-                        <input id="headerSearch" type="search" placeholder="Buscar en SafeRoom" aria-label="Buscar en SafeRoom" onkeydown="if(event.key === 'Enter') { document.getElementById('requestSearch').value = this.value; showView('requests'); renderRequests(); }" />
-                        <kbd>⌘ K</kbd>
-                    </label>
+                    <div class="header-popover-wrap">
+                        <button class="utility-button" type="button" onclick="toggleHeaderPanel('notificationPanel')" aria-label="Ver notificaciones" aria-expanded="false" aria-controls="notificationPanel" id="notificationButton">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 22h4"></path></svg>
+                            <span class="notification-dot" aria-hidden="true"></span>
+                        </button>
+                        <section class="top-popover" id="notificationPanel" hidden aria-label="Notificaciones">
+                            <header class="top-popover__head"><b>Notificaciones</b><span>2 nuevas</span></header>
+                            <div class="notification-item"><div class="notification-icon">✓</div><div><b>Acceso validado</b><p>Mariana López Canto registró acceso a la bóveda.</p></div></div>
+                            <div class="notification-item"><div class="notification-icon">!</div><div><b>Contrato próximo a vencer</b><p>CT-2026-0148 requiere seguimiento dentro de 30 días.</p></div></div>
+                        </section>
+                    </div>
                     <span class="top-divider" aria-hidden="true"></span>
-                    <button class="utility-button" type="button" onclick="flash('No hay notificaciones pendientes.')" aria-label="Ver notificaciones" title="Notificaciones">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 22h4"></path></svg>
-                        <span class="notification-dot" aria-hidden="true"></span>
-                    </button>
-                    <span class="top-divider" aria-hidden="true"></span>
-                    <button class="profile" type="button" onclick="flash('Sesión de Andrea Castillo · Administración')" aria-label="Perfil de Andrea Castillo">
-                        <i class="avatar">AC</i>
-                        <span><b>Andrea Castillo</b><br /><small>Administración</small></span>
-                    </button>
+                    <div class="header-popover-wrap">
+                        <button class="profile" type="button" onclick="toggleHeaderPanel('profilePanel')" aria-label="Opciones del perfil" aria-expanded="false" aria-controls="profilePanel" id="profileButton">
+                            <i class="avatar">AC</i>
+                            <span><b>Andrea Castillo</b><br /><small>Administración</small></span>
+                        </button>
+                        <section class="top-popover profile-popover" id="profilePanel" hidden aria-label="Opciones de perfil">
+                            <div class="profile-summary"><i class="avatar">AC</i><div><b>Andrea Castillo</b><span>Administración</span></div></div>
+                            <label class="theme-row"><span><b>Modo oscuro</b><span>Interfaz de operación nocturna</span></span><span class="theme-switch"><input id="themeToggle" type="checkbox" onchange="setTheme(this.checked)" aria-label="Activar modo oscuro" /><span class="theme-switch__track"></span></span></label>
+                        </section>
+                    </div>
                 </div>
             </header>
             <div class="content" id="contenido-principal" tabindex="-1">
@@ -3880,6 +3886,35 @@
                 x.style.display = "block";
                 setTimeout(() => (x.style.display = "none"), 3200);
             }
+            function closeHeaderPanels(except = null) {
+                ["notificationPanel", "profilePanel"].forEach((id) => {
+                    if (id === except) return;
+                    const panel = document.getElementById(id);
+                    const button = document.getElementById(id === "notificationPanel" ? "notificationButton" : "profileButton");
+                    if (panel) panel.hidden = true;
+                    if (button) button.setAttribute("aria-expanded", "false");
+                });
+            }
+            function toggleHeaderPanel(id) {
+                const panel = document.getElementById(id);
+                const button = document.getElementById(id === "notificationPanel" ? "notificationButton" : "profileButton");
+                const shouldOpen = panel.hidden;
+                closeHeaderPanels(id);
+                panel.hidden = !shouldOpen;
+                button.setAttribute("aria-expanded", String(shouldOpen));
+            }
+            function setTheme(dark) {
+                document.body.dataset.theme = dark ? "dark" : "light";
+                const toggle = document.getElementById("themeToggle");
+                if (toggle) toggle.checked = dark;
+                try { localStorage.setItem("saferoom-theme", dark ? "dark" : "light"); } catch (_) {}
+            }
+            function initialiseHeaderControls() {
+                try { setTheme(localStorage.getItem("saferoom-theme") === "dark"); } catch (_) { setTheme(false); }
+                document.addEventListener("click", (event) => {
+                    if (!event.target.closest(".header-popover-wrap")) closeHeaderPanels();
+                });
+            }
             function resetDemo() {
                 boxes = structuredClone(seedBoxes);
                 requests = structuredClone(seedRequests);
@@ -3992,6 +4027,7 @@
                 });
             }
             initialiseSafeDates();
+            initialiseHeaderControls();
             showView(initialView, { sync: false, scroll: false, tab: currentTenantTab });
         </script>
     </body>
