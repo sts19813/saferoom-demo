@@ -92,7 +92,9 @@
                 max-height: none;
                 object-fit: contain;
                 object-position: left center;
-                transform: scale(1.58);
+                /* Enlarge only enough to counter the PNG's transparent canvas,
+                   while preserving the complete wordmark inside the sidebar. */
+                transform: scale(1.18);
                 transform-origin: left center;
             }
             .brand small {
