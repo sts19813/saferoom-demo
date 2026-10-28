@@ -7,7 +7,10 @@
         <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
+            rel="stylesheet"
+        />
         <style>
             :root {
                 --navy: #363434;
@@ -21,7 +24,9 @@
                 --danger: #b42318;
                 --surface: #ffffff;
                 --radius: 16px;
-                --shadow: 0 1px 2px rgb(20 20 40 / 0.04), 0 6px 20px rgb(20 20 40 / 0.05);
+                --shadow:
+                    0 1px 2px rgb(20 20 40 / 0.04),
+                    0 6px 20px rgb(20 20 40 / 0.05);
             }
             * {
                 box-sizing: border-box;
@@ -48,7 +53,7 @@
             button:focus-visible,
             input:focus-visible,
             select:focus-visible {
-                outline: 3px solid rgb(255 202 1 / 0.40);
+                outline: 3px solid rgb(255 202 1 / 0.4);
                 outline-offset: 2px;
             }
             .side {
@@ -146,20 +151,58 @@
                 background: #ececf0;
                 color: #6f6f7c;
                 font-size: 13px;
-                transition: transform .16s ease, background .16s ease;
+                transition:
+                    transform 0.16s ease,
+                    background 0.16s ease;
             }
-            .nav:hover .ico { transform: scale(1.06); }
-            .nav[data-view="requests"] .ico { color: #2c7ed2; background: #e8f3ff; }
-            .nav[data-view="boxes"] .ico { color: #87560e; background: #fff2d9; }
-            .nav[data-view="tenants"] .ico { color: #c24f80; background: #fdebf3; }
-            .nav[data-view="contracts"] .ico { color: #7a57bf; background: #f0eaff; }
-            .nav[data-view="renewals"] .ico { color: #238368; background: #e5f7f1; }
-            .nav[data-view="cancellations"] .ico { color: #c65b43; background: #feeee9; }
-            .nav[data-view="access"] .ico { color: #237994; background: #e6f5f8; }
-            .nav[data-view="documents"] .ico { color: #586ec0; background: #ebefff; }
-            .nav[data-view="reports"] .ico { color: #9c6c19; background: #fff5dc; }
-            .nav[data-view="finance"] .ico { color: #168661; background: #e6f8ef; }
-            .nav.on .ico { background: var(--gold); color: var(--navy); box-shadow: 0 4px 10px #d49f0033; }
+            .nav:hover .ico {
+                transform: scale(1.06);
+            }
+            .nav[data-view="requests"] .ico {
+                color: #2c7ed2;
+                background: #e8f3ff;
+            }
+            .nav[data-view="boxes"] .ico {
+                color: #87560e;
+                background: #fff2d9;
+            }
+            .nav[data-view="tenants"] .ico {
+                color: #c24f80;
+                background: #fdebf3;
+            }
+            .nav[data-view="contracts"] .ico {
+                color: #7a57bf;
+                background: #f0eaff;
+            }
+            .nav[data-view="renewals"] .ico {
+                color: #238368;
+                background: #e5f7f1;
+            }
+            .nav[data-view="cancellations"] .ico {
+                color: #c65b43;
+                background: #feeee9;
+            }
+            .nav[data-view="access"] .ico {
+                color: #237994;
+                background: #e6f5f8;
+            }
+            .nav[data-view="documents"] .ico {
+                color: #586ec0;
+                background: #ebefff;
+            }
+            .nav[data-view="reports"] .ico {
+                color: #9c6c19;
+                background: #fff5dc;
+            }
+            .nav[data-view="finance"] .ico {
+                color: #168661;
+                background: #e6f8ef;
+            }
+            .nav.on .ico {
+                background: var(--gold);
+                color: var(--navy);
+                box-shadow: 0 4px 10px #d49f0033;
+            }
             .future {
                 opacity: 0.45;
             }
@@ -179,9 +222,16 @@
             }
             .top {
                 height: 60px;
-                background: linear-gradient(90deg, #fbf6f2 0%, #fffdfb 58%, #f8f0e4 100%);
+                background: linear-gradient(
+                    90deg,
+                    #fbf6f2 0%,
+                    #fffdfb 58%,
+                    #f8f0e4 100%
+                );
                 border-bottom: 1px solid #eadfd3;
-                box-shadow: inset 0 -3px 0 var(--gold), 0 3px 16px rgb(54 52 52 / 0.04);
+                box-shadow:
+                    inset 0 -3px 0 var(--gold),
+                    0 3px 16px rgb(54 52 52 / 0.04);
                 display: flex;
                 align-items: center;
                 justify-content: flex-start;
@@ -217,15 +267,18 @@
                 padding: 5px 11px 5px 6px;
                 border: 1px solid #eadfd3;
                 border-radius: 14px;
-                background: rgb(255 255 255 / .72);
-                box-shadow: 0 2px 8px rgb(54 52 52 / .035);
+                background: rgb(255 255 255 / 0.72);
+                box-shadow: 0 2px 8px rgb(54 52 52 / 0.035);
                 text-align: left;
-                transition: background .16s ease, border-color .16s ease, box-shadow .16s ease;
+                transition:
+                    background 0.16s ease,
+                    border-color 0.16s ease,
+                    box-shadow 0.16s ease;
             }
             .profile:hover {
                 background: #fff;
                 border-color: #e5c75d;
-                box-shadow: 0 6px 15px rgb(54 52 52 / .08);
+                box-shadow: 0 6px 15px rgb(54 52 52 / 0.08);
             }
             .avatar {
                 width: 38px;
@@ -243,8 +296,15 @@
                 gap: 9px;
                 margin-left: auto;
             }
-            .top-divider { width: 1px; height: 26px; margin: 0 2px; background: #e6ddd5; }
-            .header-popover-wrap { position: relative; }
+            .top-divider {
+                width: 1px;
+                height: 26px;
+                margin: 0 2px;
+                background: #e6ddd5;
+            }
+            .header-popover-wrap {
+                position: relative;
+            }
             .utility-button {
                 position: relative;
                 display: grid;
@@ -255,11 +315,30 @@
                 border-radius: 11px;
                 background: transparent;
                 color: #5f5954;
-                transition: background .16s ease, border-color .16s ease, color .16s ease;
+                transition:
+                    background 0.16s ease,
+                    border-color 0.16s ease,
+                    color 0.16s ease;
             }
-            .utility-button:hover { border-color: #ead9a0; background: #fff4cc; color: #5c4800; }
-            .utility-button svg { width: 18px; height: 18px; }
-            .notification-dot { position: absolute; top: 8px; right: 8px; width: 6px; height: 6px; border: 1.5px solid #fffaf5; border-radius: 50%; background: #d39f00; }
+            .utility-button:hover {
+                border-color: #ead9a0;
+                background: #fff4cc;
+                color: #5c4800;
+            }
+            .utility-button svg {
+                width: 18px;
+                height: 18px;
+            }
+            .notification-dot {
+                position: absolute;
+                top: 8px;
+                right: 8px;
+                width: 6px;
+                height: 6px;
+                border: 1.5px solid #fffaf5;
+                border-radius: 50%;
+                background: #d39f00;
+            }
             .top-popover {
                 position: absolute;
                 top: calc(100% + 14px);
@@ -270,33 +349,208 @@
                 border: 1px solid #e9ded2;
                 border-radius: 16px;
                 background: #fffdfb;
-                box-shadow: 0 20px 44px rgb(54 52 52 / .17), 0 3px 10px rgb(54 52 52 / .06);
+                box-shadow:
+                    0 20px 44px rgb(54 52 52 / 0.17),
+                    0 3px 10px rgb(54 52 52 / 0.06);
                 text-align: left;
             }
-            .top-popover[hidden] { display: none; }
-            .top-popover__head { display: flex; align-items: center; justify-content: space-between; padding: 15px 16px 12px; border-bottom: 1px solid #eee5de; }
-            .top-popover__head b { color: var(--ink); font-size: 13px; }
-            .top-popover__head span { color: #987400; font-size: 10px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
-            .notification-item { display: flex; gap: 10px; padding: 13px 16px; border-bottom: 1px solid #f1eae4; }
-            .notification-item:last-child { border-bottom: 0; }
-            .notification-icon { display: grid; width: 30px; height: 30px; flex: none; place-items: center; border-radius: 9px; background: #fff1bc; color: #765b00; font-size: 14px; }
-            .notification-item b { display: block; color: var(--ink); font-size: 11px; }
-            .notification-item p { margin: 3px 0 0; color: var(--muted); font-size: 10px; line-height: 1.45; }
-            .profile-popover { width: 278px; }
-            .profile-summary { display: flex; align-items: center; gap: 10px; padding: 15px 16px; border-bottom: 1px solid #eee5de; }
-            .profile-summary .avatar { width: 36px; height: 36px; }
-            .profile-summary b { display: block; color: var(--ink); font-size: 12px; }.profile-summary span { color: var(--muted); font-size: 10px; }
-            .theme-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; }
-            .theme-row b { display: block; color: var(--ink); font-size: 11px; }.theme-row span { color: var(--muted); font-size: 10px; }
-            .theme-switch { position: relative; width: 42px; height: 24px; flex: none; cursor: pointer; }.theme-switch input { position: absolute; opacity: 0; }.theme-switch__track { display: block; height: 100%; border-radius: 999px; background: #e5ddd5; transition: background .18s ease; }.theme-switch__track::after { position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: #fff; box-shadow: 0 1px 4px rgb(54 52 52 / .25); content: ""; transition: transform .18s ease; }.theme-switch input:checked + .theme-switch__track { background: #363434; }.theme-switch input:checked + .theme-switch__track::after { transform: translateX(18px); }
-            body[data-theme="dark"] { --bg: #201e1d; --surface: #2a2827; --ink: #f7f0e9; --muted: #c5bab0; --line: #4a4541; --shadow: 0 1px 2px rgb(0 0 0 / .18), 0 10px 28px rgb(0 0 0 / .2); }
-            body[data-theme="dark"] .side { background: linear-gradient(180deg, #2a2827, #211f1e); color: #c5bab0; }
-            body[data-theme="dark"] .brand { border-color: #4a4541; } body[data-theme="dark"] .nav:hover { background: #383431; color: #fff; } body[data-theme="dark"] .nav.on { background: #554617; color: #fff0b6; }
-            body[data-theme="dark"] .top { background: linear-gradient(90deg, #292625, #35312e); border-color: #4d463e; } body[data-theme="dark"] .crumb { color: #c5bab0; } body[data-theme="dark"] .top strong { color: #fffaf4; }
-            body[data-theme="dark"] .profile, body[data-theme="dark"] .top-popover { border-color: #514a44; background: #302d2b; } body[data-theme="dark"] .profile:hover { background: #393532; } body[data-theme="dark"] .top-divider { background: #514a44; }
-            body[data-theme="dark"] .utility-button { color: #eee3da; } body[data-theme="dark"] .utility-button:hover { background: #4a3d18; } body[data-theme="dark"] .top-popover__head, body[data-theme="dark"] .profile-summary, body[data-theme="dark"] .notification-item { border-color: #4b4540; }
-            body[data-theme="dark"] .notification-item b, body[data-theme="dark"] .top-popover__head b, body[data-theme="dark"] .profile-summary b, body[data-theme="dark"] .theme-row b { color: #fffaf4; }
-            body[data-theme="dark"] .field input, body[data-theme="dark"] .field select, body[data-theme="dark"] .search input, body[data-theme="dark"] .safe-date { background-color: #302d2b; color: #fffaf4; border-color: #514a44; }
+            .top-popover[hidden] {
+                display: none;
+            }
+            .top-popover__head {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 15px 16px 12px;
+                border-bottom: 1px solid #eee5de;
+            }
+            .top-popover__head b {
+                color: var(--ink);
+                font-size: 13px;
+            }
+            .top-popover__head span {
+                color: #987400;
+                font-size: 10px;
+                font-weight: 800;
+                letter-spacing: 0.07em;
+                text-transform: uppercase;
+            }
+            .notification-item {
+                display: flex;
+                gap: 10px;
+                padding: 13px 16px;
+                border-bottom: 1px solid #f1eae4;
+            }
+            .notification-item:last-child {
+                border-bottom: 0;
+            }
+            .notification-icon {
+                display: grid;
+                width: 30px;
+                height: 30px;
+                flex: none;
+                place-items: center;
+                border-radius: 9px;
+                background: #fff1bc;
+                color: #765b00;
+                font-size: 14px;
+            }
+            .notification-item b {
+                display: block;
+                color: var(--ink);
+                font-size: 11px;
+            }
+            .notification-item p {
+                margin: 3px 0 0;
+                color: var(--muted);
+                font-size: 10px;
+                line-height: 1.45;
+            }
+            .profile-popover {
+                width: 278px;
+            }
+            .profile-summary {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 15px 16px;
+                border-bottom: 1px solid #eee5de;
+            }
+            .profile-summary .avatar {
+                width: 36px;
+                height: 36px;
+            }
+            .profile-summary b {
+                display: block;
+                color: var(--ink);
+                font-size: 12px;
+            }
+            .profile-summary span {
+                color: var(--muted);
+                font-size: 10px;
+            }
+            .theme-row {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                padding: 14px 16px;
+            }
+            .theme-row b {
+                display: block;
+                color: var(--ink);
+                font-size: 11px;
+            }
+            .theme-row span {
+                color: var(--muted);
+                font-size: 10px;
+            }
+            .theme-switch {
+                position: relative;
+                width: 42px;
+                height: 24px;
+                flex: none;
+                cursor: pointer;
+            }
+            .theme-switch input {
+                position: absolute;
+                opacity: 0;
+            }
+            .theme-switch__track {
+                display: block;
+                height: 100%;
+                border-radius: 999px;
+                background: #e5ddd5;
+                transition: background 0.18s ease;
+            }
+            .theme-switch__track::after {
+                position: absolute;
+                top: 3px;
+                left: 3px;
+                width: 18px;
+                height: 18px;
+                border-radius: 50%;
+                background: #fff;
+                box-shadow: 0 1px 4px rgb(54 52 52 / 0.25);
+                content: "";
+                transition: transform 0.18s ease;
+            }
+            .theme-switch input:checked + .theme-switch__track {
+                background: #363434;
+            }
+            .theme-switch input:checked + .theme-switch__track::after {
+                transform: translateX(18px);
+            }
+            body[data-theme="dark"] {
+                --bg: #201e1d;
+                --surface: #2a2827;
+                --ink: #f7f0e9;
+                --muted: #c5bab0;
+                --line: #4a4541;
+                --shadow:
+                    0 1px 2px rgb(0 0 0 / 0.18), 0 10px 28px rgb(0 0 0 / 0.2);
+            }
+            body[data-theme="dark"] .side {
+                background: linear-gradient(180deg, #2a2827, #211f1e);
+                color: #c5bab0;
+            }
+            body[data-theme="dark"] .brand {
+                border-color: #4a4541;
+            }
+            body[data-theme="dark"] .nav:hover {
+                background: #383431;
+                color: #fff;
+            }
+            body[data-theme="dark"] .nav.on {
+                background: #554617;
+                color: #fff0b6;
+            }
+            body[data-theme="dark"] .top {
+                background: linear-gradient(90deg, #292625, #35312e);
+                border-color: #4d463e;
+            }
+            body[data-theme="dark"] .crumb {
+                color: #c5bab0;
+            }
+            body[data-theme="dark"] .top strong {
+                color: #fffaf4;
+            }
+            body[data-theme="dark"] .profile,
+            body[data-theme="dark"] .top-popover {
+                border-color: #514a44;
+                background: #302d2b;
+            }
+            body[data-theme="dark"] .profile:hover {
+                background: #393532;
+            }
+            body[data-theme="dark"] .top-divider {
+                background: #514a44;
+            }
+            body[data-theme="dark"] .utility-button {
+                color: #eee3da;
+            }
+            body[data-theme="dark"] .utility-button:hover {
+                background: #4a3d18;
+            }
+            body[data-theme="dark"] .top-popover__head,
+            body[data-theme="dark"] .profile-summary,
+            body[data-theme="dark"] .notification-item {
+                border-color: #4b4540;
+            }
+            body[data-theme="dark"] .notification-item b,
+            body[data-theme="dark"] .top-popover__head b,
+            body[data-theme="dark"] .profile-summary b,
+            body[data-theme="dark"] .theme-row b {
+                color: #fffaf4;
+            }
+            body[data-theme="dark"] .field input,
+            body[data-theme="dark"] .field select,
+            body[data-theme="dark"] .search input,
+            body[data-theme="dark"] .safe-date {
+                background-color: #302d2b;
+                color: #fffaf4;
+                border-color: #514a44;
+            }
             .content {
                 max-width: 1480px;
                 margin: auto;
@@ -309,7 +563,12 @@
                 display: block;
             }
             .hero {
-                background: linear-gradient(125deg, #363434 0%, #514c49 62%, #6b635d 100%);
+                background: linear-gradient(
+                    125deg,
+                    #363434 0%,
+                    #514c49 62%,
+                    #6b635d 100%
+                );
                 border-radius: 18px;
                 color: #fff;
                 padding: 28px 30px;
@@ -346,7 +605,10 @@
                 padding: 11px 14px;
                 font-weight: 750;
                 font-size: 13px;
-                transition: transform .16s ease, box-shadow .16s ease, background .16s ease;
+                transition:
+                    transform 0.16s ease,
+                    box-shadow 0.16s ease,
+                    background 0.16s ease;
             }
             .btn:hover {
                 transform: translateY(-1px);
@@ -365,7 +627,10 @@
                 background: white;
                 color: var(--ink);
             }
-            .outline:hover { border-color: #e3b400; background: #fffaf0; }
+            .outline:hover {
+                border-color: #e3b400;
+                background: #fffaf0;
+            }
             .hero .outline {
                 background: transparent;
                 border-color: #ffffff35;
@@ -386,7 +651,9 @@
             }
             .card {
                 padding: 19px;
-                transition: transform .18s ease, box-shadow .18s ease;
+                transition:
+                    transform 0.18s ease,
+                    box-shadow 0.18s ease;
             }
             .card:hover {
                 transform: translateY(-2px);
@@ -433,7 +700,7 @@
                 border-radius: 999px;
                 font-size: 11px;
                 font-weight: 800;
-                letter-spacing: .015em;
+                letter-spacing: 0.015em;
             }
             .green {
                 background: #e9f8f1;
@@ -446,6 +713,10 @@
             .blue {
                 background: #eef3f6;
                 color: #506d88;
+            }
+            .red {
+                background: #feecec;
+                color: #b42318;
             }
             .slate {
                 background: #eff3f6;
@@ -495,9 +766,17 @@
                 background: #fcfcfd;
                 outline: none;
                 color: var(--ink);
-                transition: border-color .16s ease, box-shadow .16s ease, background .16s ease;
+                transition:
+                    border-color 0.16s ease,
+                    box-shadow 0.16s ease,
+                    background 0.16s ease;
             }
-            .field input:hover, .field select:hover, .search input:hover { border-color: #c8c6d0; background: #fff; }
+            .field input:hover,
+            .field select:hover,
+            .search input:hover {
+                border-color: #c8c6d0;
+                background: #fff;
+            }
             .field select,
             .toolbar select {
                 appearance: none;
@@ -515,11 +794,26 @@
                 font-weight: 650;
                 cursor: pointer;
                 box-shadow: 0 1px 1px rgb(20 20 40 / 0.02);
-                transition: border-color .16s ease, box-shadow .16s ease, background-color .16s ease;
+                transition:
+                    border-color 0.16s ease,
+                    box-shadow 0.16s ease,
+                    background-color 0.16s ease;
             }
-            .toolbar select { min-width: 156px; }
-            .field select:hover, .toolbar select:hover { border-color: #aaa3e5; background-color: #fff; }
-            .field select:focus, .toolbar select:focus { outline: none; border-color: #d39f00; box-shadow: 0 0 0 4px #ffca012b; background-color: #fff; }
+            .toolbar select {
+                min-width: 156px;
+            }
+            .field select:hover,
+            .toolbar select:hover {
+                border-color: #aaa3e5;
+                background-color: #fff;
+            }
+            .field select:focus,
+            .toolbar select:focus {
+                outline: none;
+                border-color: #d39f00;
+                box-shadow: 0 0 0 4px #ffca012b;
+                background-color: #fff;
+            }
             /* Native calendar popovers cannot be branded consistently. */
             .safe-date {
                 position: relative;
@@ -531,32 +825,156 @@
                 border-radius: 11px;
                 background: #fcfcfd;
                 box-shadow: 0 1px 1px rgb(20 20 40 / 0.02);
-                transition: border-color .16s ease, box-shadow .16s ease, background-color .16s ease;
+                transition:
+                    border-color 0.16s ease,
+                    box-shadow 0.16s ease,
+                    background-color 0.16s ease;
             }
-            .safe-date:hover { border-color: #d6b13c; background: #fffdf8; }
-            .safe-date:focus-within { border-color: #d39f00; box-shadow: 0 0 0 4px #ffca012b; background: #fff; }
-            .safe-date__value { min-width: 0; flex: 1; padding: 10px 0 10px 12px; color: var(--ink); font-size: 13px; font-weight: 650; white-space: nowrap; }
-            .safe-date__trigger { display: grid; width: 38px; height: 38px; flex: none; place-items: center; margin-right: 2px; border-radius: 9px; background: transparent; color: #947100; }
-            .safe-date__trigger:hover { background: #fff1bc; }
-            .safe-date__trigger svg { width: 17px; height: 17px; }
-            .safe-date__native { position: absolute; width: 1px !important; height: 1px !important; overflow: hidden; opacity: 0; pointer-events: none; }
-            .safe-date--readonly { background: #f8f4f0; color: var(--muted); }
-            .safe-date--readonly .safe-date__trigger { display: none; }
-            .safe-calendar { position: absolute; top: calc(100% + 9px); left: 0; z-index: 20; width: 286px; padding: 13px; border: 1px solid #e8dfd6; border-radius: 16px; background: #fffdfb; box-shadow: 0 18px 40px rgb(54 52 52 / .17), 0 2px 7px rgb(54 52 52 / .06); }
-            .safe-calendar[hidden] { display: none; }
-            .safe-calendar__head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; }
-            .safe-calendar__month { color: var(--ink); font-size: 13px; font-weight: 800; text-transform: capitalize; }
-            .safe-calendar__actions { display: flex; gap: 4px; }
-            .safe-calendar__nav { display: grid; width: 29px; height: 29px; place-items: center; border: 1px solid #eee4d8; border-radius: 8px; background: #fff; color: #645e58; font-size: 17px; line-height: 1; }
-            .safe-calendar__nav:hover { background: #fff1bc; border-color: #edcf65; color: #5c4900; }
-            .safe-calendar__week, .safe-calendar__days { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; }
-            .safe-calendar__week { margin-bottom: 4px; color: #9b938a; font-size: 10px; font-weight: 800; }
-            .safe-calendar__day { display: grid; width: 32px; height: 32px; place-items: center; margin: 1px auto; border-radius: 9px; background: transparent; color: var(--ink); font-size: 12px; font-weight: 650; }
-            .safe-calendar__day:hover { background: #fff1bc; color: #493900; }
-            .safe-calendar__day--muted { color: #c0b9b2; }
-            .safe-calendar__day--today { box-shadow: inset 0 0 0 1px #e3bb25; }
-            .safe-calendar__day--selected { background: var(--navy); color: #fff; box-shadow: 0 4px 10px rgb(54 52 52 / .18); }
-            .safe-calendar__day--selected:hover { background: var(--navy); color: #fff; }
+            .safe-date:hover {
+                border-color: #d6b13c;
+                background: #fffdf8;
+            }
+            .safe-date:focus-within {
+                border-color: #d39f00;
+                box-shadow: 0 0 0 4px #ffca012b;
+                background: #fff;
+            }
+            .safe-date__value {
+                min-width: 0;
+                flex: 1;
+                padding: 10px 0 10px 12px;
+                color: var(--ink);
+                font-size: 13px;
+                font-weight: 650;
+                white-space: nowrap;
+            }
+            .safe-date__trigger {
+                display: grid;
+                width: 38px;
+                height: 38px;
+                flex: none;
+                place-items: center;
+                margin-right: 2px;
+                border-radius: 9px;
+                background: transparent;
+                color: #947100;
+            }
+            .safe-date__trigger:hover {
+                background: #fff1bc;
+            }
+            .safe-date__trigger svg {
+                width: 17px;
+                height: 17px;
+            }
+            .safe-date__native {
+                position: absolute;
+                width: 1px !important;
+                height: 1px !important;
+                overflow: hidden;
+                opacity: 0;
+                pointer-events: none;
+            }
+            .safe-date--readonly {
+                background: #f8f4f0;
+                color: var(--muted);
+            }
+            .safe-date--readonly .safe-date__trigger {
+                display: none;
+            }
+            .safe-calendar {
+                position: absolute;
+                top: calc(100% + 9px);
+                left: 0;
+                z-index: 20;
+                width: 286px;
+                padding: 13px;
+                border: 1px solid #e8dfd6;
+                border-radius: 16px;
+                background: #fffdfb;
+                box-shadow:
+                    0 18px 40px rgb(54 52 52 / 0.17),
+                    0 2px 7px rgb(54 52 52 / 0.06);
+            }
+            .safe-calendar[hidden] {
+                display: none;
+            }
+            .safe-calendar__head {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 8px;
+                margin-bottom: 12px;
+            }
+            .safe-calendar__month {
+                color: var(--ink);
+                font-size: 13px;
+                font-weight: 800;
+                text-transform: capitalize;
+            }
+            .safe-calendar__actions {
+                display: flex;
+                gap: 4px;
+            }
+            .safe-calendar__nav {
+                display: grid;
+                width: 29px;
+                height: 29px;
+                place-items: center;
+                border: 1px solid #eee4d8;
+                border-radius: 8px;
+                background: #fff;
+                color: #645e58;
+                font-size: 17px;
+                line-height: 1;
+            }
+            .safe-calendar__nav:hover {
+                background: #fff1bc;
+                border-color: #edcf65;
+                color: #5c4900;
+            }
+            .safe-calendar__week,
+            .safe-calendar__days {
+                display: grid;
+                grid-template-columns: repeat(7, 1fr);
+                text-align: center;
+            }
+            .safe-calendar__week {
+                margin-bottom: 4px;
+                color: #9b938a;
+                font-size: 10px;
+                font-weight: 800;
+            }
+            .safe-calendar__day {
+                display: grid;
+                width: 32px;
+                height: 32px;
+                place-items: center;
+                margin: 1px auto;
+                border-radius: 9px;
+                background: transparent;
+                color: var(--ink);
+                font-size: 12px;
+                font-weight: 650;
+            }
+            .safe-calendar__day:hover {
+                background: #fff1bc;
+                color: #493900;
+            }
+            .safe-calendar__day--muted {
+                color: #c0b9b2;
+            }
+            .safe-calendar__day--today {
+                box-shadow: inset 0 0 0 1px #e3bb25;
+            }
+            .safe-calendar__day--selected {
+                background: var(--navy);
+                color: #fff;
+                box-shadow: 0 4px 10px rgb(54 52 52 / 0.18);
+            }
+            .safe-calendar__day--selected:hover {
+                background: var(--navy);
+                color: #fff;
+            }
             .search input:focus,
             .field input:focus,
             .field select:focus {
@@ -608,7 +1026,10 @@
                 min-height: 145px;
                 color: var(--ink);
                 box-shadow: 0 2px 5px rgb(20 20 40 / 0.025);
-                transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+                transition:
+                    transform 0.18s ease,
+                    box-shadow 0.18s ease,
+                    border-color 0.18s ease;
             }
             .box-card.available {
                 background: linear-gradient(145deg, #f5fffa, #eafaf2);
@@ -629,7 +1050,10 @@
                 display: block;
                 margin-top: 18px;
             }
-            .box-card:disabled { opacity: .72; cursor: not-allowed; }
+            .box-card:disabled {
+                opacity: 0.72;
+                cursor: not-allowed;
+            }
             .split {
                 display: grid;
                 grid-template-columns: 1fr 360px;
@@ -657,7 +1081,7 @@
                 font-weight: 800;
                 margin-bottom: 6px;
                 color: #525260;
-                letter-spacing: .04em;
+                letter-spacing: 0.04em;
             }
             .form-group {
                 border-top: 1px solid var(--line);
@@ -722,7 +1146,7 @@
                 display: flex;
                 gap: 22px;
                 overflow: auto;
-                border-top: 1px solid rgb(255 255 255 / .16);
+                border-top: 1px solid rgb(255 255 255 / 0.16);
                 margin-top: 22px;
                 padding-top: 12px;
             }
@@ -738,11 +1162,16 @@
             }
             .tenant-top {
                 /* Same secure-vault finish as the operational hero. */
-                background: linear-gradient(125deg, #363434 0%, #514c49 62%, #6b635d 100%);
+                background: linear-gradient(
+                    125deg,
+                    #363434 0%,
+                    #514c49 62%,
+                    #6b635d 100%
+                );
                 color: #fff;
                 border-radius: 18px;
                 padding: 28px 30px;
-                box-shadow: 0 14px 28px rgb(54 52 52 / .13);
+                box-shadow: 0 14px 28px rgb(54 52 52 / 0.13);
             }
             .tenant-name {
                 display: flex;
@@ -755,7 +1184,7 @@
                 font-size: 17px;
                 background: var(--gold);
                 color: var(--navy);
-                box-shadow: 0 6px 16px rgb(255 202 1 / .24);
+                box-shadow: 0 6px 16px rgb(255 202 1 / 0.24);
             }
             .tenant-name h1 {
                 margin: 0;
@@ -819,6 +1248,81 @@
                 border-top: 1px solid var(--line);
                 margin: 15px 0;
             }
+            .document-paper {
+                max-width: 760px;
+                margin: 0 auto;
+                padding: 42px;
+                background: #fff;
+                border: 1px solid #ded7d0;
+                box-shadow: 0 12px 30px rgb(30 25 20 / 0.1);
+                color: #292525;
+            }
+            .document-paper__head {
+                display: flex;
+                align-items: flex-start;
+                justify-content: space-between;
+                gap: 20px;
+                padding-bottom: 20px;
+                border-bottom: 2px solid var(--gold);
+            }
+            .document-paper__logo {
+                width: 150px;
+                max-height: 46px;
+                object-fit: contain;
+                object-position: left center;
+            }
+            .document-paper__meta {
+                text-align: right;
+                font-size: 12px;
+                color: #625b55;
+            }
+            .document-paper__title {
+                margin: 30px 0 8px;
+                font-size: 20px;
+                color: #292525;
+            }
+            .document-paper__body {
+                color: #403a36;
+                line-height: 1.7;
+            }
+            .document-paper__summary {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px 24px;
+                margin: 24px 0;
+                padding: 16px;
+                background: #fbf8f5;
+                border: 1px solid #ece4dc;
+            }
+            .document-paper__summary small {
+                display: block;
+                margin-bottom: 3px;
+                color: #756d67;
+                font-size: 10px;
+                font-weight: 800;
+                letter-spacing: 0.08em;
+            }
+            .document-paper__signatures {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 36px;
+                margin-top: 68px;
+                font-size: 11px;
+                color: #625b55;
+                text-align: center;
+            }
+            .document-paper__signatures span {
+                display: block;
+                padding-top: 9px;
+                border-top: 1px solid #77706b;
+            }
+            @media print {
+                body { background: #fff; }
+                .side, .top, .heading, .content > .view:not(#documents), #documents .document-selection, #documents .panel-head, .small-grid, .document-preview-actions, .toast { display: none !important; }
+                .main, .content, #documents, #documents.on, .panel, .panel.section { display: block !important; margin: 0 !important; padding: 0 !important; border: 0 !important; box-shadow: none !important; background: #fff !important; }
+                #documentPreview { display: block !important; padding: 0 !important; background: transparent !important; }
+                .document-paper { max-width: none; padding: 0; border: 0; box-shadow: none; }
+            }
             .small-grid {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
@@ -826,51 +1330,156 @@
             }
             /* Complete dark treatment for operational data, controls and vault states. */
             body[data-theme="dark"] .card,
-            body[data-theme="dark"] .panel { background: #2a2827; border-color: #4d4844; }
-            body[data-theme="dark"] .toolbar { background: linear-gradient(180deg, #322f2d, #2a2827); border-color: #4d4844; }
+            body[data-theme="dark"] .panel {
+                background: #2a2827;
+                border-color: #4d4844;
+            }
+            body[data-theme="dark"] .toolbar {
+                background: linear-gradient(180deg, #322f2d, #2a2827);
+                border-color: #4d4844;
+            }
             body[data-theme="dark"] .search input,
             body[data-theme="dark"] .field input,
             body[data-theme="dark"] .field select,
             body[data-theme="dark"] .toolbar select,
-            body[data-theme="dark"] .safe-date { background-color: #363230; border-color: #5a534d; color: #fffaf4; box-shadow: none; }
-            body[data-theme="dark"] .search input::placeholder { color: #aaa098; }
+            body[data-theme="dark"] .safe-date {
+                background-color: #363230;
+                border-color: #5a534d;
+                color: #fffaf4;
+                box-shadow: none;
+            }
+            body[data-theme="dark"] .search input::placeholder {
+                color: #aaa098;
+            }
             body[data-theme="dark"] .field input:hover,
             body[data-theme="dark"] .field select:hover,
             body[data-theme="dark"] .toolbar select:hover,
-            body[data-theme="dark"] .search input:hover { background-color: #403b38; border-color: #927829; }
+            body[data-theme="dark"] .search input:hover {
+                background-color: #403b38;
+                border-color: #927829;
+            }
             body[data-theme="dark"] .field select option,
-            body[data-theme="dark"] .toolbar select option { background: #363230; color: #fffaf4; }
-            body[data-theme="dark"] .safe-date--readonly { background: #302d2b; color: #c5bab0; }
-            body[data-theme="dark"] .safe-calendar { background: #302d2b; border-color: #514a44; box-shadow: 0 18px 40px rgb(0 0 0 / .38); }
-            body[data-theme="dark"] .safe-calendar__nav { background: #3b3734; border-color: #5a534d; color: #f7f0e9; }
-            body[data-theme="dark"] .safe-calendar__week { color: #c5bab0; }
-            body[data-theme="dark"] .safe-calendar__day { color: #f7f0e9; }
-            body[data-theme="dark"] .safe-calendar__day--muted { color: #827a73; }
-            body[data-theme="dark"] .safe-calendar__day:hover { background: #554617; color: #fff4c8; }
-            body[data-theme="dark"] .outline { background: #393532; border-color: #5a534d; color: #fffaf4; }
-            body[data-theme="dark"] .outline:hover { background: #47413c; border-color: #d3a400; }
-            body[data-theme="dark"] .primary { background: #ffca01; color: #302900; box-shadow: 0 7px 16px rgb(255 202 1 / .16); }
-            body[data-theme="dark"] th { background: #383431; color: #d6cbc1; border-color: #514a44; }
+            body[data-theme="dark"] .toolbar select option {
+                background: #363230;
+                color: #fffaf4;
+            }
+            body[data-theme="dark"] .safe-date--readonly {
+                background: #302d2b;
+                color: #c5bab0;
+            }
+            body[data-theme="dark"] .safe-calendar {
+                background: #302d2b;
+                border-color: #514a44;
+                box-shadow: 0 18px 40px rgb(0 0 0 / 0.38);
+            }
+            body[data-theme="dark"] .safe-calendar__nav {
+                background: #3b3734;
+                border-color: #5a534d;
+                color: #f7f0e9;
+            }
+            body[data-theme="dark"] .safe-calendar__week {
+                color: #c5bab0;
+            }
+            body[data-theme="dark"] .safe-calendar__day {
+                color: #f7f0e9;
+            }
+            body[data-theme="dark"] .safe-calendar__day--muted {
+                color: #827a73;
+            }
+            body[data-theme="dark"] .safe-calendar__day:hover {
+                background: #554617;
+                color: #fff4c8;
+            }
+            body[data-theme="dark"] .outline {
+                background: #393532;
+                border-color: #5a534d;
+                color: #fffaf4;
+            }
+            body[data-theme="dark"] .outline:hover {
+                background: #47413c;
+                border-color: #d3a400;
+            }
+            body[data-theme="dark"] .primary {
+                background: #ffca01;
+                color: #302900;
+                box-shadow: 0 7px 16px rgb(255 202 1 / 0.16);
+            }
+            body[data-theme="dark"] th {
+                background: #383431;
+                color: #d6cbc1;
+                border-color: #514a44;
+            }
             body[data-theme="dark"] th,
-            body[data-theme="dark"] td { border-color: #48433f; }
-            body[data-theme="dark"] tbody tr:hover { background: #34312f; }
-            body[data-theme="dark"] .bar { background: #494440; }
-            body[data-theme="dark"] .box-grid { background: #242220; }
+            body[data-theme="dark"] td {
+                border-color: #48433f;
+            }
+            body[data-theme="dark"] tbody tr:hover {
+                background: #34312f;
+            }
+            body[data-theme="dark"] .bar {
+                background: #494440;
+            }
+            body[data-theme="dark"] .box-grid {
+                background: #242220;
+            }
             body[data-theme="dark"] .box-card,
-            body[data-theme="dark"] .box-card:disabled { opacity: 1; background: linear-gradient(145deg, #3a3735, #302e2c); border-color: #59534e; color: #f7f0e9; box-shadow: 0 3px 8px rgb(0 0 0 / .12); }
-            body[data-theme="dark"] .box-card.available { background: linear-gradient(145deg, #173e34, #12352d); border-color: #2f9c79; }
-            body[data-theme="dark"] .box-card.available:hover { background: linear-gradient(145deg, #1c4a3e, #164238); border-color: #68d2aa; }
-            body[data-theme="dark"] .box-card.chosen { outline-color: #ffdc57; border-color: var(--gold); }
-            body[data-theme="dark"] .box-card .muted { color: #d4cbc4; }
-            body[data-theme="dark"] .green { background: #173f34; color: #8be0bd; }
-            body[data-theme="dark"] .amber { background: #4a3a16; color: #ffd66c; }
-            body[data-theme="dark"] .blue { background: #263b4a; color: #add9f3; }
-            body[data-theme="dark"] .slate { background: #3b4145; color: #d1dbe2; }
-            body[data-theme="dark"] .notice { background: linear-gradient(135deg, #514118, #3e3216); color: #ffe29a; }
-            body[data-theme="dark"] .selected { background: #163d32; border-color: #318564; }
-            body[data-theme="dark"] .field label { color: #d9d0c8; }
-            body[data-theme="dark"] .form-group summary::before { background: #45403c; color: #f4eade; }
-            body[data-theme="dark"] .invoice { background: #302d2b; color: #fffaf4; }
+            body[data-theme="dark"] .box-card:disabled {
+                opacity: 1;
+                background: linear-gradient(145deg, #3a3735, #302e2c);
+                border-color: #59534e;
+                color: #f7f0e9;
+                box-shadow: 0 3px 8px rgb(0 0 0 / 0.12);
+            }
+            body[data-theme="dark"] .box-card.available {
+                background: linear-gradient(145deg, #173e34, #12352d);
+                border-color: #2f9c79;
+            }
+            body[data-theme="dark"] .box-card.available:hover {
+                background: linear-gradient(145deg, #1c4a3e, #164238);
+                border-color: #68d2aa;
+            }
+            body[data-theme="dark"] .box-card.chosen {
+                outline-color: #ffdc57;
+                border-color: var(--gold);
+            }
+            body[data-theme="dark"] .box-card .muted {
+                color: #d4cbc4;
+            }
+            body[data-theme="dark"] .green {
+                background: #173f34;
+                color: #8be0bd;
+            }
+            body[data-theme="dark"] .amber {
+                background: #4a3a16;
+                color: #ffd66c;
+            }
+            body[data-theme="dark"] .blue {
+                background: #263b4a;
+                color: #add9f3;
+            }
+            body[data-theme="dark"] .slate {
+                background: #3b4145;
+                color: #d1dbe2;
+            }
+            body[data-theme="dark"] .notice {
+                background: linear-gradient(135deg, #514118, #3e3216);
+                color: #ffe29a;
+            }
+            body[data-theme="dark"] .selected {
+                background: #163d32;
+                border-color: #318564;
+            }
+            body[data-theme="dark"] .field label {
+                color: #d9d0c8;
+            }
+            body[data-theme="dark"] .form-group summary::before {
+                background: #45403c;
+                color: #f4eade;
+            }
+            body[data-theme="dark"] .invoice {
+                background: #302d2b;
+                color: #fffaf4;
+            }
             @media (max-width: 1050px) {
                 .side {
                     width: 70px;
@@ -964,8 +1573,16 @@
                 .profile span {
                     display: none;
                 }
-                .top-divider { display: none; }
-                .top-popover { position: fixed; top: 70px; right: 16px; left: 16px; width: auto; }
+                .top-divider {
+                    display: none;
+                }
+                .top-popover {
+                    position: fixed;
+                    top: 70px;
+                    right: 16px;
+                    left: 16px;
+                    width: auto;
+                }
             }
         </style>
     </head>
@@ -973,7 +1590,11 @@
         <a class="skip-link" href="#contenido-principal">Saltar al contenido</a>
         <aside class="side" id="side">
             <div class="brand">
-                <img class="brand-logo" src="{{ asset('images/saferoom-logo.png') }}" alt="SafeRoom" />
+                <img
+                    class="brand-logo"
+                    src="{{ asset('images/saferoom-logo.png') }}"
+                    alt="SafeRoom"
+                />
             </div>
             <nav>
                 <p class="nav-label">OPERACIÓN</p>
@@ -1032,26 +1653,117 @@
                     ><strong id="pageTitle">Vista general</strong>
                 </div>
                 <div class="top-tools">
+                    <span
+                        class="tag blue"
+                        title="Los registros se conservan solo en este navegador"
+                        >DEMO · DATOS FICTICIOS</span
+                    >
                     <div class="header-popover-wrap">
-                        <button class="utility-button" type="button" onclick="toggleHeaderPanel('notificationPanel')" aria-label="Ver notificaciones" aria-expanded="false" aria-controls="notificationPanel" id="notificationButton">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 22h4"></path></svg>
-                            <span class="notification-dot" aria-hidden="true"></span>
+                        <button
+                            class="utility-button"
+                            type="button"
+                            onclick="toggleHeaderPanel('notificationPanel')"
+                            aria-label="Ver notificaciones"
+                            aria-expanded="false"
+                            aria-controls="notificationPanel"
+                            id="notificationButton"
+                        >
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.9"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"
+                                ></path>
+                                <path d="M10 22h4"></path>
+                            </svg>
+                            <span
+                                class="notification-dot"
+                                aria-hidden="true"
+                            ></span>
                         </button>
-                        <section class="top-popover" id="notificationPanel" hidden aria-label="Notificaciones">
-                            <header class="top-popover__head"><b>Notificaciones</b><span>2 nuevas</span></header>
-                            <div class="notification-item"><div class="notification-icon">✓</div><div><b>Acceso validado</b><p>Mariana López Canto registró acceso a la bóveda.</p></div></div>
-                            <div class="notification-item"><div class="notification-icon">!</div><div><b>Contrato próximo a vencer</b><p>CT-2026-0148 requiere seguimiento dentro de 30 días.</p></div></div>
+                        <section
+                            class="top-popover"
+                            id="notificationPanel"
+                            hidden
+                            aria-label="Notificaciones"
+                        >
+                            <header class="top-popover__head">
+                                <b>Notificaciones</b><span>2 nuevas</span>
+                            </header>
+                            <div class="notification-item">
+                                <div class="notification-icon">✓</div>
+                                <div>
+                                    <b>Acceso validado</b>
+                                    <p>
+                                        Mariana López Canto registró acceso a la
+                                        bóveda.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="notification-item">
+                                <div class="notification-icon">!</div>
+                                <div>
+                                    <b>Contrato próximo a vencer</b>
+                                    <p>
+                                        CT-2026-0148 requiere seguimiento dentro
+                                        de 30 días.
+                                    </p>
+                                </div>
+                            </div>
                         </section>
                     </div>
                     <span class="top-divider" aria-hidden="true"></span>
                     <div class="header-popover-wrap">
-                        <button class="profile" type="button" onclick="toggleHeaderPanel('profilePanel')" aria-label="Opciones del perfil" aria-expanded="false" aria-controls="profilePanel" id="profileButton">
+                        <button
+                            class="profile"
+                            type="button"
+                            onclick="toggleHeaderPanel('profilePanel')"
+                            aria-label="Opciones del perfil"
+                            aria-expanded="false"
+                            aria-controls="profilePanel"
+                            id="profileButton"
+                        >
                             <i class="avatar">AC</i>
-                            <span><b>Andrea Castillo</b><br /><small>Administración</small></span>
+                            <span
+                                ><b>Andrea Castillo</b><br /><small
+                                    >Administración</small
+                                ></span
+                            >
                         </button>
-                        <section class="top-popover profile-popover" id="profilePanel" hidden aria-label="Opciones de perfil">
-                            <div class="profile-summary"><i class="avatar">AC</i><div><b>Andrea Castillo</b><span>Administración</span></div></div>
-                            <label class="theme-row"><span><b>Modo oscuro</b><span>Interfaz de operación nocturna</span></span><span class="theme-switch"><input id="themeToggle" type="checkbox" onchange="setTheme(this.checked)" aria-label="Activar modo oscuro" /><span class="theme-switch__track"></span></span></label>
+                        <section
+                            class="top-popover profile-popover"
+                            id="profilePanel"
+                            hidden
+                            aria-label="Opciones de perfil"
+                        >
+                            <div class="profile-summary">
+                                <i class="avatar">AC</i>
+                                <div>
+                                    <b>Andrea Castillo</b
+                                    ><span>Administración</span>
+                                </div>
+                            </div>
+                            <label class="theme-row"
+                                ><span
+                                    ><b>Modo oscuro</b
+                                    ><span
+                                        >Interfaz de operación nocturna</span
+                                    ></span
+                                ><span class="theme-switch"
+                                    ><input
+                                        id="themeToggle"
+                                        type="checkbox"
+                                        onchange="setTheme(this.checked)"
+                                        aria-label="Activar modo oscuro" /><span
+                                        class="theme-switch__track"
+                                    ></span></span
+                            ></label>
                         </section>
                     </div>
                 </div>
@@ -1071,12 +1783,12 @@
                             </p>
                         </div>
                         <div>
-                            <button class="btn gold" onclick="showView('form')">
+                            <button class="btn gold" onclick="startRequest()">
                                 ＋ Nueva solicitud
                             </button>
                             <button
                                 class="btn outline"
-                                onclick="showView('boxes')"
+                                onclick="chooseBoxForDraft()"
                             >
                                 Ver cajas
                             </button>
@@ -1097,17 +1809,17 @@
                         </article>
                         <article class="card">
                             <span class="muted">PRÓXIMOS VENCIMIENTOS</span>
-                            <div class="metric">12</div>
+                            <div class="metric" id="upcomingCount">0</div>
                             <span class="muted">En los siguientes 30 días</span>
                         </article>
                         <article class="card">
                             <span class="muted">ACCESOS HOY</span>
-                            <div class="metric">37</div>
+                            <div class="metric" id="accessesToday">0</div>
                             <span class="tag blue">SIMULACIÓN BIOMÉTRICA</span>
                         </article>
                     </div>
                     <div class="two">
-                        <section class="panel">
+                        <section class="panel" id="recentActivity">
                             <div class="panel-head">
                                 <div>
                                     <b>Actividad reciente</b>
@@ -1153,6 +1865,10 @@
                                     id="statusBars"
                                     style="margin-top: 18px"
                                 ></div>
+                                <div
+                                    id="availabilityAlertBanner"
+                                    style="margin-top: 14px"
+                                ></div>
                                 <p class="notice" style="margin-top: 18px">
                                     <b>Dato confirmado:</b> cada caja física
                                     tiene cerradura y dos llaves.
@@ -1167,8 +1883,8 @@
                             <p class="eyebrow">OPERACIÓN</p>
                             <h1>Solicitudes de arrendamiento</h1>
                             <p class="muted">
-                                Prospectos pendientes de asignación y
-                                contratación.
+                                Expedientes por verificar antes de aprobar,
+                                denegar o dar de alta al arrendatario.
                             </p>
                         </div>
                         <button class="btn primary" onclick="startRequest()">
@@ -1192,7 +1908,7 @@
                                     <tr>
                                         <th>Solicitud</th>
                                         <th>Persona solicitante</th>
-                                        <th>Caja solicitada</th>
+                                        <th>Servicios solicitados</th>
                                         <th>Creada</th>
                                         <th>Estado</th>
                                         <th></th>
@@ -1207,11 +1923,12 @@
                     <button class="btn outline" onclick="showView('requests')">
                         ← Solicitudes
                     </button>
-                    <p class="eyebrow" style="margin-top: 20px">PASO 1 DE 3</p>
+                    <p class="eyebrow" style="margin-top: 20px">SOLICITUD · EXPEDIENTE</p>
                     <h1>Nueva solicitud</h1>
                     <p class="muted">
-                        Registra los datos iniciales y asigna una caja
-                        disponible.
+                        Captura el expediente, referencias, servicios y datos
+                        de facturación. La autorización ocurre después de la
+                        verificación.
                     </p>
                     <div class="split" style="margin-top: 22px">
                         <div class="panel section">
@@ -1221,6 +1938,13 @@
                                 anterior, organizados para la primera etapa.
                             </p>
                             <div class="fields">
+                                <div class="field">
+                                    <label>TIPO DE PERSONA</label
+                                    ><select id="fPersonType" onchange="syncRequestRequirements()">
+                                        <option value="Física">Persona física</option>
+                                        <option value="Moral">Persona moral</option>
+                                    </select>
+                                </div>
                                 <div class="field wide">
                                     <label>NOMBRE COMPLETO</label
                                     ><input
@@ -1276,6 +2000,10 @@
                                         ><input id="fBirthDate" type="date" />
                                     </div>
                                     <div class="field">
+                                        <label>LUGAR DE NACIMIENTO</label
+                                        ><input id="fBirthPlace" placeholder="Mérida, Yucatán" />
+                                    </div>
+                                    <div class="field">
                                         <label>SEXO</label
                                         ><select id="fGender">
                                             <option value="">
@@ -1305,6 +2033,19 @@
                                         </select>
                                     </div>
                                     <div class="field">
+                                        <label>NOMBRE DEL CÓNYUGE</label
+                                        ><input id="fSpouseName" placeholder="Nombre completo" />
+                                    </div>
+                                    <div class="field">
+                                        <label>RÉGIMEN MATRIMONIAL</label
+                                        ><select id="fMaritalRegime">
+                                            <option value="">Sin seleccionar</option>
+                                            <option>Ninguno</option>
+                                            <option>Sociedad conyugal</option>
+                                            <option>Separación de bienes</option>
+                                        </select>
+                                    </div>
+                                    <div class="field">
                                         <label>CÓMO SE ENTERÓ</label
                                         ><select id="fSource">
                                             <option value="">
@@ -1318,7 +2059,7 @@
                                     </div>
                                 </div>
                             </details>
-                            <details class="form-group">
+                            <details class="form-group" open>
                                 <summary>Domicilio y referencias</summary>
                                 <p class="form-helper">
                                     Datos de domicilio y referencia personal
@@ -1361,6 +2102,18 @@
                                         />
                                     </div>
                                     <div class="field">
+                                        <label>TIEMPO DE RESIDENCIA</label
+                                        ><input id="fResidenceTime" placeholder="Ej. 5 años" />
+                                    </div>
+                                    <div class="field">
+                                        <label>TELÉFONO DE CASA</label
+                                        ><input id="fHomePhone" placeholder="999 000 0000" />
+                                    </div>
+                                    <div class="field">
+                                        <label>OTRO TELÉFONO</label
+                                        ><input id="fOtherPhone" placeholder="999 000 0000" />
+                                    </div>
+                                    <div class="field">
                                         <label>REFERENCIA PERSONAL</label
                                         ><input
                                             id="fReference"
@@ -1374,16 +2127,22 @@
                                             placeholder="999 000 0000"
                                         />
                                     </div>
+                                    <div class="field">
+                                        <label>REFERENCIA 2</label
+                                        ><input id="fReferenceTwo" placeholder="Nombre de referencia" />
+                                    </div>
+                                    <div class="field">
+                                        <label>TELÉFONO REFERENCIA 2</label
+                                        ><input id="fReferenceTwoPhone" placeholder="999 000 0000" />
+                                    </div>
                                 </div>
                             </details>
                             <details class="form-group">
-                                <summary>
-                                    Empresa, facturación y expediente
-                                </summary>
+                                <summary>Empresa y facturación</summary>
                                 <p class="form-helper">
-                                    Se conserva la estructura para trabajo,
-                                    perfil fiscal y expediente; aún no se
-                                    conectan documentos ni CFDI.
+                                    El perfil de público general es opcional.
+                                    Para facturar a nombre del cliente se
+                                    requiere la constancia de situación fiscal.
                                 </p>
                                 <div class="fields">
                                     <div class="field">
@@ -1399,6 +2158,33 @@
                                             id="fJobTitle"
                                             placeholder="Puesto o actividad"
                                         />
+                                    </div>
+                                    <div class="field">
+                                        <label>TIPO DE EMPRESA</label
+                                        ><select id="fWorkType"><option value="">Sin seleccionar</option><option>Privada</option><option>Pública</option><option>Propia</option></select>
+                                    </div>
+                                    <div class="field">
+                                        <label>RFC DE LA EMPRESA</label
+                                        ><input id="fWorkRfc" placeholder="RFC de la empresa" />
+                                    </div>
+                                    <div class="field">
+                                        <label>TELÉFONO DE TRABAJO</label
+                                        ><input id="fWorkPhone" placeholder="999 000 0000" />
+                                    </div>
+                                    <div class="field">
+                                        <label>FECHA DE INGRESO</label
+                                        ><input id="fWorkStartDate" type="date" />
+                                    </div>
+                                    <div class="field wide">
+                                        <label>DOMICILIO DE TRABAJO</label
+                                        ><input id="fWorkAddress" placeholder="Calle, número, colonia y ciudad" />
+                                    </div>
+                                    <div class="field">
+                                        <label>FACTURACIÓN</label
+                                        ><select id="fBillingMode" onchange="syncRequestRequirements()">
+                                            <option value="Público general">Público general (sin factura a nombre del cliente)</option>
+                                            <option value="Factura a nombre del cliente">Factura a nombre del cliente</option>
+                                        </select>
                                     </div>
                                     <div class="field">
                                         <label>RÉGIMEN FISCAL</label
@@ -1440,12 +2226,36 @@
                                         />
                                     </div>
                                 </div>
-                                <p class="notice" style="margin-top: 14px">
-                                    Expediente, identificación y documentos se
-                                    muestran en la ficha como simulación: su
-                                    almacenamiento, vencimiento y privacidad
-                                    siguen pendientes de definición.
-                                </p>
+                                <div id="moralPersonFields" class="fields" style="margin-top:18px">
+                                    <div class="field wide"><label>NOTARIO PÚBLICO</label><input id="fNotaryPublic" placeholder="Nombre del notario" /></div>
+                                    <div class="field"><label>NÚMERO DE NOTARÍA</label><input id="fNotaryNumber" placeholder="Ej. 23" /></div>
+                                    <div class="field"><label>ACTA</label><input id="fConstitutiveAct" placeholder="Número de acta" /></div>
+                                    <div class="field"><label>VOLUMEN</label><input id="fConstitutiveVolume" placeholder="Volumen" /></div>
+                                    <div class="field"><label>TOMO</label><input id="fConstitutiveBook" placeholder="Tomo" /></div>
+                                    <div class="field"><label>FECHA DE CONSTITUCIÓN</label><input id="fConstitutiveDate" type="date" /></div>
+                                </div>
+                            </details>
+                            <details class="form-group" open>
+                                <summary>Servicios a contratar y expediente</summary>
+                                <p class="form-helper">Indica cuántas cajas requiere por tamaño y marca los documentos recibidos para habilitar la autorización.</p>
+                                <div class="fields">
+                                    <div class="field"><label>CAJAS 3 × 5</label><input id="fService35" type="number" min="0" value="0" /></div>
+                                    <div class="field"><label>CAJAS 5 × 5</label><input id="fService55" type="number" min="0" value="0" /></div>
+                                    <div class="field"><label>CAJAS 3 × 10</label><input id="fService310" type="number" min="0" value="0" /></div>
+                                    <div class="field"><label>CAJAS 5 × 10</label><input id="fService510" type="number" min="0" value="0" /></div>
+                                    <div class="field"><label>CAJAS 10 × 10</label><input id="fService1010" type="number" min="0" value="0" /></div>
+                                    <div class="field"><label>CAJAS 11 × 16</label><input id="fService1116" type="number" min="0" value="0" /></div>
+                                    <div class="field"><label>CAJAS 22 × 16</label><input id="fService2216" type="number" min="0" value="0" /></div>
+                                </div>
+                                <div class="check-list" style="margin-top:18px">
+                                    <label><input id="fDocIdentification" type="checkbox" onchange="syncRequestRequirements()" /> INE del titular recibida</label>
+                                    <input id="fDocIdentificationFile" type="file" accept=".pdf,image/*" onchange="markDocumentReceived('identification', this)" />
+                                    <label id="fConstituentDoc"><input id="fDocConstitutive" type="checkbox" onchange="syncRequestRequirements()" /> Acta constitutiva recibida</label>
+                                    <input id="fDocConstitutiveFile" type="file" accept=".pdf,image/*" onchange="markDocumentReceived('constitutive', this)" />
+                                    <label id="fFiscalDoc"><input id="fDocFiscal" type="checkbox" onchange="syncRequestRequirements()" /> Constancia de situación fiscal recibida</label>
+                                    <input id="fDocFiscalFile" type="file" accept=".pdf,image/*" onchange="markDocumentReceived('fiscal', this)" />
+                                </div>
+                                <p class="notice" id="requestRequirements" style="margin-top:14px"></p>
                             </details>
                             <hr
                                 style="
@@ -1477,7 +2287,7 @@
                             </div>
                         </div>
                         <aside class="panel section">
-                            <h2>Caja solicitada</h2>
+                            <h2>Servicios solicitados</h2>
                             <div
                                 id="selectedBox"
                                 class="selected"
@@ -1490,8 +2300,8 @@
                             >
                                 ▣<br /><b>Aún no hay caja asignada</b
                                 ><br /><small
-                                    >Consulta disponibilidad para
-                                    continuar.</small
+                                    >Selecciona una caja de referencia o deja
+                                    el servicio pendiente de asignación.</small
                                 >
                             </div>
                             <button
@@ -1499,14 +2309,15 @@
                                 style="width: 100%; margin-top: 14px"
                                 onclick="showView('boxes')"
                             >
-                                Seleccionar caja</button
+                                Consultar disponibilidad</button
                             ><button
                                 class="btn primary"
                                 style="width: 100%; margin-top: 10px"
-                                onclick="createRequest()"
+                                onclick="saveRequestForReview()"
                             >
-                                Continuar al contrato →
+                                Guardar para verificación →
                             </button>
+                            <div id="approvalPanel" style="margin-top:18px"></div>
                         </aside>
                     </div>
                 </section>
@@ -2106,7 +2917,7 @@
                             </p>
                         </div>
                     </div>
-                    <section class="panel">
+                    <section class="panel document-selection">
                         <div class="panel-body">
                             <div class="small-grid">
                                 <div class="card">
@@ -2192,7 +3003,10 @@
                                     que incluiría.
                                 </p>
                             </div>
-                            <span class="tag amber">SIMULACIÓN</span>
+                            <div class="document-preview-actions" style="display:flex; gap:10px; align-items:center">
+                                <span class="tag amber">SIMULACIÓN</span>
+                                <button id="printDocumentButton" class="btn outline" type="button" onclick="printDocument()" disabled>Imprimir</button>
+                            </div>
                         </div>
                         <div id="documentPreview" class="notice">
                             No se ha seleccionado un documento. Los formatos no
@@ -2211,7 +3025,7 @@
                             </p>
                         </div>
                         <button class="btn primary" onclick="exportReport()">
-                            ⇩ Exportar XLS
+                            ⇩ Descargar CSV
                         </button>
                     </div>
                     <div class="grid4">
@@ -2318,17 +3132,19 @@
                             <div class="fields">
                                 <div class="field">
                                     <label>ALERTA POR DISPONIBILIDAD</label
-                                    ><select>
+                                    ><select id="availabilityAlert">
                                         <option>Activa</option>
+                                        <option>Inactiva</option>
                                     </select>
                                 </div>
                                 <div class="field">
                                     <label>LÍMITE PORCENTUAL</label
-                                    ><input value="25%" />
+                                    ><input id="availabilityLimit" value="25%" />
                                 </div>
                                 <div class="field wide">
                                     <label>MENSAJE</label
                                     ><input
+                                        id="availabilityMessage"
                                         value="Disponibilidad de cajas por debajo del límite"
                                     />
                                 </div>
@@ -2336,14 +3152,15 @@
                             <button
                                 class="btn primary"
                                 style="margin-top: 18px"
-                                onclick="
-                                    flash(
-                                        'Configuración guardada solo en esta simulación.',
-                                    )
-                                "
+                                onclick="saveSettings()"
                             >
                                 Guardar simulación
                             </button>
+                            <div
+                                id="settingsFeedback"
+                                class="notice"
+                                style="margin-top: 18px"
+                            ></div>
                         </section>
                         <section class="panel section">
                             <h2>Capacidades identificadas</h2>
@@ -2375,6 +3192,8 @@
                         <div class="toolbar">
                             <div class="search">
                                 <input
+                                    id="tenantSearch"
+                                    oninput="renderTenants()"
                                     placeholder="Buscar por nombre, RFC, caja o contrato"
                                 />
                             </div>
@@ -2392,84 +3211,7 @@
                                         <th></th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <b>Mariana López Canto</b
-                                            ><br /><small class="muted"
-                                                >LOCM9004127A4</small
-                                            >
-                                        </td>
-                                        <td>A-101 · S</td>
-                                        <td>CT-2026-0148</td>
-                                        <td>13 nov 2026</td>
-                                        <td>
-                                            <span class="tag green"
-                                                >Activo</span
-                                            >
-                                        </td>
-                                        <td>
-                                            <button
-                                                class="btn outline"
-                                                onclick="showView('tenant')"
-                                            >
-                                                Ver ficha
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <b>Carlos Méndez Ruiz</b
-                                            ><br /><small class="muted"
-                                                >MERC840822N21</small
-                                            >
-                                        </td>
-                                        <td>A-105 · M</td>
-                                        <td>CT-2026-0149</td>
-                                        <td>20 dic 2026</td>
-                                        <td>
-                                            <span class="tag green"
-                                                >Activo</span
-                                            >
-                                        </td>
-                                        <td>
-                                            <button
-                                                class="btn outline"
-                                                onclick="
-                                                    flash(
-                                                        'Ficha de ejemplo disponible en la siguiente iteración.',
-                                                    )
-                                                "
-                                            >
-                                                Ver ficha
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <b>Blanca González Gómez</b
-                                            ><br /><small class="muted"
-                                                >GOGB860211P91</small
-                                            >
-                                        </td>
-                                        <td>B-202 · L</td>
-                                        <td>CT-2026-0141</td>
-                                        <td>22 nov 2026</td>
-                                        <td>
-                                            <span class="tag amber"
-                                                >Por renovar</span
-                                            >
-                                        </td>
-                                        <td>
-                                            <button
-                                                class="btn outline"
-                                                onclick="showView('renewals')"
-                                            >
-                                                Renovar
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
+                                <tbody id="tenantRows"></tbody>
                             </table>
                         </div>
                     </section>
@@ -2584,7 +3326,7 @@
                         </div>
                         <button
                             class="btn primary"
-                            onclick="flash('Nueva factura simulada.')"
+                            onclick="openInvoiceModal()"
                         >
                             ＋ Nueva factura
                         </button>
@@ -2733,7 +3475,7 @@
                         </div>
                         <button
                             class="btn primary"
-                            onclick="flash('Alta de usuario simulada.')"
+                            onclick="openUserModal()"
                         >
                             ＋ Nuevo usuario
                         </button>
@@ -2766,6 +3508,10 @@
                                     ></span
                                 ><span class="tag green">Activo</span>
                             </div>
+                        </section>
+                        <section class="panel section" style="margin-top:20px">
+                            <h2>Usuarios disponibles en la demo</h2>
+                            <div id="demoUserList" style="margin-top:14px"></div>
                         </section>
                         <section class="panel section">
                             <h2>Matriz de permisos</h2>
@@ -2911,133 +3657,127 @@
                 </div>
             </section>
         </div>
+        <div id="invoiceModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="invoiceModalTitle">
+            <section class="invoice">
+                <p class="eyebrow">FACTURACIÓN · SIMULACIÓN</p>
+                <h2 id="invoiceModalTitle">Registrar factura de ejemplo</h2>
+                <p class="muted" style="margin-top: 8px">No genera CFDI, timbrado ni cobro real.</p>
+                <div class="fields" style="margin-top: 20px">
+                    <div class="field wide"><label>ARRENDATARIO</label><select id="invoiceTenant" onchange="syncInvoiceContracts()"></select></div>
+                    <div class="field wide"><label>CONTRATO</label><select id="invoiceContract"></select></div>
+                    <div class="field"><label>CONCEPTO</label><input id="invoiceConcept" value="Renta mensual" /></div>
+                    <div class="field"><label>IMPORTE</label><input id="invoiceAmount" type="number" min="0.01" step="0.01" /></div>
+                    <div class="field"><label>FORMA DE PAGO</label><select id="invoiceMethod"><option>Transferencia</option><option>Efectivo</option><option>Tarjeta</option></select></div>
+                </div>
+                <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:24px">
+                    <button class="btn outline" type="button" onclick="closeInvoiceModal()">Cancelar</button>
+                    <button class="btn primary" type="button" onclick="registerInvoice()">Registrar factura</button>
+                </div>
+            </section>
+        </div>
+        <div id="userModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="userModalTitle">
+            <section class="invoice">
+                <p class="eyebrow">USUARIOS · SIMULACIÓN</p>
+                <h2 id="userModalTitle">Agregar usuario de demostración</h2>
+                <p class="muted" style="margin-top: 8px">No crea credenciales ni concede permisos reales.</p>
+                <div class="fields" style="margin-top: 20px">
+                    <div class="field wide"><label>NOMBRE COMPLETO</label><input id="userName" placeholder="Ej. Laura Pérez" /></div>
+                    <div class="field"><label>CORREO</label><input id="userEmail" type="email" placeholder="nombre@saferoom.mx" /></div>
+                    <div class="field"><label>PERFIL</label><select id="userRole"><option>Recepción</option><option>Finanzas</option><option>Administrador</option></select></div>
+                </div>
+                <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:24px">
+                    <button class="btn outline" type="button" onclick="closeUserModal()">Cancelar</button>
+                    <button class="btn primary" type="button" onclick="saveDemoUser()">Guardar usuario</button>
+                </div>
+            </section>
+        </div>
         <div id="toast" class="toast"></div>
         <script>
-            const seedBoxes = [
-                ["A-101", "S", "Acceso A", "Ocupada", 1290],
-                ["A-102", "S", "Acceso A", "Disponible", 1290],
-                ["A-103", "S", "Acceso A", "Disponible", 1290],
-                ["A-104", "M", "Acceso A", "Reservada", 1890],
-                ["A-105", "M", "Acceso A", "Ocupada", 1890],
-                ["B-201", "M", "Nivel B", "Disponible", 1890],
-                ["B-202", "L", "Nivel B", "Ocupada", 2590],
-                ["B-203", "L", "Nivel B", "Disponible", 2590],
-                ["B-204", "L", "Nivel B", "Mantenimiento", 2590],
-                ["C-301", "XL", "Nivel C", "Ocupada", 3490],
-                ["C-302", "XL", "Nivel C", "Disponible", 3490],
-                ["C-303", "XL", "Nivel C", "Ocupada", 3490],
-            ];
-            const seedRequests = [
-                [
-                    "SOL-0032",
-                    "Sofía Herrera",
-                    "B-201 · Mediana",
-                    "Hoy, 09:42",
-                    "Nueva",
-                    "sofia.herrera@ejemplo.mx",
-                    "999 312 4578",
+            const DEMO_STORAGE_KEY = "saferoom-demo-state";
+            const DEMO_SCHEMA_VERSION = 5;
+            const seedState = {
+                schemaVersion: DEMO_SCHEMA_VERSION,
+                boxes: [
+                    { id: "box-a101", code: "A-101", size: "S", area: "Acceso A", status: "Ocupada", rentCents: 129000, keys: 2 },
+                    { id: "box-a102", code: "A-102", size: "S", area: "Acceso A", status: "Disponible", rentCents: 129000, keys: 2 },
+                    { id: "box-a103", code: "A-103", size: "S", area: "Acceso A", status: "Disponible", rentCents: 129000, keys: 2 },
+                    { id: "box-a104", code: "A-104", size: "M", area: "Acceso A", status: "Reservada", rentCents: 189000, keys: 2 },
+                    { id: "box-a105", code: "A-105", size: "M", area: "Acceso A", status: "Ocupada", rentCents: 189000, keys: 2 },
+                    { id: "box-b201", code: "B-201", size: "M", area: "Nivel B", status: "Disponible", rentCents: 189000, keys: 2 },
+                    { id: "box-b202", code: "B-202", size: "L", area: "Nivel B", status: "Ocupada", rentCents: 259000, keys: 2 },
+                    { id: "box-b203", code: "B-203", size: "L", area: "Nivel B", status: "Disponible", rentCents: 259000, keys: 2 },
+                    { id: "box-b204", code: "B-204", size: "L", area: "Nivel B", status: "Mantenimiento", rentCents: 259000, keys: 2 },
+                    { id: "box-c301", code: "C-301", size: "XL", area: "Nivel C", status: "Disponible", rentCents: 349000, keys: 2 },
+                    { id: "box-c302", code: "C-302", size: "XL", area: "Nivel C", status: "Disponible", rentCents: 349000, keys: 2 },
+                    { id: "box-c303", code: "C-303", size: "XL", area: "Nivel C", status: "Disponible", rentCents: 349000, keys: 2 },
                 ],
-                [
-                    "SOL-0031",
-                    "Daniela Cruz",
-                    "A-102 · Pequeña",
-                    "Ayer, 16:10",
-                    "En revisión",
-                    "daniela.cruz@ejemplo.mx",
-                    "999 425 1087",
+                tenants: [
+                    { id: "tenant-mariana", catalogNumber: 13, name: "Mariana López Canto", email: "mariana.lopez@ejemplo.mx", phone: "999 261 4587", rfc: "LOCM9004127A4", curp: "LOCM900412MYNPNT08", street: "Calle 60 #412", neighborhood: "Centro", postalCode: "97000", municipality: "Mérida", state: "Yucatán", billingEmail: "mariana.lopez@ejemplo.mx", taxRegime: "Régimen simplificado de confianza", cfdiUse: "S01 · Sin efectos fiscales" },
+                    { id: "tenant-carlos", catalogNumber: 14, name: "Carlos Méndez Ruiz", email: "carlos.mendez@ejemplo.mx", phone: "999 180 1212", rfc: "MERC840822N21", municipality: "Mérida", state: "Yucatán" },
+                    { id: "tenant-blanca", catalogNumber: 15, name: "Blanca González Gómez", email: "blanca.gonzalez@ejemplo.mx", phone: "999 209 7861", rfc: "GOGB860211P91", municipality: "Mérida", state: "Yucatán" },
+                    { id: "tenant-sofia", name: "Sofía Herrera", email: "sofia.herrera@ejemplo.mx", phone: "999 312 4578", rfc: "", municipality: "Mérida", state: "Yucatán" },
+                    { id: "tenant-daniela", name: "Daniela Cruz", email: "daniela.cruz@ejemplo.mx", phone: "999 425 1087", rfc: "", municipality: "Mérida", state: "Yucatán" },
+                    { id: "tenant-alberto", name: "Alberto Torres", email: "alberto.torres@ejemplo.mx", phone: "999 140 9833", rfc: "", municipality: "Mérida", state: "Yucatán" },
                 ],
-                [
-                    "SOL-0030",
-                    "Alberto Torres",
-                    "C-302 · Extra grande",
-                    "Ayer, 11:25",
-                    "Nueva",
-                    "alberto.torres@ejemplo.mx",
-                    "999 140 9833",
+                authorizations: [
+                    { id: "auth-jose", tenantId: "tenant-mariana", name: "José Luis López", phone: "999 852 9911", type: "Autorizado" },
+                    { id: "auth-rejon", tenantId: "tenant-blanca", name: "Rejón Pérez Juan Manuel", phone: "999 620 4432", type: "Autorizado" },
                 ],
-            ];
-            let boxes = structuredClone(seedBoxes),
-                requests = structuredClone(seedRequests),
-                draft = {},
-                activeTenant = {
-                    name: "Mariana López Canto",
-                    email: "mariana.lopez@ejemplo.mx",
-                    phone: "999 261 4587",
-                    rfc: "LOCM9004127A4",
-                    box: "A-101",
-                    contract: "CT-2026-0148",
-                    auth: "José Luis López",
-                };
-            const seedFinanceMovements = [
-                [
-                    "F-2026-1637",
-                    "Mariana López Canto",
-                    "Renta + depósito",
-                    "Transferencia",
-                    2786,
-                    "Simulada",
+                requests: [
+                    { id: "request-0032", folio: "SOL-0032", tenantId: "tenant-sofia", boxId: "box-b201", createdAt: "2026-10-27T09:42:00", status: "Nueva", contractId: null, services: { "5 × 10": 1 }, documents: { identification: false, constitutive: false, fiscal: false } },
+                    { id: "request-0031", folio: "SOL-0031", tenantId: "tenant-daniela", boxId: "box-a102", createdAt: "2026-10-26T16:10:00", status: "En revisión", contractId: null, services: { "3 × 5": 1, "5 × 5": 1 }, documents: { identification: true, constitutive: false, fiscal: false } },
+                    { id: "request-0030", folio: "SOL-0030", tenantId: "tenant-alberto", boxId: "box-c302", createdAt: "2026-10-26T11:25:00", status: "Nueva", contractId: null, services: { "10 × 10": 1 }, documents: { identification: false, constitutive: false, fiscal: false } },
                 ],
-                [
-                    "OI-2026-0032",
-                    "Carlos Méndez Ruiz",
-                    "Reposición de llaves",
-                    "Tarjeta",
-                    450,
-                    "Registrado",
+                contracts: [
+                    { id: "contract-0148", folio: "CT-2026-0148", tenantId: "tenant-mariana", boxId: "box-a101", startDate: "2026-01-01", endDate: "2026-11-13", durationMonths: 12, rentCents: 129000, depositCents: 129000, paymentDay: 1, paymentMethod: "Transferencia", status: "Activo", createdAt: "2026-01-01T10:00:00" },
+                    { id: "contract-0149", folio: "CT-2026-0149", tenantId: "tenant-carlos", boxId: "box-a105", startDate: "2026-01-01", endDate: "2026-12-20", durationMonths: 12, rentCents: 189000, depositCents: 189000, paymentDay: 5, paymentMethod: "Tarjeta", status: "Activo", createdAt: "2026-01-01T10:00:00" },
+                    { id: "contract-0141", folio: "CT-2026-0141", tenantId: "tenant-blanca", boxId: "box-b202", startDate: "2025-11-23", endDate: "2026-11-22", durationMonths: 12, rentCents: 259000, depositCents: 259000, paymentDay: 1, paymentMethod: "Transferencia", status: "Por renovar", createdAt: "2025-11-23T10:00:00" },
                 ],
-            ];
-            let financeMovements = structuredClone(seedFinanceMovements);
-            const seedAccessQueue = [
-                {
-                    id: "a-1",
-                    name: "José Luis López",
-                    box: "A-101",
-                    type: "Autorizado",
-                    contract: "CT-2026-0148",
-                    status: "Pendiente",
-                },
-                {
-                    id: "a-2",
-                    name: "Rejón Pérez Juan Manuel",
-                    box: "D-127",
-                    type: "Titular",
-                    contract: "CT-2026-0141",
-                    status: "Pendiente",
-                },
-                {
-                    id: "a-3",
-                    name: "Daniela Cruz",
-                    box: "A-102",
-                    type: "Titular",
-                    contract: "Sin contrato",
-                    status: "Requiere revisión",
-                },
-            ];
-            let accessQueue = structuredClone(seedAccessQueue);
-            const seedAuditLog = [
-                [
-                    "31 oct 2026 · 09:42",
-                    "Andrea Castillo",
-                    "Creó solicitud",
-                    "SOL-0032",
-                    "Correcto",
+                movements: [
+                    { id: "movement-1637", folio: "F-2026-1637", tenantId: "tenant-mariana", contractId: "contract-0148", concept: "Renta + depósito", method: "Transferencia", amountCents: 278640, type: "Factura", status: "Simulada", occurredAt: "2026-10-01" },
+                    { id: "movement-0032", folio: "OI-2026-0032", tenantId: "tenant-carlos", contractId: "contract-0149", concept: "Reposición de llaves", method: "Tarjeta", amountCents: 45000, type: "Otro ingreso", status: "Registrado", occurredAt: "2026-10-08" },
                 ],
-                [
-                    "31 oct 2026 · 09:12",
-                    "Seguridad",
-                    "Actualizó entradas",
-                    "Accesos",
-                    "Simulado",
+                documents: [
+                    { id: "document-0148-contract", contractId: "contract-0148", type: "Contrato de arrendamiento", folio: "DOC-CT-0148", createdAt: "2026-01-01" },
+                    { id: "document-0148-keys", contractId: "contract-0148", type: "Constancia de entrega de llaves", folio: "DOC-LL-0148", createdAt: "2026-01-01" },
+                    { id: "document-0148-deposit", contractId: "contract-0148", type: "Recibo de depósito en garantía", folio: "DOC-DG-0148", createdAt: "2026-01-01" },
                 ],
-                [
-                    "30 oct 2026 · 16:10",
-                    "Andrea Castillo",
-                    "Consultó arrendatario",
-                    "Mariana López",
-                    "Correcto",
+                accessQueue: [
+                    { id: "queue-1", tenantId: "tenant-mariana", authorizationId: "auth-jose", contractId: "contract-0148", direction: "Entrada", status: "Pendiente", createdAt: "2026-10-27T09:42:00" },
+                    { id: "queue-2", tenantId: "tenant-blanca", authorizationId: null, contractId: "contract-0141", direction: "Entrada", status: "Pendiente", createdAt: "2026-10-27T09:15:00" },
+                    { id: "queue-3", tenantId: "tenant-daniela", authorizationId: null, contractId: null, direction: "Entrada", status: "Requiere revisión", createdAt: "2026-10-27T09:02:00" },
                 ],
-            ];
-            let auditLog = structuredClone(seedAuditLog);
+                accessEvents: [],
+                operations: [],
+                auditLog: [
+                    { id: "audit-1", occurredAt: "2026-10-27T09:42:00", user: "Andrea Castillo", action: "Creó solicitud", entity: "SOL-0032", result: "Correcto" },
+                    { id: "audit-2", occurredAt: "2026-10-27T09:12:00", user: "Seguridad", action: "Actualizó entradas", entity: "Accesos", result: "Simulado" },
+                ],
+                users: [
+                    { id: "user-andrea", name: "Andrea Castillo", email: "andrea.castillo@saferoom.mx", role: "Administrador", status: "Activo" },
+                    { id: "user-marco", name: "Marco Rodríguez", email: "marco.rodriguez@saferoom.mx", role: "Recepción", status: "Activo" },
+                ],
+                settings: { availabilityAlert: "Activa", availabilityLimit: "25%", availabilityMessage: "Disponibilidad de cajas por debajo del límite" },
+                ui: { selectedTenantId: "tenant-mariana", selectedContractId: "contract-0148", selectedRequestId: null, draft: null },
+            };
+            const clone = (value) => structuredClone(value);
+            const validState = (value) => value && value.schemaVersion === DEMO_SCHEMA_VERSION && ["boxes", "tenants", "requests", "contracts", "movements", "documents", "accessQueue", "accessEvents", "operations", "auditLog", "users"].every((key) => Array.isArray(value[key])) && value.ui;
+            function loadState() {
+                try {
+                    const saved = JSON.parse(localStorage.getItem(DEMO_STORAGE_KEY));
+                    return validState(saved) ? saved : clone(seedState);
+                } catch (_) {
+                    return clone(seedState);
+                }
+            }
+            let state = loadState();
+            function persistState() {
+                try {
+                    localStorage.setItem(DEMO_STORAGE_KEY, JSON.stringify(state));
+                } catch (_) {
+                    flash("No fue posible guardar los cambios de la demo en este navegador.");
+                }
+            }
             const fmt = (n) =>
                 new Intl.NumberFormat("es-MX", {
                     style: "currency",
@@ -3365,7 +4105,6 @@
                     if (r[1] === draft.name) r[4] = "Contratada";
                 });
                 activeTenant = {
-                    ...draft,
                     name: draft.name,
                     email: draft.email,
                     phone: draft.phone,
@@ -3408,7 +4147,7 @@
                 const safeTab = tenantTabs.includes(tab) ? tab : "Resumen";
                 tenantTab(
                     safeTab,
-                    [...document.querySelectorAll("#tenantTabs button")].find((button) => button.textContent.trim() === safeTab),
+                    Array.from(document.querySelectorAll("#tenantTabs button")).find((button) => button.textContent.trim() === safeTab),
                     { sync: options.sync !== false },
                 );
             }
@@ -4080,6 +4819,846 @@
                     if (!event.target.closest(".safe-date")) document.querySelectorAll(".safe-calendar").forEach((panel) => panel.hidden = true);
                 });
             }
+            /* Estado relacionado de la demo (fase 7). Estas funciones reemplazan
+               progresivamente la implementación anterior basada en arreglos. */
+            const moneyFormatter = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN", minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            const fmtCents = (cents) => moneyFormatter.format((Number(cents) || 0) / 100);
+            const esc = (value) => String(value ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\"/g, "&quot;").replace(/'/g, "&#039;");
+            const byId = (id) => document.getElementById(id);
+            const tenantById = (id) => state.tenants.find((tenant) => tenant.id === id);
+            const boxById = (id) => state.boxes.find((box) => box.id === id);
+            const contractById = (id) => state.contracts.find((contract) => contract.id === id);
+            const requestById = (id) => state.requests.find((request) => request.id === id);
+            const contractsForTenant = (tenantId) => state.contracts.filter((contract) => contract.tenantId === tenantId);
+            const isOpenContract = (contract) => contract && ["Activo", "Por renovar"].includes(contract.status);
+            const activeContracts = () => state.contracts.filter(isOpenContract);
+            const nextSequence = (items, field, fallback) => Math.max.apply(null, [fallback].concat(items.map((item) => Number(String(item[field] || "").match(/(\d+)(?!.*\d)/)?.[1]) || 0))) + 1;
+            const dateLabel = (value) => value ? new Intl.DateTimeFormat("es-MX", { day: "2-digit", month: "short", year: "numeric" }).format(new Date(`${value}T12:00:00`)).replace(".", "") : "Sin fecha";
+            function addMonthsMinusOne(startValue, months) {
+                if (!startValue) return "";
+                const [year, month, day] = startValue.split("-").map(Number);
+                if (!year || !month || !day) return "";
+                const target = (month - 1) + Math.max(1, Number(months) || 1);
+                const targetYear = year + Math.floor(target / 12);
+                const targetMonth = target % 12;
+                const lastDay = new Date(Date.UTC(targetYear, targetMonth + 1, 0)).getUTCDate();
+                const result = new Date(Date.UTC(targetYear, targetMonth, Math.min(day, lastDay)));
+                result.setUTCDate(result.getUTCDate() - 1);
+                return result.toISOString().slice(0, 10);
+            }
+            function selectedTenant() {
+                return tenantById(state.ui.selectedTenantId) || state.tenants[0];
+            }
+            function selectedContract() {
+                return contractById(state.ui.selectedContractId) || activeContracts()[0] || state.contracts[0];
+            }
+            function syncSelectionFromUrl() {
+                const params = new URLSearchParams(location.search);
+                if (tenantById(params.get("tenant"))) state.ui.selectedTenantId = params.get("tenant");
+                if (contractById(params.get("contract"))) {
+                    state.ui.selectedContractId = params.get("contract");
+                    state.ui.selectedTenantId = selectedContract().tenantId;
+                }
+                if (requestById(params.get("request"))) state.ui.selectedRequestId = params.get("request");
+            }
+            function routeFor(id, tab = null) {
+                const url = new URL(viewRoutes[id] || viewRoutes.home, window.location.origin);
+                if (state.ui.selectedTenantId) url.searchParams.set("tenant", state.ui.selectedTenantId);
+                if (state.ui.selectedContractId) url.searchParams.set("contract", state.ui.selectedContractId);
+                if (state.ui.selectedRequestId) url.searchParams.set("request", state.ui.selectedRequestId);
+                if (id === "tenant" && tab && tab !== "Resumen") url.searchParams.set("tab", tab);
+                return `${url.pathname}${url.search}`;
+            }
+            function showView(id, options = {}) {
+                if (!byId(id)) id = "home";
+                document.querySelectorAll(".view").forEach((view) => view.classList.remove("on"));
+                byId(id).classList.add("on");
+                const activeNav = navParent[id] || id;
+                document.querySelectorAll(".nav").forEach((nav) => nav.classList.toggle("on", nav.dataset.view === activeNav));
+                byId("pageTitle").textContent = title[id];
+                byId("side").classList.remove("open");
+                if (id === "home") renderHome();
+                if (id === "requests") renderRequests();
+                if (id === "boxes") renderBoxes();
+                if (id === "contract") populateContract();
+                if (id === "tenants") renderTenants();
+                if (id === "tenant") renderTenant(options.tab || currentTenantTab, { sync: false });
+                if (id === "contracts") renderContracts();
+                if (id === "renewals") renderRenewal();
+                if (id === "cancellations") renderCancellation();
+                if (id === "finance") renderFinance();
+                if (id === "access") { renderAccessQueue(); renderAuditLog(); }
+                if (id === "reports") renderReport();
+                if (id === "users") { renderRolePermissions(); renderDemoUsers(); }
+                if (id === "settings") renderSettings();
+                if (options.sync !== false) {
+                    const target = routeFor(id, id === "tenant" ? (options.tab || currentTenantTab) : null);
+                    if (`${location.pathname}${location.search}` !== target) history.pushState({ view: id }, "", target);
+                }
+                persistState();
+                if (options.scroll !== false) scrollTo({ top: 0, behavior: "smooth" });
+            }
+            function badge(status) {
+                const green = ["Disponible", "Activo", "Por renovar", "Confirmado", "Correcto", "Registrado", "Aprobada"];
+                const amber = ["Nueva", "En revisión", "Reservada", "Pendiente", "Requiere revisión", "Revisión requerida"];
+                const tone = green.includes(status) ? "green" : amber.includes(status) ? "amber" : status === "Denegada" ? "red" : status === "Simulado" ? "blue" : "slate";
+                return `<span class="tag ${tone}">${esc(status)}</span>`;
+            }
+            function tone(status) {
+                return status === "Disponible" ? "green" : status === "Reservada" ? "amber" : status === "Mantenimiento" ? "blue" : "slate";
+            }
+            function formDraftFromTenant(tenant, request = null) {
+                const authorization = state.authorizations.find((item) => item.tenantId === tenant.id);
+                return Object.assign({}, tenant, {
+                    requestId: request?.id || null,
+                    tenantId: tenant.id,
+                    boxId: request?.boxId || "",
+                    auth: authorization?.name || "",
+                    authPhone: authorization?.phone || "",
+                    services: request?.services || {},
+                    documents: request?.documents || {},
+                });
+            }
+            function fillRequestForm(draft) {
+                const fields = { fName: "name", fEmail: "email", fPhone: "phone", fRfc: "rfc", fCurp: "curp", fBirthDate: "birthDate", fBirthPlace: "birthPlace", fGender: "gender", fNationality: "nationality", fCivilStatus: "civilStatus", fSpouseName: "spouseName", fMaritalRegime: "maritalRegime", fSource: "source", fStreet: "street", fNeighborhood: "neighborhood", fPostalCode: "postalCode", fMunicipality: "municipality", fState: "state", fResidenceTime: "residenceTime", fHomePhone: "homePhone", fOtherPhone: "otherPhone", fReference: "reference", fReferencePhone: "referencePhone", fReferenceTwo: "referenceTwo", fReferenceTwoPhone: "referenceTwoPhone", fPersonType: "personType", fCompany: "company", fJobTitle: "jobTitle", fWorkType: "workType", fWorkRfc: "workRfc", fWorkPhone: "workPhone", fWorkStartDate: "workStartDate", fWorkAddress: "workAddress", fBillingMode: "billingMode", fTaxRegime: "taxRegime", fCfdiUse: "cfdiUse", fBillingEmail: "billingEmail", fNotaryPublic: "notaryPublic", fNotaryNumber: "notaryNumber", fConstitutiveAct: "constitutiveAct", fConstitutiveVolume: "constitutiveVolume", fConstitutiveBook: "constitutiveBook", fConstitutiveDate: "constitutiveDate", fAuth: "auth", fAuthPhone: "authPhone" };
+                Object.entries(fields).forEach(([inputId, property]) => { const input = byId(inputId); if (input) { input.value = draft[property] || ""; refreshSafeDate(input); } });
+                const services = { fService35: "3 × 5", fService55: "5 × 5", fService310: "3 × 10", fService510: "5 × 10", fService1010: "10 × 10", fService1116: "11 × 16", fService2216: "22 × 16" };
+                Object.entries(services).forEach(([inputId, service]) => { byId(inputId).value = draft.services?.[service] || 0; });
+                byId("fDocIdentification").checked = Boolean(draft.documents?.identification);
+                byId("fDocConstitutive").checked = Boolean(draft.documents?.constitutive);
+                byId("fDocFiscal").checked = Boolean(draft.documents?.fiscal);
+                syncRequestRequirements();
+                selected();
+            }
+            function readRequestForm() {
+                const source = state.ui.draft || {};
+                const values = Object.assign({}, source);
+                const fields = { fName: "name", fEmail: "email", fPhone: "phone", fRfc: "rfc", fCurp: "curp", fBirthDate: "birthDate", fBirthPlace: "birthPlace", fGender: "gender", fNationality: "nationality", fCivilStatus: "civilStatus", fSpouseName: "spouseName", fMaritalRegime: "maritalRegime", fSource: "source", fStreet: "street", fNeighborhood: "neighborhood", fPostalCode: "postalCode", fMunicipality: "municipality", fState: "state", fResidenceTime: "residenceTime", fHomePhone: "homePhone", fOtherPhone: "otherPhone", fReference: "reference", fReferencePhone: "referencePhone", fReferenceTwo: "referenceTwo", fReferenceTwoPhone: "referenceTwoPhone", fPersonType: "personType", fCompany: "company", fJobTitle: "jobTitle", fWorkType: "workType", fWorkRfc: "workRfc", fWorkPhone: "workPhone", fWorkStartDate: "workStartDate", fWorkAddress: "workAddress", fBillingMode: "billingMode", fTaxRegime: "taxRegime", fCfdiUse: "cfdiUse", fBillingEmail: "billingEmail", fNotaryPublic: "notaryPublic", fNotaryNumber: "notaryNumber", fConstitutiveAct: "constitutiveAct", fConstitutiveVolume: "constitutiveVolume", fConstitutiveBook: "constitutiveBook", fConstitutiveDate: "constitutiveDate", fAuth: "auth", fAuthPhone: "authPhone" };
+                Object.entries(fields).forEach(([inputId, property]) => { values[property] = byId(inputId)?.value.trim() || ""; });
+                const services = { fService35: "3 × 5", fService55: "5 × 5", fService310: "3 × 10", fService510: "5 × 10", fService1010: "10 × 10", fService1116: "11 × 16", fService2216: "22 × 16" };
+                values.services = Object.fromEntries(Object.entries(services).map(([inputId, service]) => [service, Number(byId(inputId)?.value) || 0]).filter(([, quantity]) => quantity > 0));
+                values.documents = { identification: byId("fDocIdentification").checked, constitutive: byId("fDocConstitutive").checked, fiscal: byId("fDocFiscal").checked };
+                return values;
+            }
+            function requestGaps(draft) {
+                const gaps = [];
+                if (!draft.name || !draft.email || !draft.phone) gaps.push("datos de contacto");
+                if (!draft.reference || !draft.referencePhone) gaps.push("referencia personal");
+                if (!Object.keys(draft.services || {}).length) gaps.push("al menos un servicio/caja");
+                if (!draft.documents?.identification) gaps.push("INE del titular");
+                if (draft.personType === "Moral" && !draft.documents?.constitutive) gaps.push("acta constitutiva");
+                if (draft.billingMode === "Factura a nombre del cliente" && !draft.documents?.fiscal) gaps.push("constancia de situación fiscal");
+                return gaps;
+            }
+            function markDocumentReceived(type, input) {
+                if (!input.files?.length) return;
+                const checkbox = byId({ identification: "fDocIdentification", constitutive: "fDocConstitutive", fiscal: "fDocFiscal" }[type]);
+                if (checkbox) checkbox.checked = true;
+                syncRequestRequirements();
+                flash(`${input.files[0].name} marcado como recibido en el expediente de la demo.`);
+            }
+            function syncRequestRequirements() {
+                const draft = readRequestForm();
+                const isMoral = draft.personType === "Moral";
+                const needsFiscal = draft.billingMode === "Factura a nombre del cliente";
+                byId("fConstituentDoc").style.display = isMoral ? "block" : "none";
+                byId("fDocConstitutiveFile").style.display = isMoral ? "block" : "none";
+                byId("moralPersonFields").style.display = isMoral ? "grid" : "none";
+                byId("fFiscalDoc").style.display = needsFiscal ? "block" : "none";
+                byId("fDocFiscalFile").style.display = needsFiscal ? "block" : "none";
+                const gaps = requestGaps(draft);
+                byId("requestRequirements").innerHTML = gaps.length ? `<b>Falta para autorizar:</b> ${esc(gaps.join(", "))}.` : "<b>Expediente completo.</b> Ya puede pasar a autorización.";
+                renderApprovalPanel();
+            }
+            function startRequest() {
+                state.ui.selectedRequestId = null;
+                state.ui.selectedTenantId = null;
+                state.ui.selectedContractId = null;
+                state.ui.draft = { requestId: null, tenantId: null, boxId: "" };
+                fillRequestForm(state.ui.draft);
+                showView("form");
+                history.replaceState({ view: "form" }, "", viewRoutes.form);
+            }
+            function openRequest(id) {
+                const request = requestById(id);
+                if (!request) return flash("No encontramos esa solicitud.");
+                const tenant = tenantById(request.tenantId);
+                state.ui.selectedRequestId = id;
+                state.ui.selectedTenantId = tenant.id;
+                state.ui.draft = formDraftFromTenant(tenant, request);
+                fillRequestForm(state.ui.draft);
+                showView("form");
+            }
+            function renderRequests() {
+                const query = (byId("requestSearch")?.value || "").toLocaleLowerCase("es");
+                const rows = state.requests.filter((request) => {
+                    const tenant = tenantById(request.tenantId);
+                    const box = boxById(request.boxId);
+                    return `${request.folio} ${tenant?.name || ""} ${box?.code || ""}`.toLocaleLowerCase("es").includes(query);
+                });
+                byId("requestRows").innerHTML = rows.map((request) => {
+                    const tenant = tenantById(request.tenantId);
+                    const box = boxById(request.boxId);
+                    const services = Object.entries(request.services || {}).map(([service, quantity]) => `${quantity} × ${service}`).join(", ") || (box ? `${box.code} · ${box.size}` : "Sin servicios");
+                    return `<tr><td><b>${esc(request.folio)}</b></td><td><b>${esc(tenant?.name)}</b><br><small class="muted">${esc(tenant?.email)}</small></td><td>${esc(services)}</td><td class="muted">${esc(dateLabel(request.createdAt.slice(0, 10)))}</td><td>${badge(request.status)}</td><td><button class="btn outline" onclick="openRequest('${request.id}')">Abrir</button></td></tr>`;
+                }).join("") || `<tr><td colspan="6" class="muted">No hay solicitudes con ese criterio.</td></tr>`;
+            }
+            function renderBoxes() {
+                const status = byId("boxStatus").value;
+                const size = byId("boxSize").value;
+                const draft = state.ui.draft || {};
+                byId("selectionMode").style.display = draft.requestId || Object.keys(draft).length ? "block" : "none";
+                byId("boxGrid").innerHTML = state.boxes.filter((box) => (status === "Todas" || box.status === status) && (size === "Todas" || box.size === size)).map((box) => `<button class="box-card ${box.status === "Disponible" ? "available" : ""} ${draft.boxId === box.id ? "chosen" : ""}" ${box.status !== "Disponible" ? "disabled" : ""} onclick="selectBox('${box.id}')"><span class="tag ${tone(box.status)}">${esc(box.status)}</span><b>▣ ${esc(box.code)}</b><small class="muted">${esc(box.area)} · Tamaño ${esc(box.size)}</small><p style="margin:14px 0 0;border-top:1px solid #0000000b;padding-top:8px;font-size:12px">Renta base <strong style="float:right">${fmtCents(box.rentCents)}</strong></p></button>`).join("") || `<div class="empty">No hay cajas para este filtro.</div>`;
+            }
+            function selectBox(id) {
+                const box = boxById(id);
+                if (!box || box.status !== "Disponible") return flash("Esa caja ya no está disponible.");
+                state.ui.draft = Object.assign({}, state.ui.draft || {}, { boxId: id });
+                selected();
+                persistState();
+                flash(`Caja ${box.code} seleccionada.`);
+                showView("form");
+            }
+            function selected() {
+                const box = boxById(state.ui.draft?.boxId);
+                const selectedBox = byId("selectedBox");
+                const noBox = byId("noBox");
+                if (!selectedBox || !noBox) return;
+                selectedBox.style.display = box ? "block" : "none";
+                noBox.style.display = box ? "none" : "block";
+                if (box) selectedBox.innerHTML = `<b style="font-size:19px">${esc(box.code)}</b><p class="muted">${esc(box.area)} · Tamaño ${esc(box.size)}</p><strong>${fmtCents(box.rentCents)} / mes</strong>`;
+            }
+            function saveRequestForReview() {
+                const draft = readRequestForm();
+                if (!draft.name || !draft.email || !draft.phone) return flash("Completa nombre, correo y teléfono para guardar la solicitud.");
+                let tenant = tenantById(draft.tenantId) || state.tenants.find((item) => item.email.toLocaleLowerCase() === draft.email.toLocaleLowerCase());
+                if (tenant) Object.assign(tenant, draft, { id: tenant.id });
+                else { tenant = Object.assign({}, draft, { id: `tenant-${crypto.randomUUID()}` }); state.tenants.push(tenant); }
+                let request = requestById(draft.requestId);
+                if (request) Object.assign(request, { tenantId: tenant.id, boxId: draft.boxId || null, services: draft.services, documents: draft.documents, status: request.status === "Aprobada" || request.status === "Denegada" ? request.status : "En revisión" });
+                else {
+                    const number = nextSequence(state.requests, "folio", 32);
+                    request = { id: `request-${crypto.randomUUID()}`, folio: `SOL-${String(number).padStart(4, "0")}`, tenantId: tenant.id, boxId: draft.boxId || null, createdAt: new Date().toISOString(), status: "En revisión", contractId: null, services: draft.services, documents: draft.documents };
+                    state.requests.unshift(request);
+                }
+                const authorization = state.authorizations.find((item) => item.tenantId === tenant.id);
+                if (draft.auth) {
+                    if (authorization) Object.assign(authorization, { name: draft.auth, phone: draft.authPhone });
+                    else state.authorizations.push({ id: `auth-${crypto.randomUUID()}`, tenantId: tenant.id, name: draft.auth, phone: draft.authPhone, type: "Autorizado" });
+                }
+                state.ui.selectedTenantId = tenant.id;
+                state.ui.selectedRequestId = request.id;
+                state.ui.draft = Object.assign({}, draft, { tenantId: tenant.id, requestId: request.id });
+                logAudit("Envió solicitud a verificación", request.folio, "Correcto", false);
+                persistState();
+                fillRequestForm(state.ui.draft);
+                flash("Solicitud guardada en revisión. Completa el expediente para autorizarla.");
+            }
+            function createRequest() { saveRequestForReview(); }
+            function renderApprovalPanel() {
+                const panel = byId("approvalPanel");
+                const request = requestById(state.ui.selectedRequestId || state.ui.draft?.requestId);
+                if (!panel) return;
+                if (!request) {
+                    panel.innerHTML = `<p class="muted" style="font-size:12px">Guarda la solicitud para habilitar la verificación y autorización.</p>`;
+                    return;
+                }
+                const gaps = requestGaps(readRequestForm());
+                const decision = request.status === "Aprobada" ? `<p class="notice"><b>Solicitud aprobada.</b> Arrendatario #${esc(tenantById(request.tenantId)?.catalogNumber || "—")} creado en el catálogo.<br /><small>Autorizó ${esc(request.approvedBy || "—")} · ${esc(dateLabel(request.approvedAt?.slice(0, 10)))}</small></p>` : request.status === "Denegada" ? `<p class="notice"><b>Solicitud denegada.</b> ${esc(request.denialReason || "Sin motivo registrado.")}<br /><small>${esc(dateLabel(request.deniedAt?.slice(0, 10)))}</small></p>` : `<p class="muted" style="font-size:12px">${gaps.length ? "El expediente aún tiene pendientes." : "El expediente está listo para decisión."}</p><div style="display:grid;gap:10px"><button class="btn primary" onclick="approveRequest()" ${gaps.length ? "disabled" : ""}>✓ Aprobar solicitud</button><button class="btn outline" onclick="denyRequest()">Denegar solicitud</button></div>`;
+                panel.innerHTML = `<hr style="border:0;border-top:1px solid var(--line);margin:18px 0" /><p class="eyebrow">AUTORIZACIÓN</p><p style="margin:7px 0">${badge(request.status)}</p>${decision}`;
+            }
+            function approveRequest() {
+                const request = requestById(state.ui.selectedRequestId);
+                const tenant = request && tenantById(request.tenantId);
+                if (!request || !tenant) return flash("Guarda la solicitud antes de autorizarla.");
+                const draft = readRequestForm();
+                const gaps = requestGaps(draft);
+                if (gaps.length) return flash(`No se puede aprobar: falta ${gaps.join(", ")}.`);
+                Object.assign(tenant, draft);
+                request.services = draft.services;
+                request.documents = draft.documents;
+                request.status = "Aprobada";
+                request.approvedAt = new Date().toISOString();
+                request.approvedBy = "Andrea Castillo";
+                tenant.catalogNumber = Math.max(0, ...state.tenants.map((item) => Number(item.catalogNumber) || 0)) + 1;
+                state.ui.selectedTenantId = tenant.id;
+                logAudit("Aprobó solicitud y creó arrendatario", `${request.folio} · #${tenant.catalogNumber}`, "Correcto", false);
+                persistState();
+                flash(`Solicitud aprobada. Arrendatario #${tenant.catalogNumber} creado en el catálogo.`);
+                showView("tenants");
+            }
+            function denyRequest() {
+                const request = requestById(state.ui.selectedRequestId);
+                if (!request) return flash("Guarda la solicitud antes de denegarla.");
+                const reason = window.prompt("Motivo de no autorización:", request.denialReason || "Referencias pendientes de verificación");
+                if (!reason?.trim()) return;
+                request.status = "Denegada";
+                request.denialReason = reason.trim().slice(0, 180);
+                request.deniedAt = new Date().toISOString();
+                logAudit("Denegó solicitud", request.folio, "Correcto", false);
+                persistState();
+                renderApprovalPanel();
+                flash("Solicitud denegada; se conserva el motivo en el expediente.");
+            }
+            function chooseBoxForDraft() {
+                state.ui.draft = readRequestForm();
+                persistState();
+                showView("boxes");
+            }
+            function populateContract() {
+                const request = requestById(state.ui.selectedRequestId) || requestById(state.ui.draft?.requestId);
+                if (!request) return;
+                if (request.status !== "Aprobada") {
+                    flash("Primero verifica y aprueba la solicitud antes de generar un contrato.");
+                    showView("form");
+                    return;
+                }
+                const tenant = tenantById(request.tenantId);
+                const box = boxById(request.boxId);
+                if (!tenant || !box) return;
+                byId("cTenant").value = tenant.name;
+                byId("cBox").value = `${box.code} · ${box.area} · ${box.size}`;
+                byId("cAuth").textContent = state.authorizations.find((item) => item.tenantId === tenant.id)?.name || "Sin persona autorizada registrada";
+                byId("cAuthPhone").textContent = state.authorizations.find((item) => item.tenantId === tenant.id)?.phone || "Puedes completar este dato en la solicitud.";
+                if (!byId("cStart").value) byId("cStart").value = "2026-11-01";
+                byId("rent").value = (box.rentCents / 100).toFixed(2);
+                byId("deposit").value = (box.rentCents / 100).toFixed(2);
+                updateContractDates();
+                calc();
+            }
+            function updateContractDates() {
+                const duration = Number(byId("cDuration").value.split(" ")[0]) || 12;
+                byId("cEnd").value = addMonthsMinusOne(byId("cStart").value, duration);
+                refreshSafeDate(byId("cEnd"));
+            }
+            function calc() {
+                const rentCents = Math.round((Number(byId("rent").value) || 0) * 100);
+                const depositCents = Math.round((Number(byId("deposit").value) || 0) * 100);
+                const taxCents = Math.round(rentCents * 0.16);
+                byId("sumRent").textContent = fmtCents(rentCents);
+                byId("sumDeposit").textContent = fmtCents(depositCents);
+                byId("sumIva").textContent = fmtCents(taxCents);
+                byId("sumTotal").textContent = fmtCents(rentCents + depositCents + taxCents);
+            }
+            function requestContractConfirmation() {
+                const request = requestById(state.ui.selectedRequestId);
+                const box = request && boxById(request.boxId);
+                if (!request || !box) return flash("Regresa a la solicitud y selecciona una caja.");
+                if (request.status !== "Aprobada") return flash("Solo una solicitud aprobada puede continuar a contrato.");
+                if (request.contractId) return flash("Esta solicitud ya tiene un contrato asociado.");
+                if (box.status !== "Disponible") return flash("La caja dejó de estar disponible. Selecciona otra para continuar.");
+                if (!byId("cKeysConfirmed").checked || !byId("cReviewConfirmed").checked) return flash("Confirma la revisión de datos y la entrega de dos llaves para continuar.");
+                const tenant = tenantById(request.tenantId);
+                byId("contractConfirmSummary").innerHTML = `<b>${esc(tenant.name)}</b><br><span class="muted">Caja ${esc(box.code)} · ${esc(byId("cDuration").value)} · ${esc(byId("cStart").value)} a ${esc(byId("cEnd").value)}</span><p style="margin:10px 0 0"><b>Total inicial: ${esc(byId("sumTotal").textContent)}</b></p>`;
+                byId("contractConfirm").classList.add("on");
+            }
+            let isSavingContract = false;
+            function saveContract() {
+                if (isSavingContract) return;
+                const request = requestById(state.ui.selectedRequestId);
+                const box = request && boxById(request.boxId);
+                if (!request || !box || request.contractId || box.status !== "Disponible" || request.status !== "Aprobada") return flash("No se puede generar el contrato: la solicitud debe estar aprobada y la caja disponible.");
+                isSavingContract = true;
+                const number = nextSequence(state.contracts, "folio", 149);
+                const contract = { id: `contract-${crypto.randomUUID()}`, folio: `CT-2026-${String(number).padStart(4, "0")}`, tenantId: request.tenantId, boxId: box.id, startDate: byId("cStart").value, endDate: byId("cEnd").value, durationMonths: Number(byId("cDuration").value.split(" ")[0]) || 12, rentCents: Math.round((Number(byId("rent").value) || 0) * 100), depositCents: Math.round((Number(byId("deposit").value) || 0) * 100), paymentDay: Number(byId("cPaymentDay").value.replace(/\D/g, "")) || 1, paymentMethod: byId("cPaymentMethod").value, status: "Activo", createdAt: new Date().toISOString(), beneficiary: byId("cBeneficiary").value.trim(), support: byId("cSupport").value.trim() };
+                state.contracts.push(contract);
+                request.contractId = contract.id;
+                request.status = "Contratada";
+                box.status = "Ocupada";
+                const taxCents = Math.round(contract.rentCents * 0.16);
+                state.movements.unshift({ id: `movement-${crypto.randomUUID()}`, folio: `F-2026-${String(nextSequence(state.movements, "folio", 1637)).padStart(4, "0")}`, tenantId: contract.tenantId, contractId: contract.id, concept: "Renta, IVA estimado y garantía", method: contract.paymentMethod, amountCents: contract.rentCents + taxCents + contract.depositCents, type: "Factura", status: "Simulada", occurredAt: contract.startDate });
+                ["Contrato de arrendamiento", "Constancia de entrega de llaves", "Recibo de depósito en garantía"].forEach((type, index) => state.documents.push({ id: `document-${crypto.randomUUID()}`, contractId: contract.id, type, folio: `DOC-${contract.folio.slice(-4)}-${index + 1}`, createdAt: contract.startDate }));
+                state.operations.unshift({ id: `operation-${crypto.randomUUID()}`, contractId: contract.id, type: "Contrato generado", occurredAt: new Date().toISOString(), detail: `Caja ${box.code}` });
+                state.ui.selectedContractId = contract.id;
+                state.ui.selectedTenantId = contract.tenantId;
+                state.ui.draft = null;
+                closeContractConfirmation();
+                logAudit("Generó contrato", contract.folio, "Correcto", false);
+                persistState();
+                isSavingContract = false;
+                flash(`Contrato ${contract.folio} generado; caja ${box.code} ocupada.`);
+                showView("tenant");
+            }
+            function openTenant(tenantId, tab = "Resumen") {
+                const tenant = tenantById(tenantId);
+                if (!tenant) return flash("No encontramos ese arrendatario.");
+                state.ui.selectedTenantId = tenantId;
+                const contract = contractsForTenant(tenantId).find(isOpenContract) || contractsForTenant(tenantId)[0];
+                if (contract) state.ui.selectedContractId = contract.id;
+                persistState();
+                showView("tenant", { tab });
+            }
+            function openContract(contractId, destination = "tenant") {
+                const contract = contractById(contractId);
+                if (!contract) return flash("No encontramos ese contrato.");
+                state.ui.selectedContractId = contractId;
+                state.ui.selectedTenantId = contract.tenantId;
+                persistState();
+                showView(destination);
+            }
+            function renderTenants() {
+                const query = (byId("tenantSearch")?.value || "").toLocaleLowerCase("es");
+                const rows = state.tenants.filter((tenant) => tenant.catalogNumber).filter((tenant) => {
+                    const contract = contractsForTenant(tenant.id).find(isOpenContract) || contractsForTenant(tenant.id)[0];
+                    const box = contract && boxById(contract.boxId);
+                    return `${tenant.name} ${tenant.rfc || ""} ${contract?.folio || ""} ${box?.code || ""}`.toLocaleLowerCase("es").includes(query);
+                });
+                byId("tenantRows").innerHTML = rows.map((tenant) => {
+                    const contract = contractsForTenant(tenant.id).find(isOpenContract) || contractsForTenant(tenant.id)[0];
+                    const box = contract && boxById(contract.boxId);
+                    const status = contract?.status || "Sin contrato";
+                    return `<tr><td><b>#${esc(tenant.catalogNumber)} · ${esc(tenant.name)}</b><br><small class="muted">${esc(tenant.rfc || "Sin RFC")}</small></td><td>${esc(box ? `${box.code} · ${box.size}` : "Sin caja activa")}</td><td>${esc(contract?.folio || "—")}</td><td>${esc(dateLabel(contract?.endDate))}</td><td>${badge(status)}</td><td><button class="btn outline" onclick="openTenant('${tenant.id}')">Ver ficha</button>${isOpenContract(contract) ? ` <button class="btn outline" onclick="openContract('${contract.id}', 'renewals')">Renovar</button>` : ""}</td></tr>`;
+                }).join("") || `<tr><td colspan="6" class="muted">No hay arrendatarios con ese criterio.</td></tr>`;
+            }
+            function renderContracts() {
+                byId("contractRows").innerHTML = state.contracts.map((contract) => {
+                    const tenant = tenantById(contract.tenantId);
+                    const box = boxById(contract.boxId);
+                    const invoice = state.movements.find((movement) => movement.contractId === contract.id && movement.type === "Factura");
+                    return `<tr><td><b>${esc(contract.folio)}</b></td><td>${esc(tenant?.name)}</td><td>${esc(box?.code || "Sin caja")}</td><td>${esc(`${dateLabel(contract.startDate)} · ${dateLabel(contract.endDate)}`)}</td><td>${invoice ? badge(invoice.status) : "—"}</td><td>${badge(contract.status)}<br><button class="btn outline" style="margin-top:8px" onclick="openContract('${contract.id}')">Abrir</button>${isOpenContract(contract) ? ` <button class="btn outline" style="margin-top:8px" onclick="openContract('${contract.id}', 'renewals')">Renovar</button>` : ""}</td></tr>`;
+                }).join("") || `<tr><td colspan="6" class="muted">No hay contratos.</td></tr>`;
+            }
+            function renderTenant(tab = currentTenantTab, options = {}) {
+                const tenant = selectedTenant();
+                if (!tenant) return;
+                const contract = contractsForTenant(tenant.id).find((item) => item.id === state.ui.selectedContractId) || contractsForTenant(tenant.id).find(isOpenContract) || contractsForTenant(tenant.id)[0];
+                if (contract) state.ui.selectedContractId = contract.id;
+                byId("tenantName").textContent = tenant.name;
+                byId("tenantInitials").textContent = tenant.name.split(" ").slice(0, 2).map((part) => part[0]).join("");
+                byId("tenantContract").textContent = contract ? `Arrendatario · ${contract.folio} · ${contract.status}` : "Arrendatario · Sin contrato activo";
+                tenantTab(tenantTabs.includes(tab) ? tab : "Resumen", Array.from(document.querySelectorAll("#tenantTabs button")).find((button) => button.textContent.trim() === tab), { sync: options.sync !== false });
+            }
+            function tenantTab(tab, button, options = {}) {
+                if (!tenantTabs.includes(tab)) tab = "Resumen";
+                currentTenantTab = tab;
+                const tenant = selectedTenant();
+                const contracts = contractsForTenant(tenant.id);
+                const contract = contracts.find((item) => item.id === state.ui.selectedContractId) || contracts.find(isOpenContract) || contracts[0];
+                const box = contract && boxById(contract.boxId);
+                document.querySelectorAll("#tenantTabs button").forEach((item) => item.classList.remove("on"));
+                (button || document.querySelector("#tenantTabs button")).classList.add("on");
+                byId("tenantSectionTitle").textContent = tab === "Resumen" ? "Información de contacto" : tab;
+                const field = (label, value) => `<div class="field"><label>${esc(label)}</label><input value="${esc(value || "Sin registro")}" readonly /></div>`;
+                const table = (headers, rows) => `<div class="table-wrap wide"><table><thead><tr>${headers.map((header) => `<th>${esc(header)}</th>`).join("")}</tr></thead><tbody>${rows.length ? rows.map((row) => `<tr>${row.map((cell) => `<td>${cell}</td>`).join("")}</tr>`).join("") : `<tr><td colspan="${headers.length}" class="muted">Sin registros relacionados.</td></tr>`}</tbody></table></div>`;
+                const authorizations = state.authorizations.filter((item) => item.tenantId === tenant.id);
+                const invoices = state.movements.filter((item) => item.tenantId === tenant.id);
+                const documents = state.documents.filter((item) => contracts.some((contractItem) => contractItem.id === item.contractId));
+                const events = state.accessEvents.filter((item) => item.tenantId === tenant.id);
+                const content = {
+                    Resumen: field("CORREO", tenant.email) + field("TELÉFONO", tenant.phone) + field("RFC", tenant.rfc) + field("CONTRATO ACTIVO", contract?.folio) + field("CAJA ACTIVA", box?.code),
+                    Generales: field("CURP", tenant.curp) + field("FECHA DE NACIMIENTO", tenant.birthDate) + field("SEXO", tenant.gender) + field("NACIONALIDAD", tenant.nationality) + field("ESTADO CIVIL", tenant.civilStatus) + field("CÓMO SE ENTERÓ", tenant.source),
+                    Domicilio: field("CALLE Y NÚMERO", tenant.street) + field("COLONIA", tenant.neighborhood) + field("CÓDIGO POSTAL", tenant.postalCode) + field("MUNICIPIO", tenant.municipality) + field("ESTADO", tenant.state) + field("REFERENCIA", tenant.reference),
+                    "Laboral y fiscal": field("EMPRESA / RAZÓN SOCIAL", tenant.company) + field("PUESTO / ACTIVIDAD", tenant.jobTitle) + field("RÉGIMEN FISCAL", tenant.taxRegime) + field("USO CFDI", tenant.cfdiUse) + field("CORREO DE FACTURACIÓN", tenant.billingEmail),
+                    Autorizados: table(["Persona", "Teléfono", "Tipo"], authorizations.map((item) => [esc(item.name), esc(item.phone), badge(item.type)])),
+                    Cajas: table(["Caja", "Tamaño", "Estado", "Contrato"], contracts.map((item) => { const assignedBox = boxById(item.boxId); return [esc(assignedBox?.code), esc(assignedBox?.size), badge(assignedBox?.status || "Sin caja"), esc(item.folio)]; })),
+                    Contratos: table(["Folio", "Vigencia", "Renta", "Estado"], contracts.map((item) => [esc(item.folio), esc(`${dateLabel(item.startDate)} a ${dateLabel(item.endDate)}`), esc(fmtCents(item.rentCents)), badge(item.status)])),
+                    Facturas: table(["Folio", "Concepto", "Importe", "Estado"], invoices.map((item) => [esc(item.folio), esc(item.concept), esc(fmtCents(item.amountCents)), badge(item.status)])),
+                    Documentos: table(["Folio", "Documento", "Fecha", ""], documents.map((item) => [esc(item.folio), esc(item.type), esc(dateLabel(item.createdAt)), `<button class="btn outline" onclick="state.ui.selectedContractId='${item.contractId}';previewDocument('${esc(item.type)}')">Vista previa</button>`])),
+                    Accesos: table(["Fecha", "Movimiento", "Resultado", "Motivo"], events.map((item) => [esc(dateLabel(item.occurredAt.slice(0, 10))), esc(item.direction), badge(item.status), esc(item.reason || "—")])),
+                };
+                byId("tenantMain").innerHTML = content[tab];
+                byId("tenantBox").innerHTML = box ? `<b style="font-size:20px">▣ ${esc(box.code)}</b><p class="muted">${esc(box.area)} · Tamaño ${esc(box.size)}</p><div class="summary-row"><span>Renta mensual</span><b>${fmtCents(contract.rentCents)}</b></div><div class="summary-row"><span>Llaves</span><b>${box.keys} de ${box.keys}</b></div>${isOpenContract(contract) ? `<button class="btn outline" style="margin-top:14px" onclick="openContract('${contract.id}', 'renewals')">Renovar o cambiar caja</button>` : ""}` : `<div class="empty">No tiene una caja activa.</div>`;
+                if (options.sync !== false) showView("tenant", { sync: true, scroll: false, tab });
+            }
+            function renderHome() {
+                const occupied = state.boxes.filter((box) => box.status === "Ocupada").length;
+                const total = state.boxes.length;
+                const today = new Date().toISOString().slice(0, 10);
+                const inThirtyDays = new Date(Date.now() + (30 * 86400000)).toISOString().slice(0, 10);
+                byId("occupancy").textContent = `${Math.round((occupied / total) * 100)}%`;
+                byId("occDetail").textContent = `${occupied} de ${total} cajas ocupadas`;
+                byId("contractsCount").textContent = activeContracts().length;
+                byId("upcomingCount").textContent = activeContracts().filter((contract) => contract.endDate >= today && contract.endDate <= inThirtyDays).length;
+                byId("accessesToday").textContent = state.accessEvents.filter((event) => event.occurredAt.slice(0, 10) === today).length;
+                const activity = state.auditLog.slice(0, 3).map((item) => `<div class="activity"><span><b>${esc(item.action)}</b><br><small class="muted">${esc(item.entity)}</small></span><small class="muted">${esc(dateLabel(item.occurredAt.slice(0, 10)))}</small></div>`).join("") || `<div class="empty">Aún no hay actividad en esta sesión.</div>`;
+                byId("recentActivity").innerHTML = `<div class="panel-head"><div><b>Actividad reciente</b><p class="muted">Operación del día</p></div><button class="btn outline" onclick="showView('requests')">Ver solicitudes</button></div>${activity}`;
+                byId("statusBars").innerHTML = ["Disponible", "Ocupada", "Reservada", "Mantenimiento"].map((status) => { const count = state.boxes.filter((box) => box.status === status).length; return `<div class="summary-row"><span>${esc(status)}</span><b>${count}</b></div>`; }).join("");
+                const availability = Math.round((state.boxes.filter((box) => box.status === "Disponible").length / Math.max(total, 1)) * 100);
+                const limit = Number(String(state.settings?.availabilityLimit || "25").replace(/[^0-9.]/g, "")) || 0;
+                const alertTarget = byId("availabilityAlertBanner");
+                if (alertTarget) {
+                    alertTarget.innerHTML = state.settings?.availabilityAlert === "Activa" && availability <= limit
+                        ? `<p class="notice"><b>Alerta de disponibilidad:</b> ${esc(state.settings.availabilityMessage || "Disponibilidad de cajas por debajo del límite")} (${availability}% disponible).</p>`
+                        : `<p class="muted">Disponibilidad actual: ${availability}%. Las alertas operativas están ${state.settings?.availabilityAlert === "Activa" ? "activas" : "inactivas"}.</p>`;
+                }
+            }
+            function logAudit(action, entity, result = "Correcto", save = true) {
+                state.auditLog.unshift({ id: `audit-${crypto.randomUUID()}`, occurredAt: new Date().toISOString(), user: "Andrea Castillo", action, entity, result });
+                if (save) persistState();
+                if (byId("auditRows")) renderAuditLog();
+            }
+            function renderAuditLog() {
+                const target = byId("auditRows");
+                if (target) target.innerHTML = state.auditLog.map((item) => `<tr><td>${esc(new Intl.DateTimeFormat("es-MX", { dateStyle: "short", timeStyle: "short" }).format(new Date(item.occurredAt)))}</td><td>${esc(item.user)}</td><td>${esc(item.action)}</td><td>${esc(item.entity)}</td><td>${badge(item.result)}</td></tr>`).join("");
+            }
+            function accessContext(item) {
+                const tenant = tenantById(item.tenantId);
+                const contract = contractById(item.contractId);
+                const box = contract && boxById(contract.boxId);
+                const authorization = item.authorizationId && state.authorizations.find((record) => record.id === item.authorizationId);
+                const type = authorization ? "Autorizado" : "Titular";
+                const name = authorization?.name || tenant?.name || "Persona no identificada";
+                const valid = Boolean(tenant && contract && isOpenContract(contract) && box?.status === "Ocupada" && (!authorization || authorization.tenantId === tenant.id));
+                return { tenant, contract, box, authorization, type, name, valid };
+            }
+            function renderAccessQueue() {
+                const target = byId("accessQueue");
+                if (!target) return;
+                const query = (byId("accessSearch")?.value || "").toLocaleLowerCase("es");
+                const filter = byId("accessFilter")?.value || "Todas";
+                const items = state.accessQueue.filter((item) => {
+                    const context = accessContext(item);
+                    return !["Confirmado", "Rechazado"].includes(item.status) && (filter === "Todas" || context.type === filter) && `${context.name} ${context.box?.code || ""}`.toLocaleLowerCase("es").includes(query);
+                });
+                target.innerHTML = items.map((item) => { const context = accessContext(item); return `<div class="activity"><span><b>${esc(context.name)}</b><br><small class="muted">${esc(context.box?.code || "Sin caja")} · ${esc(context.type)} · ${esc(context.contract?.folio || "Sin contrato")}</small></span><span>${badge(item.status)} <button class="btn primary" style="margin-left:8px" onclick="selectAccess('${item.id}')">Validar</button></span></div>`; }).join("") || `<div class="empty">No hay accesos pendientes con esos filtros.</div>`;
+            }
+            function selectAccess(id) {
+                const item = state.accessQueue.find((record) => record.id === id);
+                if (!item) return;
+                const context = accessContext(item);
+                const result = context.valid ? "Contrato y caja vigentes en demo" : "Requiere revisión operativa";
+                const actions = context.valid ? `<button class="btn primary" onclick="confirmAccess('${item.id}')">Confirmar ${esc(item.direction.toLowerCase())}</button><button class="btn outline" style="margin-left:8px" onclick="denyAccess('${item.id}')">Rechazar</button>` : `<button class="btn outline" onclick="denyAccess('${item.id}')">Registrar rechazo</button>`;
+                byId("accessVerification").innerHTML = `<b>${esc(context.name)}</b><br><span class="muted">${esc(context.type)} · Caja ${esc(context.box?.code || "Sin caja")}</span><div class="summary-row"><span>Contrato</span><b>${esc(context.contract?.folio || "Sin contrato")}</b></div><div class="summary-row"><span>Resultado de validación</span><b>${esc(result)}</b></div><div style="margin-top:14px">${actions}</div>`;
+            }
+            function confirmAccess(id) {
+                const item = state.accessQueue.find((record) => record.id === id);
+                const context = item && accessContext(item);
+                if (!item || !context?.valid) return flash("No se puede confirmar: valida contrato, caja y autorizado.");
+                item.status = "Confirmado";
+                state.accessEvents.unshift({ id: `access-${crypto.randomUUID()}`, tenantId: context.tenant.id, contractId: context.contract.id, authorizationId: context.authorization?.id || null, direction: item.direction, status: "Confirmado", reason: "Validación local de demostración", occurredAt: new Date().toISOString() });
+                logAudit(`Confirmó ${item.direction.toLowerCase()}`, `${context.name} · ${context.box.code}`, "Confirmado", false);
+                persistState();
+                renderAccessQueue();
+                byId("accessVerification").innerHTML = `<b>${esc(item.direction)} confirmada</b><br><span class="muted">El evento quedó relacionado a la ficha de ${esc(context.tenant.name)}.</span><div style="margin-top:14px"><button class="btn outline" onclick="registerAccessExit('${context.contract.id}')">Registrar salida</button></div>`;
+                flash(`${item.direction} confirmada (simulación).`);
+            }
+            function registerAccessExit(contractId) {
+                const contract = contractById(contractId);
+                if (!isOpenContract(contract)) return flash("No hay un contrato vigente para registrar salida.");
+                state.accessEvents.unshift({ id: `access-${crypto.randomUUID()}`, tenantId: contract.tenantId, contractId: contract.id, authorizationId: null, direction: "Salida", status: "Confirmado", reason: "Salida registrada en demo", occurredAt: new Date().toISOString() });
+                logAudit("Registró salida", contract.folio, "Confirmado", false);
+                persistState();
+                byId("accessVerification").innerHTML = `<b>Salida registrada</b><br><span class="muted">El historial de la ficha y los reportes se actualizó.</span>`;
+                flash("Salida registrada (simulación).");
+            }
+            function denyAccess(id) {
+                const item = state.accessQueue.find((record) => record.id === id);
+                if (!item) return;
+                const context = accessContext(item);
+                item.status = "Rechazado";
+                state.accessEvents.unshift({ id: `access-${crypto.randomUUID()}`, tenantId: item.tenantId, contractId: item.contractId, authorizationId: item.authorizationId, direction: item.direction, status: "Rechazado", reason: context.valid ? "Rechazado por operación" : "Contrato, caja o autorización no válidos", occurredAt: new Date().toISOString() });
+                logAudit("Rechazó acceso", `${context.name} · ${context.box?.code || "Sin caja"}`, "Revisión requerida", false);
+                persistState();
+                renderAccessQueue();
+                byId("accessVerification").innerHTML = `<b>Rechazo registrado</b><br><span class="muted">No se concedió acceso automático.</span>`;
+                flash("Rechazo de acceso registrado (simulación).");
+            }
+            function renderFinance() {
+                const target = byId("financeRows");
+                if (!target) return;
+                target.innerHTML = state.movements.map((movement) => `<tr><td>${esc(movement.folio)}</td><td>${esc(tenantById(movement.tenantId)?.name)}</td><td>${esc(movement.concept)}</td><td>${esc(movement.method)}</td><td>${fmtCents(movement.amountCents)}</td><td>${badge(movement.status)}</td></tr>`).join("") || `<tr><td colspan="6" class="muted">Sin movimientos.</td></tr>`;
+                const select = byId("incomeTenant");
+                if (select) {
+                    const previous = select.value;
+                    select.innerHTML = state.tenants.map((tenant) => `<option value="${tenant.id}">${esc(tenant.name)}</option>`).join("");
+                    if (tenantById(previous)) select.value = previous;
+                }
+            }
+            function registerOtherIncome() {
+                const amountCents = Math.round((Number(byId("incomeAmount").value) || 0) * 100);
+                const tenantId = byId("incomeTenant").value;
+                if (!tenantById(tenantId) || amountCents <= 0) return flash("Indica un arrendatario y un importe mayor que cero.");
+                const number = nextSequence(state.movements, "folio", 32);
+                state.movements.unshift({ id: `movement-${crypto.randomUUID()}`, folio: `OI-2026-${String(number).padStart(4, "0")}`, tenantId, contractId: contractsForTenant(tenantId).find(isOpenContract)?.id || null, concept: byId("incomeConcept").value, method: byId("incomeMethod").value, amountCents, type: "Otro ingreso", status: "Registrado", occurredAt: new Date().toISOString().slice(0, 10) });
+                logAudit("Registró otro ingreso", `${byId("incomeConcept").value} · ${fmtCents(amountCents)}`, "Registrado", false);
+                persistState();
+                renderFinance();
+                flash("Otro ingreso registrado en la demostración.");
+            }
+            function previewDocument(type) {
+                const contract = selectedContract();
+                const tenant = contract && tenantById(contract.tenantId);
+                const box = contract && boxById(contract.boxId);
+                const documentRecord = state.documents.find((item) => item.contractId === contract?.id && item.type === type);
+                if (!contract || !tenant) return flash("Selecciona primero un contrato relacionado.");
+                const folio = documentRecord?.folio || `VISTA-${contract.folio}`;
+                const createdAt = documentRecord?.createdAt || new Date().toISOString().slice(0, 10);
+                const documentBodies = {
+                    "Contrato de arrendamiento": `<p>Se presenta el resumen operativo del contrato para la caja <b>${esc(box?.code)}</b>, tamaño ${esc(box?.size)}.</p><div class="document-paper__summary"><div><span>Vigencia</span><b>${esc(dateLabel(contract.startDate))} a ${esc(dateLabel(contract.endDate))}</b></div><div><span>Renta mensual</span><b>${fmtCents(contract.rentCents)}</b></div><div><span>Garantía</span><b>${fmtCents(contract.depositCents)}</b></div></div><p>Este formato es una representación visual; las cláusulas, firmas y efectos legales quedan fuera del alcance de la demo.</p>`,
+                    "Constancia de entrega de llaves": `<p>Se deja constancia simulada de la entrega de acceso físico a la caja <b>${esc(box?.code)}</b>.</p><div class="document-paper__summary"><div><span>Caja</span><b>${esc(box?.code)} · ${esc(box?.area)}</b></div><div><span>Llaves entregadas</span><b>${Number(box?.keys) || 2} de ${Number(box?.keys) || 2}</b></div><div><span>Estatus</span><b>Entrega simulada</b></div></div><p>La demo no sustituye un acta ni registra entrega física de llaves.</p>`,
+                    "Recibo de depósito en garantía": `<p>Comprobante demostrativo del depósito asociado al contrato <b>${esc(contract.folio)}</b>.</p><div class="document-paper__summary"><div><span>Importe recibido</span><b>${fmtCents(contract.depositCents)}</b></div><div><span>Forma de pago</span><b>Simulación de registro</b></div><div><span>Referencia</span><b>${esc(folio)}</b></div></div><p>Sin timbrado, CFDI, cobro ni efecto fiscal.</p>`,
+                    "Expediente de arrendatario": `<p>Índice visual del expediente de <b>${esc(tenant.name)}</b> para consulta durante la presentación.</p><div class="document-paper__summary"><div><span>Identificación</span><b>Disponible en demo</b></div><div><span>Contrato</span><b>${esc(contract.folio)}</b></div><div><span>Documentos relacionados</span><b>${state.documents.filter((item) => item.contractId === contract.id).length} registros</b></div></div><p>Los archivos, la validación documental y el resguardo legal son simulados.</p>`,
+                };
+                byId("documentPreviewTitle").textContent = `${type} · ${folio}`;
+                byId("documentPreview").innerHTML = `<article class="document-paper"><header class="document-paper__head"><img class="document-paper__logo" src="{{ asset('images/saferoom-logo.png') }}" alt="SafeRoom"><div class="document-paper__meta"><b>${esc(folio)}</b><span>Emitido: ${esc(dateLabel(createdAt))}</span><span>ESTADO: SIMULACIÓN</span></div></header><div class="document-paper__title"><p>SAFE ROOM · FORMATO OPERATIVO</p><h2>${esc(type)}</h2></div><div class="document-paper__body"><p><b>Arrendatario:</b> ${esc(tenant.name)}</p><p><b>Contrato:</b> ${esc(contract.folio)} · <b>Caja:</b> ${esc(box?.code || "Sin asignar")}</p>${documentBodies[type] || documentBodies["Expediente de arrendatario"]}</div><footer class="document-paper__signatures"><div>Nombre y firma del arrendatario</div><div>Nombre y firma de SafeRoom</div></footer></article>`;
+                byId("printDocumentButton").disabled = false;
+                flash(`${type}: vista previa actualizada.`);
+            }
+            function printDocument() {
+                if (byId("printDocumentButton")?.disabled) return flash("Selecciona un documento antes de imprimir.");
+                window.print();
+            }
+            function reportData() {
+                const type = byId("reportType").value;
+                const from = byId("reportFrom").value || "0000-01-01";
+                const to = byId("reportTo").value || "9999-12-31";
+                const between = (value) => value && value.slice(0, 10) >= from && value.slice(0, 10) <= to;
+                if (type === "availability") return { title: "Vista previa: disponibilidad de cajas", headers: ["Estado", "Cantidad"], rows: ["Disponible", "Ocupada", "Reservada", "Mantenimiento"].map((status) => [status, state.boxes.filter((box) => box.status === status).length]) };
+                if (type === "access") return { title: "Vista previa: accesos por arrendatario", headers: ["Fecha", "Persona", "Caja", "Movimiento", "Resultado"], rows: state.accessEvents.filter((event) => between(event.occurredAt)).map((event) => { const contract = contractById(event.contractId); return [dateLabel(event.occurredAt.slice(0, 10)), tenantById(event.tenantId)?.name || "Sin persona", boxById(contract?.boxId)?.code || "Sin caja", event.direction, event.status]; }) };
+                if (type === "finance") return { title: "Vista previa: ingresos y garantías", headers: ["Fecha", "Folio", "Concepto", "Importe", "Estado"], rows: state.movements.filter((movement) => between(movement.occurredAt)).map((movement) => [dateLabel(movement.occurredAt), movement.folio, movement.concept, fmtCents(movement.amountCents), movement.status]) };
+                return { title: "Vista previa: reporte general para consejo", headers: ["Indicador", "Resultado"], rows: [["Solicitudes recibidas", state.requests.filter((request) => between(request.createdAt)).length], ["Cajas ocupadas", state.boxes.filter((box) => box.status === "Ocupada").length], ["Contratos activos", activeContracts().length], ["Ingresos registrados", fmtCents(state.movements.filter((movement) => between(movement.occurredAt)).reduce((total, movement) => total + movement.amountCents, 0))]] };
+            }
+            function renderReport() {
+                const report = reportData();
+                byId("reportPreviewTitle").textContent = report.title;
+                byId("reportPreviewHead").innerHTML = `<tr>${report.headers.map((header) => `<th>${esc(header)}</th>`).join("")}</tr>`;
+                byId("reportPreviewRows").innerHTML = report.rows.map((row) => `<tr>${row.map((cell) => `<td>${esc(cell)}</td>`).join("")}</tr>`).join("") || `<tr><td colspan="${report.headers.length}" class="muted">No hay resultados para el periodo.</td></tr>`;
+                if (byId("reportOccupied")) byId("reportOccupied").textContent = state.boxes.filter((box) => box.status === "Ocupada").length;
+                if (byId("reportRequests")) byId("reportRequests").textContent = state.requests.length;
+            }
+            function exportReport() {
+                const report = reportData();
+                const escapeCsv = (value) => `"${String(value ?? "").replaceAll("\"", "\"\"")}"`;
+                const csv = [report.headers].concat(report.rows).map((row) => row.map(escapeCsv).join(",")).join("\n");
+                const link = document.createElement("a");
+                link.href = URL.createObjectURL(new Blob([`\uFEFF${csv}`], { type: "text/csv;charset=utf-8" }));
+                link.download = `saferoom-${byId("reportType").value}-${byId("reportFrom").value || "demo"}.csv`;
+                link.click();
+                URL.revokeObjectURL(link.href);
+                flash("Reporte CSV descargado.");
+            }
+            function fillContractOptions(selectId, selectedId, includeCancelled = false) {
+                const select = byId(selectId);
+                if (!select) return null;
+                const contracts = state.contracts.filter((contract) => includeCancelled || isOpenContract(contract));
+                select.innerHTML = contracts.map((contract) => { const tenant = tenantById(contract.tenantId); const box = boxById(contract.boxId); return `<option value="${contract.id}">${esc(`${contract.folio} · ${tenant?.name || "Sin titular"} · ${box?.code || "Sin caja"}`)}</option>`; }).join("");
+                if (contracts.some((contract) => contract.id === selectedId)) select.value = selectedId;
+                else if (contracts[0]) select.value = contracts[0].id;
+                return contractById(select.value);
+            }
+            function renderRenewal() {
+                const requestedContract = contractById(byId("rContract")?.value);
+                if (requestedContract) state.ui.selectedContractId = requestedContract.id;
+                let contract = fillContractOptions("rContract", state.ui.selectedContractId);
+                if (!contract) { byId("renewalSummary").innerHTML = `<div class="empty">No hay contratos vigentes para renovar.</div>`; return; }
+                state.ui.selectedContractId = contract.id;
+                state.ui.selectedTenantId = contract.tenantId;
+                const mode = byId("rMode").value;
+                const box = boxById(contract.boxId);
+                const options = state.boxes.filter((candidate) => candidate.status === "Disponible" && candidate.id !== box.id);
+                const boxSelect = byId("rBox");
+                const currentChoice = boxSelect.value;
+                boxSelect.innerHTML = `<option value="">Conservar caja actual</option>${options.map((candidate) => `<option value="${candidate.id}">${esc(`${candidate.code} · ${candidate.size} · Disponible`)}</option>`).join("")}`;
+                if (options.some((candidate) => candidate.id === currentChoice)) boxSelect.value = currentChoice;
+                if (!byId("rStart").value || byId("rContract").dataset.contractId !== contract.id) {
+                    const dayAfterEnd = new Date(`${contract.endDate}T12:00:00`);
+                    dayAfterEnd.setDate(dayAfterEnd.getDate() + 1);
+                    byId("rStart").value = dayAfterEnd.toISOString().slice(0, 10);
+                    refreshSafeDate(byId("rStart"));
+                }
+                if (!byId("rRent").value || byId("rContract").dataset.contractId !== contract.id) byId("rRent").value = (contract.rentCents / 100).toFixed(2);
+                byId("rContract").dataset.contractId = contract.id;
+                const nextBox = mode === "move" ? boxById(boxSelect.value) : box;
+                const duration = Number(byId("rDuration").value) || 12;
+                const endDate = addMonthsMinusOne(byId("rStart").value, duration);
+                const rentCents = Math.round((Number(byId("rRent").value) || 0) * 100);
+                byId("renewalSummary").innerHTML = `<p class="muted">CONTRATO ACTUAL</p><b>${esc(contract.folio)}</b><div class="summary-row"><span>Caja actual</span><b>${esc(`${box.code} · ${box.size}`)}</b></div><div class="summary-row"><span>${mode === "move" ? "Nueva caja" : "Caja a conservar"}</span><b>${esc(nextBox ? `${nextBox.code} · ${nextBox.size}` : "Selecciona una caja")}</b></div><div class="summary-row"><span>Vigencia nueva</span><b>${esc(`${duration} meses · hasta ${dateLabel(endDate)}`)}</b></div><div class="summary-row"><span>Renta actual</span><b>${fmtCents(contract.rentCents)}</b></div><div class="summary-total"><span>Nueva renta</span><span style="float:right">${fmtCents(rentCents)}</span></div>`;
+            }
+            function requestRenewalConfirmation() {
+                const contract = contractById(byId("rContract").value);
+                if (!isOpenContract(contract)) return flash("Solo pueden renovarse contratos vigentes.");
+                if (!byId("rReviewed").checked) return flash("Confirma la revisión de caja, llaves, importes y documentos.");
+                const mode = byId("rMode").value;
+                const nextBox = mode === "move" ? boxById(byId("rBox").value) : boxById(contract.boxId);
+                if (!nextBox || (mode === "move" && (nextBox.id === contract.boxId || nextBox.status !== "Disponible"))) return flash("Selecciona otra caja disponible para el cambio.");
+                if (!byId("rStart").value) return flash("Indica la fecha de inicio de la nueva vigencia.");
+                byId("lifecycleConfirmEyebrow").textContent = "RENOVACIÓN · DEMO";
+                byId("lifecycleConfirmTitle").textContent = mode === "move" ? "Confirmar renovación y cambio de caja" : "Confirmar renovación";
+                byId("lifecycleConfirmText").textContent = "Se conservará el historial de la operación y se recalculará la vigencia. No se emite un documento real.";
+                byId("lifecycleConfirmSummary").innerHTML = byId("renewalSummary").innerHTML;
+                byId("lifecycleConfirmAction").onclick = completeRenewal;
+                byId("lifecycleConfirm").classList.add("on");
+            }
+            function completeRenewal() {
+                const contract = contractById(byId("rContract").value);
+                if (!isOpenContract(contract)) return flash("El contrato ya no está disponible para renovación.");
+                const mode = byId("rMode").value;
+                const oldBox = boxById(contract.boxId);
+                const nextBox = mode === "move" ? boxById(byId("rBox").value) : oldBox;
+                if (!nextBox || (mode === "move" && nextBox.status !== "Disponible")) return flash("La caja seleccionada dejó de estar disponible.");
+                const previous = { boxId: contract.boxId, startDate: contract.startDate, endDate: contract.endDate, rentCents: contract.rentCents };
+                const duration = Number(byId("rDuration").value) || 12;
+                contract.startDate = byId("rStart").value;
+                contract.endDate = addMonthsMinusOne(contract.startDate, duration);
+                contract.durationMonths = duration;
+                contract.rentCents = Math.round((Number(byId("rRent").value) || 0) * 100);
+                contract.status = "Activo";
+                if (mode === "move") { oldBox.status = "Disponible"; nextBox.status = "Ocupada"; contract.boxId = nextBox.id; }
+                state.operations.unshift({ id: `operation-${crypto.randomUUID()}`, contractId: contract.id, type: mode === "move" ? "Renovación con cambio de caja" : "Renovación", occurredAt: new Date().toISOString(), detail: `Anterior: ${boxById(previous.boxId).code} · ${dateLabel(previous.startDate)} a ${dateLabel(previous.endDate)} · ${fmtCents(previous.rentCents)}` });
+                state.ui.selectedTenantId = contract.tenantId;
+                state.ui.selectedContractId = contract.id;
+                closeLifecycleConfirmation();
+                logAudit(mode === "move" ? "Renovó y cambió caja" : "Renovó contrato", contract.folio, "Correcto", false);
+                persistState();
+                flash(mode === "move" ? "Renovación y cambio de caja guardados." : "Renovación guardada.");
+                showView("tenant", { tab: "Contratos" });
+            }
+            function renderCancellation() {
+                const requestedContract = contractById(byId("xContract")?.value);
+                if (requestedContract) state.ui.selectedContractId = requestedContract.id;
+                const contract = fillContractOptions("xContract", state.ui.selectedContractId);
+                if (!contract) { byId("cancellationSummary").innerHTML = `<div class="empty">No hay contratos vigentes para cancelar.</div>`; return; }
+                state.ui.selectedContractId = contract.id;
+                state.ui.selectedTenantId = contract.tenantId;
+                const box = boxById(contract.boxId);
+                const keys = Number((byId("xKeys").value || "2").match(/^\d+/)?.[0] || 0);
+                byId("cancellationSummary").innerHTML = `<div class="summary-row"><span>Contrato activo</span><b>${esc(contract.folio)}</b></div><div class="summary-row"><span>Caja actual</span><b>${esc(box?.code)}</b></div><div class="summary-row"><span>Garantía registrada</span><b>${fmtCents(contract.depositCents)}</b></div><div class="summary-row"><span>Llaves devueltas</span><b>${keys} de ${box?.keys || 2}</b></div><div class="summary-total"><span>Devolución propuesta*</span><span style="float:right">${fmtCents(contract.depositCents)}</span></div>`;
+            }
+            function requestCancellationConfirmation() {
+                const contract = contractById(byId("xContract").value);
+                if (!isOpenContract(contract)) return flash("Solo pueden cancelarse contratos vigentes.");
+                if (!byId("xReviewed").checked) return flash("Confirma la revisión de llaves, garantía y documentos.");
+                byId("lifecycleConfirmEyebrow").textContent = "CANCELACIÓN · DEMO";
+                byId("lifecycleConfirmTitle").textContent = "Confirmar cancelación de contrato";
+                byId("lifecycleConfirmText").textContent = "Se liberará solamente la caja de este contrato y se registrará una devolución de garantía simulada.";
+                byId("lifecycleConfirmSummary").innerHTML = byId("cancellationSummary").innerHTML;
+                byId("lifecycleConfirmAction").onclick = completeCancellation;
+                byId("lifecycleConfirm").classList.add("on");
+            }
+            function completeCancellation() {
+                const contract = contractById(byId("xContract").value);
+                if (!isOpenContract(contract)) return flash("El contrato ya fue cancelado o no es vigente.");
+                const box = boxById(contract.boxId);
+                const cancellationDate = byId("xDate").value;
+                if (!cancellationDate) return flash("Indica la fecha de cancelación.");
+                contract.status = "Cancelado";
+                contract.cancelledAt = cancellationDate;
+                contract.cancellationReason = byId("xReason").value;
+                contract.cancellationNotes = byId("xNotes").value.trim();
+                contract.keysReturned = Number((byId("xKeys").value.match(/^\d+/) || [0])[0]);
+                if (box) box.status = "Disponible";
+                state.movements.unshift({ id: `movement-${crypto.randomUUID()}`, folio: `DG-2026-${String(nextSequence(state.movements, "folio", 1)).padStart(4, "0")}`, tenantId: contract.tenantId, contractId: contract.id, concept: "Devolución propuesta de garantía", method: "Transferencia", amountCents: -contract.depositCents, type: "Devolución de garantía", status: "Simulada", occurredAt: cancellationDate });
+                state.operations.unshift({ id: `operation-${crypto.randomUUID()}`, contractId: contract.id, type: "Cancelación", occurredAt: `${cancellationDate}T12:00:00`, detail: `${contract.cancellationReason} · ${contract.keysReturned} llaves devueltas` });
+                closeLifecycleConfirmation();
+                logAudit("Canceló contrato", contract.folio, "Simulado", false);
+                persistState();
+                flash(`Contrato ${contract.folio} cancelado; caja ${box?.code || ""} liberada.`);
+                showView("tenant", { tab: "Contratos" });
+            }
+            function renderSettings() {
+                const settings = state.settings || {};
+                const availabilityAlert = byId("availabilityAlert");
+                const availabilityLimit = byId("availabilityLimit");
+                const availabilityMessage = byId("availabilityMessage");
+                if (!availabilityAlert || !availabilityLimit || !availabilityMessage) return;
+                availabilityAlert.value = settings.availabilityAlert === "Inactiva" ? "Inactiva" : "Activa";
+                availabilityLimit.value = settings.availabilityLimit || "25%";
+                availabilityMessage.value = settings.availabilityMessage || "Disponibilidad de cajas por debajo del límite";
+                const available = state.boxes.filter((box) => box.status === "Disponible").length;
+                const percentage = Math.round((available / Math.max(state.boxes.length, 1)) * 100);
+                const target = byId("settingsFeedback");
+                if (target) target.innerHTML = availabilityAlert.value === "Activa"
+                    ? `<b>Indicador actual:</b> ${percentage}% de cajas disponibles. La alerta se mostrará en Inicio cuando la disponibilidad sea igual o menor al límite.`
+                    : `<b>Alertas inactivas.</b> El tablero conservará el indicador de disponibilidad sin mostrar una alerta operativa.`;
+            }
+            function saveSettings() {
+                const limitInput = byId("availabilityLimit").value.replace(",", ".").replace(/[^0-9.]/g, "");
+                const limit = Math.min(100, Math.max(0, Number(limitInput) || 0));
+                const message = byId("availabilityMessage").value.trim().slice(0, 140) || "Disponibilidad de cajas por debajo del límite";
+                state.settings = { availabilityAlert: byId("availabilityAlert").value, availabilityLimit: `${limit}%`, availabilityMessage: message };
+                logAudit("Actualizó alertas", `Disponibilidad ≤ ${limit}%`, "Correcto", false);
+                persistState();
+                renderSettings();
+                renderHome();
+                flash("Configuración de alertas guardada en esta demo.");
+            }
+            function closeInvoiceModal() {
+                byId("invoiceModal")?.classList.remove("on");
+            }
+            function syncInvoiceContracts() {
+                const tenantId = byId("invoiceTenant")?.value;
+                const select = byId("invoiceContract");
+                if (!select) return;
+                const contracts = contractsForTenant(tenantId).filter(isOpenContract);
+                select.innerHTML = contracts.map((contract) => {
+                    const box = boxById(contract.boxId);
+                    return `<option value="${esc(contract.id)}">${esc(`${contract.folio} · ${box?.code || "Sin caja"}`)}</option>`;
+                }).join("");
+                const contract = contractById(select.value);
+                if (contract) byId("invoiceAmount").value = (contract.rentCents / 100).toFixed(2);
+            }
+            function openInvoiceModal() {
+                const tenantSelect = byId("invoiceTenant");
+                if (!tenantSelect) return;
+                const currentTenant = selectedContract()?.tenantId || selectedTenant()?.id;
+                tenantSelect.innerHTML = state.tenants.map((tenant) => `<option value="${esc(tenant.id)}">${esc(tenant.name)}</option>`).join("");
+                if (tenantById(currentTenant)) tenantSelect.value = currentTenant;
+                byId("invoiceConcept").value = "Renta mensual";
+                byId("invoiceMethod").value = "Transferencia";
+                syncInvoiceContracts();
+                if (!byId("invoiceContract").value) return flash("El arrendatario seleccionado no tiene un contrato vigente para facturar.");
+                byId("invoiceModal").classList.add("on");
+                setTimeout(() => byId("invoiceAmount")?.focus(), 0);
+            }
+            function registerInvoice() {
+                const tenantId = byId("invoiceTenant").value;
+                const contract = contractById(byId("invoiceContract").value);
+                const amountCents = Math.round((Number(byId("invoiceAmount").value) || 0) * 100);
+                if (!tenantById(tenantId) || !contract || contract.tenantId !== tenantId || !isOpenContract(contract) || amountCents <= 0) return flash("Completa un arrendatario, contrato vigente e importe mayor a cero.");
+                const number = nextSequence(state.movements, "folio", 48);
+                const folio = `FAC-2026-${String(number).padStart(4, "0")}`;
+                state.movements.unshift({ id: `movement-${crypto.randomUUID()}`, folio, tenantId, contractId: contract.id, concept: byId("invoiceConcept").value.trim().slice(0, 80) || "Renta mensual", method: byId("invoiceMethod").value, amountCents, type: "Factura", status: "Simulada", occurredAt: new Date().toISOString().slice(0, 10) });
+                logAudit("Registró factura", `${folio} · ${contract.folio}`, "Simulado", false);
+                persistState();
+                closeInvoiceModal();
+                renderFinance();
+                flash(`Factura ${folio} registrada como simulación; no se generó CFDI.`);
+            }
+            function closeUserModal() {
+                byId("userModal")?.classList.remove("on");
+            }
+            function openUserModal() {
+                byId("userName").value = "";
+                byId("userEmail").value = "";
+                byId("userRole").value = "Recepción";
+                byId("userModal").classList.add("on");
+                setTimeout(() => byId("userName")?.focus(), 0);
+            }
+            function renderDemoUsers() {
+                const target = byId("demoUserList");
+                if (!target) return;
+                target.innerHTML = state.users.map((user) => `<div class="activity"><span><b>${esc(user.name)}</b><br><small class="muted">${esc(user.email)} · ${esc(user.role)}</small></span>${badge(user.status)}</div>`).join("") || `<div class="empty">Sin usuarios configurados.</div>`;
+            }
+            function saveDemoUser() {
+                const name = byId("userName").value.trim().slice(0, 90);
+                const email = byId("userEmail").value.trim().toLowerCase().slice(0, 120);
+                const role = byId("userRole").value;
+                if (name.length < 3 || !email.includes("@")) return flash("Indica nombre completo y un correo válido.");
+                if (state.users.some((user) => user.email.toLowerCase() === email)) return flash("Ese correo ya está registrado en la demo.");
+                state.users.push({ id: `user-${crypto.randomUUID()}`, name, email, role, status: "Activo" });
+                logAudit("Agregó usuario", `${name} · ${role}`, "Correcto", false);
+                persistState();
+                closeUserModal();
+                renderDemoUsers();
+                flash("Usuario agregado solo a los datos locales de la demo.");
+            }
+            function resetDemo() {
+                if (!window.confirm("¿Restablecer todos los datos locales de la demo? Esta acción no se puede deshacer.")) return;
+                state = clone(seedState);
+                try { localStorage.removeItem(DEMO_STORAGE_KEY); } catch (_) {}
+                currentTenantTab = "Resumen";
+                byId("contractConfirm").classList.remove("on");
+                byId("lifecycleConfirm").classList.remove("on");
+                closeInvoiceModal();
+                closeUserModal();
+                persistState();
+                flash("Datos de demo restablecidos.");
+                showView("home");
+            }
+            document.addEventListener("keydown", (event) => {
+                if (event.key === "Escape") { closeContractConfirmation(); closeLifecycleConfirmation(); closeInvoiceModal(); closeUserModal(); closeHeaderPanels(); }
+            });
+            syncSelectionFromUrl();
             initialiseSafeDates();
             initialiseHeaderControls();
             showView(initialView, { sync: false, scroll: false, tab: currentTenantTab });
