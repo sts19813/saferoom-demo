@@ -203,6 +203,16 @@
                 color: var(--navy);
                 box-shadow: 0 4px 10px #d49f0033;
             }
+            .side.vault-mode .nav,
+            .side.vault-mode .nav-label,
+            .side.vault-mode .restore { display: none; }
+            .side.vault-mode .nav[data-view="access"] { display: flex; margin-top: 28px; }
+            .side.vault-mode::after { content: "PERFIL ACTIVO\A ENCARGADO DE BÓVEDA"; white-space: pre; margin: auto 18px 20px; padding: 12px; border-radius: 12px; background: #fff1bc; color: #5c4800; font-size: 10px; font-weight: 800; line-height: 1.6; }
+            .side.c4-mode .nav,
+            .side.c4-mode .nav-label,
+            .side.c4-mode .restore { display: none; }
+            .side.c4-mode .nav[data-view="access"] { display: flex; margin-top: 28px; }
+            .side.c4-mode::after { content: "PERFIL ACTIVO\A C4 · CONTROL DE PUERTA"; white-space: pre; margin: auto 18px 20px; padding: 12px; border-radius: 12px; background: #e6f5f8; color: #237994; font-size: 10px; font-weight: 800; line-height: 1.6; }
             .future {
                 opacity: 0.45;
             }
@@ -1017,6 +1027,54 @@
                 gap: 13px;
                 padding: 20px;
             }
+            .availability-map {
+                display: grid;
+                gap: 14px;
+                padding: 18px 20px 20px;
+                border-bottom: 1px solid var(--line);
+            }
+            .availability-map__head {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+            }
+            .availability-map__legend {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                color: var(--muted);
+                font-size: 11px;
+            }
+            .availability-map__legend i {
+                display: inline-block;
+                width: 10px;
+                height: 10px;
+                margin-right: 4px;
+                border-radius: 3px;
+                vertical-align: -1px;
+            }
+            .availability-map__grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(78px, 1fr));
+                gap: 7px;
+            }
+            .availability-slot {
+                min-height: 48px;
+                padding: 7px;
+                border: 1px solid transparent;
+                border-radius: 8px;
+                color: #fff;
+                font-size: 11px;
+                font-weight: 800;
+                text-align: left;
+            }
+            .availability-slot small { display:block; margin-top:3px; color:inherit; font-size:9px; font-weight:600; opacity:.82; }
+            .availability-slot--Disponible { background:#168b62; }
+            .availability-slot--Ocupada { background:#c0392b; }
+            .availability-slot--Reservada { background:#c98b00; }
+            .availability-slot--Mantenimiento { background:#506d88; }
+            .availability-slot.chosen { outline:3px solid var(--gold); outline-offset:2px; }
             .box-card {
                 border: 1px solid #e4e4e9;
                 border-radius: 16px;
@@ -1658,6 +1716,7 @@
                         title="Los registros se conservan solo en este navegador"
                         >DEMO · DATOS FICTICIOS</span
                     >
+                    <button id="exitVaultProfile" class="btn outline" style="display:none" onclick="exitVaultProfile()">← Volver a administración</button>
                     <div class="header-popover-wrap">
                         <button
                             class="utility-button"
@@ -1729,9 +1788,9 @@
                             aria-controls="profilePanel"
                             id="profileButton"
                         >
-                            <i class="avatar">AC</i>
+                            <i class="avatar" id="profileInitials">AC</i>
                             <span
-                                ><b>Andrea Castillo</b><br /><small
+                                ><b id="profileName">Andrea Castillo</b><br /><small id="profileRole"
                                     >Administración</small
                                 ></span
                             >
@@ -1743,10 +1802,10 @@
                             aria-label="Opciones de perfil"
                         >
                             <div class="profile-summary">
-                                <i class="avatar">AC</i>
+                                <i class="avatar" id="profilePanelInitials">AC</i>
                                 <div>
-                                    <b>Andrea Castillo</b
-                                    ><span>Administración</span>
+                                    <b id="profilePanelName">Andrea Castillo</b
+                                    ><span id="profilePanelRole">Administración</span>
                                 </div>
                             </div>
                             <label class="theme-row"
@@ -1892,6 +1951,19 @@
                         </button>
                     </div>
                     <section class="panel">
+                        <div class="availability-map">
+                            <div class="availability-map__head">
+                                <div><b>Mapa de disponibilidad</b><br /><small class="muted">Consulta el estado de cada caja antes de asignarla.</small></div>
+                                <div class="availability-map__legend"><span><i style="background:#168b62"></i>Disponible</span><span><i style="background:#c0392b"></i>Ocupada</span><span><i style="background:#c98b00"></i>Reservada</span><span><i style="background:#506d88"></i>Mantenimiento</span></div>
+                            </div>
+                            <div class="grid4">
+                                <div class="notice"><b id="boxAvailableCount">—</b><br /><small>Disponibles</small></div>
+                                <div class="notice"><b id="boxOccupiedCount">—</b><br /><small>Ocupadas</small></div>
+                                <div class="notice"><b id="boxReservedCount">—</b><br /><small>Reservadas</small></div>
+                                <div class="notice"><b id="boxAvailabilityRate">—</b><br /><small>Disponibilidad</small></div>
+                            </div>
+                            <div class="availability-map__grid" id="availabilityMap"></div>
+                        </div>
                         <div class="toolbar">
                             <div class="search">
                                 <input
@@ -2352,11 +2424,6 @@
                                 <option>M</option>
                                 <option>L</option>
                                 <option>XL</option></select
-                            ><span
-                                class="muted"
-                                style="margin: auto 0 auto auto"
-                                >Verde: disponible · Gris: ocupada · Ámbar:
-                                reservada</span
                             >
                         </div>
                         <div class="box-grid" id="boxGrid"></div>
@@ -2462,32 +2529,6 @@
                                 <b>2 llaves</b> para la caja seleccionada. La
                                 generación de formato es una simulación.
                             </div>
-                            <details class="form-group">
-                                <summary>
-                                    Beneficiarios y personal de apoyo
-                                </summary>
-                                <p class="form-helper">
-                                    Capacidades observadas en el contrato. Su
-                                    relación exacta y permisos aún deben
-                                    validarse.
-                                </p>
-                                <div class="fields">
-                                    <div class="field">
-                                        <label>BENEFICIARIO</label
-                                        ><input
-                                            id="cBeneficiary"
-                                            placeholder="Nombre completo"
-                                        />
-                                    </div>
-                                    <div class="field">
-                                        <label>PERSONAL DE APOYO</label
-                                        ><input
-                                            id="cSupport"
-                                            placeholder="Nombre completo"
-                                        />
-                                    </div>
-                                </div>
-                            </details>
                         </div>
                         <aside class="panel section">
                             <h2>Resumen financiero</h2>
@@ -2554,7 +2595,7 @@
                                 style="width: 100%; margin-top: 20px"
                                 onclick="requestContractConfirmation()"
                             >
-                                ✓ Generar contrato y factura</button
+                                ✓ Guardar, timbrar y salir</button
                             ><small
                                 class="muted"
                                 style="
@@ -2674,17 +2715,17 @@
                     <div class="heading">
                         <div>
                             <p class="eyebrow">GESTIÓN · DEMO</p>
-                            <h1>Renovaciones y cambios de caja</h1>
+                            <h1>Cambios y renovaciones de contrato</h1>
                             <p class="muted">
-                                Capacidad observada en el sistema anterior.
-                                Regla comercial pendiente de validación.
+                                Primero registra modificaciones; después
+                                renueva o renueva con cambio de caja.
                             </p>
                         </div>
                         <span class="tag amber">SIMULACIÓN</span>
                     </div>
                     <div class="split">
                         <section class="panel section">
-                            <h2>Preparar renovación o cambio</h2>
+                            <h2>Selecciona la operación</h2>
                             <p class="muted">
                                 Compara el contrato actual con las nuevas
                                 condiciones antes de confirmar.
@@ -2720,6 +2761,15 @@
                                         </option>
                                         <option value="move">
                                             Renovar con cambio de caja
+                                        </option>
+                                        <option value="renew-size">
+                                            Renovar con cambio de medida
+                                        </option>
+                                        <option value="location">
+                                            Cambio de ubicación
+                                        </option>
+                                        <option value="size">
+                                            Cambio de medida y recálculo
                                         </option>
                                     </select>
                                 </div>
@@ -2814,31 +2864,26 @@
                 <section class="view" id="access">
                     <div class="heading">
                         <div>
-                            <p class="eyebrow">GESTIÓN · DEMO</p>
-                            <h1>Historial de accesos</h1>
-                            <p class="muted">
-                                Interfaz de operación; integración biométrica y
-                                hardware aún por definir.
+                            <p class="eyebrow" id="accessEyebrow">BÓVEDA · CONTROL OPERATIVO</p>
+                            <h1 id="accessHeading">Accesos a la bóveda</h1>
+                            <p class="muted" id="accessDescription">
+                                El encargado valida la entrada de una persona;
+                                la salida se actualiza con su firma simulada.
                             </p>
                         </div>
                         <span class="tag blue">SIMULACIÓN BIOMÉTRICA</span>
                     </div>
-                    <div class="two">
+                    <div class="two" id="vaultOperations">
                         <section class="panel">
                             <div class="panel-head">
                                 <div>
-                                    <b>Entradas pendientes de confirmación</b>
+                                    <b>Actualizar entrada</b>
                                     <p class="muted">
-                                        La autorización se revisa contra
-                                        contrato/caja de demostración.
+                                        El encargado de bóveda confirma a otra
+                                        persona tras revisar su contrato.
                                     </p>
                                 </div>
-                                <button
-                                    class="btn outline"
-                                    onclick="renderAccessQueue()"
-                                >
-                                    ↻ Actualizar
-                                </button>
+                                <button class="btn outline" onclick="renderAccessQueue()">↻ Actualizar</button>
                             </div>
                             <div class="toolbar">
                                 <div class="search">
@@ -2864,21 +2909,35 @@
                             <div id="accessQueue"></div>
                         </section>
                         <section class="panel section">
-                            <h2>Validación de acceso</h2>
-                            <div id="accessVerification" class="notice">
-                                Selecciona una persona pendiente para revisar su
-                                acceso.
-                            </div>
-                            <p class="notice" style="margin-top: 14px">
-                                <b>Biometría:</b> el video muestra esta
-                                capacidad, pero dispositivo, proveedor,
-                                privacidad y contingencia manual siguen
-                                pendientes. Esta pantalla solo simula la
-                                decisión de acceso.
-                            </p>
+                            <h2>Actualizar salida</h2>
+                            <p class="muted">Personas dentro de la bóveda pendientes de registrar salida.</p>
+                            <div id="accessExitQueue"></div>
                         </section>
                     </div>
-                    <section class="panel" style="margin-top: 20px">
+                    <section class="panel section" id="c4ControlPanel" style="display:none; margin-top:20px">
+                        <div class="panel-head">
+                            <div>
+                                <h2>Control C4 · puerta de bóveda</h2>
+                                <p class="muted">Este perfil solo concede el acceso físico y cierra la puerta. No valida contratos ni registra entradas, salidas o firmas.</p>
+                            </div>
+                            <span class="tag blue">OPERACIÓN C4</span>
+                        </div>
+                        <div class="small-grid" style="margin-top:16px">
+                            <div class="notice"><b>Estado de puerta</b><br /><span id="c4DoorState">Cerrada</span></div>
+                            <div class="notice"><b>Última acción</b><br /><span id="c4DoorUpdated">Sin movimientos en esta sesión</span></div>
+                        </div>
+                        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:18px">
+                            <button class="btn primary" id="c4GrantButton" onclick="grantC4Access()">Conceder acceso</button>
+                            <button class="btn outline" id="c4CloseButton" onclick="closeC4Door()">Cerrar puerta</button>
+                        </div>
+                        <p class="notice" id="c4ControlFeedback" style="margin-top:16px">La puerta permanece cerrada hasta que C4 conceda el acceso físico.</p>
+                    </section>
+                    <section class="panel section" id="vaultVerification" style="margin-top:20px">
+                        <h2>Validación del encargado</h2>
+                        <div id="accessVerification" class="notice">Selecciona una persona de entrada o salida para continuar.</div>
+                        <p class="notice" style="margin-top:14px"><b>Biometría:</b> la identificación mostrada es una referencia visual de la integración. La demo no procesa imágenes ni biométricos.</p>
+                    </section>
+                    <section class="panel" id="vaultAudit" style="margin-top: 20px">
                         <div class="panel-head">
                             <div>
                                 <b>Bitácora operativa</b>
@@ -3017,11 +3076,12 @@
                 <section class="view" id="reports">
                     <div class="heading">
                         <div>
-                            <p class="eyebrow">GESTIÓN · SIMULACIÓN</p>
-                            <h1>Reportes operativos</h1>
+                            <p class="eyebrow">ADMINISTRACIÓN · CENTRO DE CONTROL</p>
+                            <h1>Reportes administrativos</h1>
                             <p class="muted">
-                                Representación de los reportes administrativos,
-                                disponibilidad y accesos observados.
+                                Consulta resultados en pantalla antes de
+                                descargar. Los datos se recalculan con la
+                                operación simulada de la demo.
                             </p>
                         </div>
                         <button class="btn primary" onclick="exportReport()">
@@ -3030,9 +3090,9 @@
                     </div>
                     <div class="grid4">
                         <article class="card">
-                            <span class="muted">INGRESOS DEL MES</span>
-                            <div class="metric">$327,900</div>
-                            <span class="tag amber">SIMULADO</span>
+                            <span class="muted">INGRESOS DEL PERIODO</span>
+                            <div class="metric" id="reportIncome">—</div>
+                            <span class="tag green">VISTA PREVIA</span>
                         </article>
                         <article class="card">
                             <span class="muted">CAJAS OCUPADAS</span>
@@ -3045,9 +3105,9 @@
                             <span class="muted">Periodo actual</span>
                         </article>
                         <article class="card">
-                            <span class="muted">ACCESOS</span>
-                            <div class="metric">37</div>
-                            <span class="muted">Registro de ejemplo</span>
+                            <span class="muted">CONTRATOS VIGENTES</span>
+                            <div class="metric" id="reportContracts">—</div>
+                            <span class="muted">Al corte seleccionado</span>
                         </article>
                     </div>
                     <section class="panel section">
@@ -3064,6 +3124,12 @@
                                 </option>
                                 <option value="finance">
                                     Ingresos y garantías
+                                </option>
+                                <option value="new-contracts">
+                                    Contratos nuevos
+                                </option>
+                                <option value="annual">
+                                    Resumen anual de operaciones
                                 </option></select
                             ><input
                                 id="reportFrom"
@@ -3082,6 +3148,8 @@
                                 Actualizar vista
                             </button>
                         </div>
+                        <div id="reportHighlights" class="small-grid" style="margin-bottom:18px"></div>
+                        <div id="reportVisual" class="notice" style="margin-bottom:18px"></div>
                         <h2 id="reportPreviewTitle">
                             Vista previa: reporte general para consejo
                         </h2>
@@ -3093,7 +3161,7 @@
                         </div>
                     </section>
                     <section class="panel section" style="margin-top: 20px">
-                        <h2>Reportes disponibles en el alcance</h2>
+                        <h2>Reportes disponibles en este centro</h2>
                         <div class="small-grid" style="margin-top: 18px">
                             <div class="notice">
                                 <b>General para consejo</b><br />Solicitudes,
@@ -3103,6 +3171,14 @@
                             <div class="notice">
                                 <b>Disponibilidad de cajas</b><br />Vista por
                                 colores, medida, área y estado.
+                            </div>
+                            <div class="notice">
+                                <b>Contratos nuevos</b><br />Fecha de pago,
+                                cliente, caja, renta, garantía y estatus.
+                            </div>
+                            <div class="notice">
+                                <b>Resumen anual</b><br />Altas,
+                                cancelaciones, renovaciones y modificaciones.
                             </div>
                             <div class="notice">
                                 <b>Accesos por arrendatario</b><br />Filtros por
@@ -3148,6 +3224,14 @@
                                         value="Disponibilidad de cajas por debajo del límite"
                                     />
                                 </div>
+                                <div class="field">
+                                    <label>RECORDATORIO DE CUMPLEAÑOS</label
+                                    ><select id="birthdayAlert"><option>Activo</option><option>Inactivo</option></select>
+                                </div>
+                                <div class="field">
+                                    <label>ANTICIPACIÓN DE CUMPLEAÑOS</label
+                                    ><select id="birthdayLeadDays"><option value="0">El mismo día</option><option value="1">1 día antes</option><option value="3">3 días antes</option><option value="7">7 días antes</option></select>
+                                </div>
                             </div>
                             <button
                                 class="btn primary"
@@ -3163,14 +3247,15 @@
                             ></div>
                         </section>
                         <section class="panel section">
-                            <h2>Capacidades identificadas</h2>
-                            <p class="notice">
-                                Catálogos, roles/permisos, alertas, facturación,
-                                biométricos, firmas, otros ingresos y
-                                comunicación manual mediante Kommo. No hay
-                                integración con Kommo ni servicios externos en
-                                esta demo.
-                            </p>
+                            <h2>Conexión biométrica</h2>
+                            <p class="muted">Configuración preparada para un proveedor externo; esta demo no intenta conectarse ni envía biométricos.</p>
+                            <div class="fields">
+                                <div class="field"><label>PROVEEDOR</label><select id="biometricProvider"><option>BioStar 2</option><option>Otro proveedor</option></select></div>
+                                <div class="field"><label>ESTADO</label><select id="biometricEnabled"><option>Configuración pendiente</option><option>Simulación conectada</option><option>Desactivado</option></select></div>
+                                <div class="field wide"><label>REFERENCIA DEL SERVIDOR</label><input id="biometricEndpoint" placeholder="Ej. servidor interno / dispositivo de acceso" /></div>
+                            </div>
+                            <button class="btn outline" style="margin-top:18px" onclick="testBiometricConfiguration()">Probar configuración simulada</button>
+                            <div id="biometricFeedback" class="notice" style="margin-top:14px"></div>
                         </section>
                     </div>
                 </section>
@@ -3311,6 +3396,12 @@
                                 cancelación. Los criterios exactos de devolución
                                 siguen sin verificarse.
                             </p>
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px">
+                                <button class="btn outline" onclick="previewDocument('Recibo de depósito en garantía')">Ver devolución</button>
+                                <button class="btn outline" onclick="previewDocument('Constancia de entrega de llaves')">Ver recepción de llaves</button>
+                                <button class="btn outline" onclick="previewDocument('Expediente de arrendatario')">Ver expediente</button>
+                                <button class="btn outline" onclick="previewDocument('Aviso de cancelación')">Ver aviso</button>
+                            </div>
                         </aside>
                     </div>
                 </section>
@@ -3508,6 +3599,12 @@
                                     ></span
                                 ><span class="tag green">Activo</span>
                             </div>
+                            <div class="activity">
+                                <span><b>Encargado de bóveda</b><br /><small class="muted">Solo puede consultar y confirmar entradas/salidas en Accesos a la bóveda.</small></span><span class="tag green">Activo</span>
+                            </div>
+                            <div class="activity">
+                                <span><b>Operador C4</b><br /><small class="muted">Solo concede acceso físico y cierra la puerta de Bóveda.</small></span><span class="tag green">Activo</span>
+                            </div>
                         </section>
                         <section class="panel section" style="margin-top:20px">
                             <h2>Usuarios disponibles en la demo</h2>
@@ -3555,6 +3652,8 @@
                                 <option>Administrador</option>
                                 <option>Recepción</option>
                                 <option>Finanzas</option>
+                                <option>Encargado de bóveda</option>
+                                <option>Operador C4</option>
                             </select>
                         </div>
                         <div id="rolePermissions" class="small-grid"></div>
@@ -3665,6 +3764,8 @@
                 <div class="fields" style="margin-top: 20px">
                     <div class="field wide"><label>ARRENDATARIO</label><select id="invoiceTenant" onchange="syncInvoiceContracts()"></select></div>
                     <div class="field wide"><label>CONTRATO</label><select id="invoiceContract"></select></div>
+                    <div class="field wide"><label>PERFIL DE FACTURACIÓN</label><select id="invoiceProfile" onchange="syncInvoiceProfile()"><option value="general">Público general</option><option value="tenant">Datos fiscales del arrendatario</option></select></div>
+                    <div id="invoiceProfileHelp" class="notice wide"></div>
                     <div class="field"><label>CONCEPTO</label><input id="invoiceConcept" value="Renta mensual" /></div>
                     <div class="field"><label>IMPORTE</label><input id="invoiceAmount" type="number" min="0.01" step="0.01" /></div>
                     <div class="field"><label>FORMA DE PAGO</label><select id="invoiceMethod"><option>Transferencia</option><option>Efectivo</option><option>Tarjeta</option></select></div>
@@ -3681,9 +3782,9 @@
                 <h2 id="userModalTitle">Agregar usuario de demostración</h2>
                 <p class="muted" style="margin-top: 8px">No crea credenciales ni concede permisos reales.</p>
                 <div class="fields" style="margin-top: 20px">
-                    <div class="field wide"><label>NOMBRE COMPLETO</label><input id="userName" placeholder="Ej. Laura Pérez" /></div>
+                <div class="field wide"><label>NOMBRE COMPLETO</label><input id="userName" placeholder="Ej. Laura Pérez" /></div>
                     <div class="field"><label>CORREO</label><input id="userEmail" type="email" placeholder="nombre@saferoom.mx" /></div>
-                    <div class="field"><label>PERFIL</label><select id="userRole"><option>Recepción</option><option>Finanzas</option><option>Administrador</option></select></div>
+                    <div class="field"><label>PERFIL</label><select id="userRole"><option>Recepción</option><option>Finanzas</option><option>Administrador</option><option>Encargado de bóveda</option><option>Operador C4</option></select></div>
                 </div>
                 <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:24px">
                     <button class="btn outline" type="button" onclick="closeUserModal()">Cancelar</button>
@@ -3692,9 +3793,22 @@
             </section>
         </div>
         <div id="toast" class="toast"></div>
+        <div id="documentViewerModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="documentViewerTitle">
+            <section class="invoice" style="max-width:900px;max-height:88vh;overflow:auto">
+                <div class="panel-head">
+                    <div><p class="eyebrow">DOCUMENTO · VISTA PREVIA</p><h2 id="documentViewerTitle">Documento</h2></div>
+                    <button class="btn outline" type="button" onclick="closeDocumentViewer()">× Cerrar</button>
+                </div>
+                <div id="documentViewerContent" style="margin-top:18px"></div>
+                <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:20px">
+                    <button class="btn outline" type="button" onclick="downloadPreviewDocument()">⇩ Descargar ejemplo</button>
+                    <button class="btn primary" type="button" onclick="closeDocumentViewer()">Listo</button>
+                </div>
+            </section>
+        </div>
         <script>
             const DEMO_STORAGE_KEY = "saferoom-demo-state";
-            const DEMO_SCHEMA_VERSION = 5;
+            const DEMO_SCHEMA_VERSION = 9;
             const seedState = {
                 schemaVersion: DEMO_SCHEMA_VERSION,
                 boxes: [
@@ -3747,7 +3861,10 @@
                     { id: "queue-2", tenantId: "tenant-blanca", authorizationId: null, contractId: "contract-0141", direction: "Entrada", status: "Pendiente", createdAt: "2026-10-27T09:15:00" },
                     { id: "queue-3", tenantId: "tenant-daniela", authorizationId: null, contractId: null, direction: "Entrada", status: "Requiere revisión", createdAt: "2026-10-27T09:02:00" },
                 ],
-                accessEvents: [],
+                accessEvents: [
+                    { id: "access-entry-c4", tenantId: "tenant-mariana", contractId: "contract-0148", authorizationId: null, direction: "Entrada", status: "Confirmado", reason: "Acceso confirmado por encargado de bóveda", confirmedBy: "Sergio Paredes", occurredAt: "2026-10-27T10:04:00", image: "Referencia biométrica simulada" },
+                    { id: "access-exit-c4", entryId: "access-entry-c4", tenantId: "tenant-mariana", contractId: "contract-0148", authorizationId: null, direction: "Salida", status: "Confirmado", reason: "Salida firmada en demo", signature: "Mariana López", occurredAt: "2026-10-27T10:18:00" },
+                ],
                 operations: [],
                 auditLog: [
                     { id: "audit-1", occurredAt: "2026-10-27T09:42:00", user: "Andrea Castillo", action: "Creó solicitud", entity: "SOL-0032", result: "Correcto" },
@@ -3756,9 +3873,11 @@
                 users: [
                     { id: "user-andrea", name: "Andrea Castillo", email: "andrea.castillo@saferoom.mx", role: "Administrador", status: "Activo" },
                     { id: "user-marco", name: "Marco Rodríguez", email: "marco.rodriguez@saferoom.mx", role: "Recepción", status: "Activo" },
+                    { id: "user-boveda", name: "Sergio Paredes", email: "boveda@saferoom.mx", role: "Encargado de bóveda", status: "Activo", permissions: ["access"] },
+                    { id: "user-c4", name: "Valeria Cárdenas", email: "c4@saferoom.mx", role: "Operador C4", status: "Activo", permissions: ["door-control"] },
                 ],
                 settings: { availabilityAlert: "Activa", availabilityLimit: "25%", availabilityMessage: "Disponibilidad de cajas por debajo del límite" },
-                ui: { selectedTenantId: "tenant-mariana", selectedContractId: "contract-0148", selectedRequestId: null, draft: null },
+                ui: { selectedTenantId: "tenant-mariana", selectedContractId: "contract-0148", selectedRequestId: null, draft: null, activeProfile: "admin" },
             };
             const clone = (value) => structuredClone(value);
             const validState = (value) => value && value.schemaVersion === DEMO_SCHEMA_VERSION && ["boxes", "tenants", "requests", "contracts", "movements", "documents", "accessQueue", "accessEvents", "operations", "auditLog", "users"].every((key) => Array.isArray(value[key])) && value.ui;
@@ -3778,12 +3897,6 @@
                     flash("No fue posible guardar los cambios de la demo en este navegador.");
                 }
             }
-            const fmt = (n) =>
-                new Intl.NumberFormat("es-MX", {
-                    style: "currency",
-                    currency: "MXN",
-                    maximumFractionDigits: 0,
-                }).format(n);
             const title = {
                 home: "Vista general",
                 requests: "Solicitudes",
@@ -3825,910 +3938,6 @@
             const tenantTabs = ["Resumen", "Generales", "Domicilio", "Laboral y fiscal", "Autorizados", "Cajas", "Contratos", "Facturas", "Documentos", "Accesos"];
             let currentTenantTab = tenantTabs.includes(initialTenantTab) ? initialTenantTab : "Resumen";
             const navParent = { form: "requests", contract: "contracts", tenant: "tenants" };
-            function routeFor(id, tab = null) {
-                const url = new URL(viewRoutes[id] || viewRoutes.home, window.location.origin);
-                if (id === "tenant" && tab && tab !== "Resumen") url.searchParams.set("tab", tab);
-                return `${url.pathname}${url.search}`;
-            }
-            function showView(id, options = {}) {
-                if (!document.getElementById(id)) id = "home";
-                document
-                    .querySelectorAll(".view")
-                    .forEach((x) => x.classList.remove("on"));
-                document.getElementById(id).classList.add("on");
-                const activeNav = navParent[id] || id;
-                document
-                    .querySelectorAll(".nav")
-                    .forEach((x) =>
-                        x.classList.toggle("on", x.dataset.view === activeNav),
-                    );
-                document.getElementById("pageTitle").textContent = title[id];
-                document.getElementById("side").classList.remove("open");
-                if (id === "boxes") renderBoxes();
-                if (id === "requests") renderRequests();
-                if (id === "home") renderHome();
-                if (id === "contracts") renderContracts();
-                if (id === "reports") renderHome();
-                if (id === "reports") renderReport();
-                if (id === "finance") renderFinance();
-                if (id === "access") {
-                    renderAccessQueue();
-                    renderAuditLog();
-                }
-                if (id === "users") renderRolePermissions();
-                if (id === "renewals") renderRenewal();
-                if (id === "cancellations") renderCancellation();
-                if (id === "tenant") renderTenant(options.tab || currentTenantTab, { sync: false });
-                if (options.sync !== false) {
-                    const target = routeFor(id, id === "tenant" ? (options.tab || currentTenantTab) : null);
-                    if (`${location.pathname}${location.search}` !== target) history.pushState({ view: id }, "", target);
-                }
-                if (options.scroll !== false) scrollTo({ top: 0, behavior: "smooth" });
-            }
-            document
-                .querySelectorAll(".nav")
-                .forEach((x) => (x.onclick = () => showView(x.dataset.view)));
-            window.addEventListener("popstate", () => {
-                const entry = Object.entries(viewRoutes).find(([, route]) => new URL(route, location.origin).pathname === location.pathname);
-                const view = entry ? entry[0] : "home";
-                showView(view, { sync: false, scroll: false, tab: new URLSearchParams(location.search).get("tab") || "Resumen" });
-            });
-            function badge(s) {
-                return `<span class="tag ${["Disponible", "Contratada", "Confirmado", "Correcto", "Registrado", "Activo"].includes(s) ? "green" : s === "Nueva" || s === "Simulado" ? "blue" : ["En revisión", "Reservada", "Pendiente", "Requiere revisión", "Revisión requerida"].includes(s) ? "amber" : "slate"}">${s}</span>`;
-            }
-            function renderRequests() {
-                let q = document
-                    .getElementById("requestSearch")
-                    .value.toLowerCase();
-                document.getElementById("requestRows").innerHTML = requests
-                    .filter((r) => r.join(" ").toLowerCase().includes(q))
-                    .map(
-                        (r) =>
-                            `<tr><td><b>${r[0]}</b></td><td><b>${r[1]}</b><br><small class="muted">${r[5]}</small></td><td>${r[2]}</td><td class="muted">${r[3]}</td><td>${badge(r[4])}</td><td><button class="btn outline" onclick="openRequest('${r[0]}')">Abrir</button></td></tr>`,
-                    )
-                    .join("");
-            }
-            function openRequest(id) {
-                let r = requests.find((x) => x[0] === id);
-                draft = { name: r[1], email: r[5], phone: r[6], boxId: "" };
-                document.getElementById("fName").value = draft.name;
-                document.getElementById("fEmail").value = draft.email;
-                document.getElementById("fPhone").value = draft.phone;
-                showView("form");
-            }
-            function startRequest() {
-                draft = {};
-                [
-                    "fName",
-                    "fEmail",
-                    "fPhone",
-                    "fRfc",
-                    "fCurp",
-                    "fBirthDate",
-                    "fGender",
-                    "fNationality",
-                    "fCivilStatus",
-                    "fSource",
-                    "fStreet",
-                    "fNeighborhood",
-                    "fPostalCode",
-                    "fMunicipality",
-                    "fState",
-                    "fReference",
-                    "fReferencePhone",
-                    "fCompany",
-                    "fJobTitle",
-                    "fTaxRegime",
-                    "fCfdiUse",
-                    "fBillingEmail",
-                    "fAuth",
-                    "fAuthPhone",
-                ].forEach((i) => (document.getElementById(i).value = ""));
-                selected();
-                showView("form");
-            }
-            function renderBoxes() {
-                let f = document.getElementById("boxStatus").value,
-                    z = document.getElementById("boxSize").value;
-                document.getElementById("selectionMode").style.display =
-                    draft && Object.keys(draft).length ? "block" : "none";
-                document.getElementById("boxGrid").innerHTML = boxes
-                    .filter(
-                        (b) =>
-                            (f === "Todas" || b[3] === f) &&
-                            (z === "Todas" || b[1] === z),
-                    )
-                    .map(
-                        (b) =>
-                            `<button class="box-card ${b[3] === "Disponible" ? "available" : ""} ${draft.boxId === b[0] ? "chosen" : ""}" ${b[3] !== "Disponible" ? "disabled" : ""} onclick="selectBox('${b[0]}')"><span class="tag ${tone(b[3])}">${b[3]}</span><b>▣ ${b[0]}</b><small class="muted">${b[2]} · Tamaño ${b[1]}</small><p style="margin:14px 0 0;border-top:1px solid #0000000b;padding-top:8px;font-size:12px">Renta base <strong style="float:right">${fmt(b[4])}</strong></p></button>`,
-                    )
-                    .join("");
-            }
-            function tone(s) {
-                return s === "Disponible"
-                    ? "green"
-                    : s === "Ocupada"
-                      ? "slate"
-                      : s === "Reservada"
-                        ? "amber"
-                        : "blue";
-            }
-            function selectBox(id) {
-                let b = boxes.find((x) => x[0] === id);
-                if (!b || b[3] !== "Disponible") return;
-                draft.boxId = id;
-                selected();
-                flash(`Caja ${id} seleccionada.`);
-                showView("form");
-            }
-            function selected() {
-                let b = boxes.find((x) => x[0] === draft.boxId),
-                    el = document.getElementById("selectedBox"),
-                    no = document.getElementById("noBox");
-                if (b) {
-                    el.style.display = "block";
-                    no.style.display = "none";
-                    el.innerHTML = `<b style="font-size:19px">${b[0]}</b><p class="muted">${b[2]} · Tamaño ${b[1]}</p><strong>${fmt(b[4])} / mes</strong>`;
-                } else {
-                    el.style.display = "none";
-                    no.style.display = "block";
-                }
-            }
-            function createRequest() {
-                draft.name = document.getElementById("fName").value.trim();
-                draft.email = document.getElementById("fEmail").value.trim();
-                draft.phone = document.getElementById("fPhone").value.trim();
-                draft.rfc = document.getElementById("fRfc").value.trim();
-                draft.curp = document.getElementById("fCurp").value.trim();
-                draft.birthDate = document.getElementById("fBirthDate").value;
-                draft.gender = document.getElementById("fGender").value;
-                draft.nationality = document
-                    .getElementById("fNationality")
-                    .value.trim();
-                draft.civilStatus =
-                    document.getElementById("fCivilStatus").value;
-                draft.source = document.getElementById("fSource").value;
-                draft.street = document.getElementById("fStreet").value.trim();
-                draft.neighborhood = document
-                    .getElementById("fNeighborhood")
-                    .value.trim();
-                draft.postalCode = document
-                    .getElementById("fPostalCode")
-                    .value.trim();
-                draft.municipality = document
-                    .getElementById("fMunicipality")
-                    .value.trim();
-                draft.state = document.getElementById("fState").value.trim();
-                draft.reference = document
-                    .getElementById("fReference")
-                    .value.trim();
-                draft.referencePhone = document
-                    .getElementById("fReferencePhone")
-                    .value.trim();
-                draft.company = document
-                    .getElementById("fCompany")
-                    .value.trim();
-                draft.jobTitle = document
-                    .getElementById("fJobTitle")
-                    .value.trim();
-                draft.taxRegime = document.getElementById("fTaxRegime").value;
-                draft.cfdiUse = document.getElementById("fCfdiUse").value;
-                draft.billingEmail = document
-                    .getElementById("fBillingEmail")
-                    .value.trim();
-                draft.auth = document.getElementById("fAuth").value.trim();
-                draft.authPhone = document
-                    .getElementById("fAuthPhone")
-                    .value.trim();
-                if (!draft.name || !draft.email)
-                    return flash("Completa nombre y correo para continuar.");
-                if (!draft.boxId) return showView("boxes");
-                let b = boxes.find((x) => x[0] === draft.boxId);
-                requests.unshift([
-                    `SOL-${String(33 + requests.length).padStart(4, "0")}`,
-                    draft.name,
-                    `${b[0]} · ${b[1]}`,
-                    "Ahora",
-                    "En revisión",
-                    draft.email,
-                    draft.phone,
-                ]);
-                document.getElementById("cTenant").value = draft.name;
-                document.getElementById("cBox").value =
-                    `${b[0]} · ${b[2]} · ${b[1]}`;
-                document.getElementById("cAuth").textContent =
-                    draft.auth || "Sin persona autorizada registrada";
-                document.getElementById("cAuthPhone").textContent =
-                    draft.authPhone ||
-                    "Puedes completar este dato en la solicitud.";
-                document.getElementById("rent").value = b[4];
-                document.getElementById("deposit").value = b[4];
-                document.getElementById("cKeysConfirmed").checked = false;
-                document.getElementById("cReviewConfirmed").checked = false;
-                updateContractDates();
-                calc();
-                showView("contract");
-            }
-            function updateContractDates() {
-                const start = document.getElementById("cStart").value;
-                const duration =
-                    Number(
-                        document
-                            .getElementById("cDuration")
-                            .value.split(" ")[0],
-                    ) || 12;
-                if (!start) return;
-                const date = new Date(`${start}T12:00:00`);
-                date.setMonth(date.getMonth() + duration);
-                date.setDate(date.getDate() - 1);
-                document.getElementById("cEnd").value = date
-                    .toISOString()
-                    .slice(0, 10);
-                refreshSafeDate(document.getElementById("cEnd"));
-            }
-            function requestContractConfirmation() {
-                if (
-                    !document.getElementById("cKeysConfirmed").checked ||
-                    !document.getElementById("cReviewConfirmed").checked
-                ) {
-                    return flash(
-                        "Confirma la revisión de datos y la entrega de dos llaves para continuar.",
-                    );
-                }
-                const box = boxes.find((x) => x[0] === draft.boxId);
-                document.getElementById("contractConfirmSummary").innerHTML =
-                    `<b>${draft.name}</b><br><span class="muted">Caja ${box[0]} · ${document.getElementById("cDuration").value} · ${document.getElementById("cStart").value} a ${document.getElementById("cEnd").value}</span><p style="margin:10px 0 0"><b>Total inicial: ${document.getElementById("sumTotal").textContent}</b></p>`;
-                document.getElementById("contractConfirm").classList.add("on");
-            }
-            function closeContractConfirmation() {
-                document
-                    .getElementById("contractConfirm")
-                    .classList.remove("on");
-            }
-            function calc() {
-                let r = +document.getElementById("rent").value || 0,
-                    d = +document.getElementById("deposit").value || 0,
-                    i = Math.round(r * 0.16);
-                document.getElementById("sumRent").textContent = fmt(r);
-                document.getElementById("sumDeposit").textContent = fmt(d);
-                document.getElementById("sumIva").textContent = fmt(i);
-                document.getElementById("sumTotal").textContent = fmt(
-                    r + d + i,
-                );
-            }
-            function saveContract() {
-                let b = boxes.find((x) => x[0] === draft.boxId);
-                if (!b) return showView("boxes");
-                closeContractConfirmation();
-                b[3] = "Ocupada";
-                requests.forEach((r) => {
-                    if (r[1] === draft.name) r[4] = "Contratada";
-                });
-                activeTenant = {
-                    name: draft.name,
-                    email: draft.email,
-                    phone: draft.phone,
-                    rfc: draft.rfc || "XAXX010101000",
-                    box: b[0],
-                    contract: `CT-2026-${150 + requests.length}`,
-                    auth: draft.auth,
-                    authPhone: draft.authPhone,
-                    beneficiary: document
-                        .getElementById("cBeneficiary")
-                        .value.trim(),
-                    support: document.getElementById("cSupport").value.trim(),
-                    duration: document.getElementById("cDuration").value,
-                    startDate: document.getElementById("cStart").value,
-                    endDate: document.getElementById("cEnd").value,
-                    paymentDay: document.getElementById("cPaymentDay").value,
-                    paymentMethod:
-                        document.getElementById("cPaymentMethod").value,
-                    rent: Number(document.getElementById("rent").value) || 0,
-                    deposit:
-                        Number(document.getElementById("deposit").value) || 0,
-                };
-                renderTenant();
-                logAudit("Generó contrato", activeTenant.contract, "Correcto");
-                flash(
-                    `Contrato ${activeTenant.contract} generado; caja ${b[0]} ocupada.`,
-                );
-                showView("tenant");
-            }
-            function renderTenant(tab = currentTenantTab, options = {}) {
-                let t = activeTenant;
-                document.getElementById("tenantName").textContent = t.name;
-                document.getElementById("tenantInitials").textContent = t.name
-                    .split(" ")
-                    .slice(0, 2)
-                    .map((x) => x[0])
-                    .join("");
-                document.getElementById("tenantContract").textContent =
-                    `Arrendatario · ${t.contract}`;
-                const safeTab = tenantTabs.includes(tab) ? tab : "Resumen";
-                tenantTab(
-                    safeTab,
-                    Array.from(document.querySelectorAll("#tenantTabs button")).find((button) => button.textContent.trim() === safeTab),
-                    { sync: options.sync !== false },
-                );
-            }
-            function tenantTab(tab, btn, options = {}) {
-                if (!tenantTabs.includes(tab)) tab = "Resumen";
-                currentTenantTab = tab;
-                document
-                    .querySelectorAll("#tenantTabs button")
-                    .forEach((x) => x.classList.remove("on"));
-                (btn || document.querySelector("#tenantTabs button")).classList.add("on");
-                let t = activeTenant,
-                    b = boxes.find((x) => x[0] === t.box);
-                document.getElementById("tenantSectionTitle").textContent =
-                    tab === "Resumen" ? "Información de contacto" : tab;
-                const field = (label, value) =>
-                    `<div class="field"><label>${label}</label><input value="${value || "Sin registro"}" readonly></div>`;
-                const note = (title, text) =>
-                    `<div class="notice wide"><b>${title}</b><br>${text}</div>`;
-                const views = {
-                    Resumen:
-                        field("CORREO", t.email) +
-                        field("TELÉFONO", t.phone) +
-                        field("RFC", t.rfc) +
-                        field("PERSONA AUTORIZADA", t.auth),
-                    Generales:
-                        field("CURP", t.curp) +
-                        field("FECHA DE NACIMIENTO", t.birthDate) +
-                        field("SEXO", t.gender) +
-                        field("NACIONALIDAD", t.nationality) +
-                        field("ESTADO CIVIL", t.civilStatus) +
-                        field("CÓMO SE ENTERÓ", t.source),
-                    Domicilio:
-                        field("CALLE Y NÚMERO", t.street) +
-                        field("COLONIA", t.neighborhood) +
-                        field("CÓDIGO POSTAL", t.postalCode) +
-                        field("MUNICIPIO", t.municipality) +
-                        field("ESTADO", t.state) +
-                        field("REFERENCIA", t.reference),
-                    "Laboral y fiscal":
-                        field("EMPRESA / RAZÓN SOCIAL", t.company) +
-                        field("PUESTO / ACTIVIDAD", t.jobTitle) +
-                        field("RÉGIMEN FISCAL", t.taxRegime) +
-                        field("USO CFDI", t.cfdiUse) +
-                        field("CORREO DE FACTURACIÓN", t.billingEmail),
-                    Autorizados:
-                        field("NOMBRE", t.auth) +
-                        field("TELÉFONO", t.authPhone) +
-                        field("BENEFICIARIO", t.beneficiary) +
-                        field("PERSONAL DE APOYO", t.support) +
-                        note(
-                            "Acceso autorizado",
-                            "La capacidad de validar vigencia y biometría permanece como simulación hasta definir hardware y reglas.",
-                        ),
-                    Cajas: note(
-                        "Historial de cajas",
-                        `Caja activa: <b>${t.box}</b>. La posibilidad de varias cajas activas requiere validación operativa.`,
-                    ),
-                    Contratos:
-                        field("FOLIO", t.contract) +
-                        field(
-                            "VIGENCIA",
-                            `${t.startDate || "Sin registro"} a ${t.endDate || "Sin registro"}`,
-                        ) +
-                        field("DURACIÓN", t.duration) +
-                        field("DÍA DE PAGO", t.paymentDay) +
-                        note(
-                            "Historial contractual",
-                            "Renovaciones, cambios y cancelaciones se consultan desde sus módulos de demostración.",
-                        ),
-                    Facturas:
-                        field("RENTA", t.rent ? fmt(t.rent) : "Sin registro") +
-                        field(
-                            "DEPÓSITO",
-                            t.deposit ? fmt(t.deposit) : "Sin registro",
-                        ) +
-                        field("FORMA DE PAGO", t.paymentMethod) +
-                        note(
-                            "Facturación",
-                            "Perfil fiscal y CFDI se muestran como datos de referencia; no hay timbrado ni conciliación conectados.",
-                        ),
-                    Documentos: note(
-                        "Expediente",
-                        "Contrato, recibos e identificación forman parte del alcance, pero el almacenamiento documental es una simulación.",
-                    ),
-                    Accesos: note(
-                        "Historial de accesos",
-                        "Los registros de entrada/salida y la biometría se muestran como capacidad futura simulada.",
-                    ),
-                };
-                document.getElementById("tenantMain").innerHTML =
-                    views[tab] ||
-                    note(tab, "Información pendiente de configuración.");
-                document.getElementById("tenantBox").innerHTML = b
-                    ? `<div class="selected"><b style="font-size:22px">${b[0]}</b><p class="muted">${b[2]} · Tamaño ${b[1]}</p><p>Renta mensual: <b>${fmt(b[4])}</b><br>Llaves: <b>2 asignadas</b></p></div>`
-                    : `<div class="notice"><b>Sin caja activa</b><br>La caja fue liberada durante una cancelación simulada.</div>`;
-                if (options.sync !== false && document.getElementById("tenant").classList.contains("on")) {
-                    const target = routeFor("tenant", tab);
-                    if (`${location.pathname}${location.search}` !== target) history.pushState({ view: "tenant", tab }, "", target);
-                }
-            }
-            function renderHome() {
-                let n = boxes.filter((x) => x[3] === "Ocupada").length;
-                document.getElementById("occupancy").textContent =
-                    Math.round((n / boxes.length) * 100) + "%";
-                document.getElementById("occDetail").textContent =
-                    `${n} de ${boxes.length} cajas ocupadas`;
-                document.getElementById("contractsCount").textContent =
-                    148 + (activeTenant.name !== "Mariana López Canto" ? 1 : 0);
-                document.getElementById("reportOccupied").textContent = n;
-                document.getElementById("reportRequests").textContent =
-                    requests.length;
-                document.getElementById("statusBars").innerHTML = [
-                    "Disponible",
-                    "Ocupada",
-                    "Reservada",
-                    "Mantenimiento",
-                ]
-                    .map((s) => {
-                        let n = boxes.filter((x) => x[3] === s).length;
-                        return `<div style="margin:13px 0"><div style="display:flex;justify-content:space-between;font-size:12px"><span>${s}</span><b>${n}</b></div><div class="bar"><i style="width:${(n / boxes.length) * 100}%;background:${s === "Disponible" ? "#168b62" : s === "Ocupada" ? "#64748b" : s === "Reservada" ? "#e9a522" : "#6693c5"}"></i></div></div>`;
-                    })
-                    .join("");
-            }
-            function renderContracts() {
-                document.getElementById("contractRows").innerHTML = [
-                    [
-                        activeTenant.contract,
-                        activeTenant.name,
-                        activeTenant.box,
-                        "01 nov 2026 · 12 meses",
-                        "Factura simulada",
-                        "Activo",
-                    ],
-                    [
-                        "CT-2026-0148",
-                        "Mariana López Canto",
-                        "A-101",
-                        "13 nov 2025 · 12 meses",
-                        "Pendiente",
-                        "Activo",
-                    ],
-                    [
-                        "CT-2026-0149",
-                        "Carlos Méndez Ruiz",
-                        "A-105",
-                        "20 dic 2025 · 12 meses",
-                        "Facturada",
-                        "Activo",
-                    ],
-                ]
-                    .map(
-                        (x) =>
-                            `<tr>${x.map((v, i) => `<td>${i === 5 ? badge(v) : v}</td>`).join("")}</tr>`,
-                    )
-                    .join("");
-            }
-            function logAudit(action, entity, result = "Correcto") {
-                auditLog.unshift([
-                    new Date().toLocaleString("es-MX", {
-                        dateStyle: "short",
-                        timeStyle: "short",
-                    }),
-                    "Andrea Castillo",
-                    action,
-                    entity,
-                    result,
-                ]);
-                renderAuditLog();
-            }
-            function renderAuditLog() {
-                const body = document.getElementById("auditRows");
-                if (!body) return;
-                body.innerHTML = auditLog
-                    .map(
-                        (row) =>
-                            `<tr><td>${row[0]}</td><td>${row[1]}</td><td>${row[2]}</td><td>${row[3]}</td><td>${badge(row[4])}</td></tr>`,
-                    )
-                    .join("");
-            }
-            function renderAccessQueue() {
-                const target = document.getElementById("accessQueue");
-                if (!target) return;
-                const query = document
-                    .getElementById("accessSearch")
-                    .value.toLowerCase();
-                const filter = document.getElementById("accessFilter").value;
-                target.innerHTML =
-                    accessQueue
-                        .filter(
-                            (item) =>
-                                item.status !== "Confirmado" &&
-                                (filter === "Todas" || item.type === filter) &&
-                                `${item.name} ${item.box}`
-                                    .toLowerCase()
-                                    .includes(query),
-                        )
-                        .map(
-                            (item) =>
-                                `<div class="activity"><span><b>${item.name}</b><br><small class="muted">Caja ${item.box} · ${item.type} · ${item.contract}</small></span><span>${badge(item.status)} <button class="btn primary" style="margin-left:8px" onclick="selectAccess('${item.id}')">Validar</button></span></div>`,
-                        )
-                        .join("") ||
-                    `<div class="empty">No hay accesos pendientes con esos filtros.</div>`;
-            }
-            function selectAccess(id) {
-                const item = accessQueue.find((x) => x.id === id);
-                const contractValid = item.contract !== "Sin contrato";
-                document.getElementById("accessVerification").innerHTML =
-                    `<b>${item.name}</b><br><span class="muted">${item.type} · Caja ${item.box}</span><div class="summary-row"><span>Contrato</span><b>${item.contract}</b></div><div class="summary-row"><span>Resultado de validación</span><b>${contractValid ? "Vigente en demo" : "Requiere revisión"}</b></div><div style="margin-top:14px">${contractValid ? `<button class="btn primary" onclick="confirmAccess('${id}')">Confirmar acceso</button>` : `<button class="btn outline" onclick="denyAccess('${id}')">Marcar excepción</button>`}</div>`;
-            }
-            function confirmAccess(id) {
-                const item = accessQueue.find((x) => x.id === id);
-                item.status = "Confirmado";
-                logAudit(
-                    "Confirmó acceso",
-                    `${item.name} · ${item.box}`,
-                    "Confirmado",
-                );
-                renderAccessQueue();
-                document.getElementById("accessVerification").innerHTML =
-                    `<b>Acceso confirmado</b><br><span class="muted">${item.name} quedó registrado solo en esta demostración.</span>`;
-                flash("Acceso confirmado (simulación).");
-            }
-            function denyAccess(id) {
-                const item = accessQueue.find((x) => x.id === id);
-                item.status = "Excepción";
-                logAudit(
-                    "Marcó excepción de acceso",
-                    `${item.name} · ${item.box}`,
-                    "Revisión requerida",
-                );
-                renderAccessQueue();
-                document.getElementById("accessVerification").innerHTML =
-                    `<b>Excepción registrada</b><br><span class="muted">La persona no se autoriza automáticamente; requiere revisión operativa.</span>`;
-                flash("Excepción de acceso registrada (simulación).");
-            }
-            function renderRolePermissions() {
-                const target = document.getElementById("rolePermissions");
-                if (!target) return;
-                const role = document.getElementById("rolePreview").value;
-                const roles = {
-                    Administrador: [
-                        [
-                            "Operación",
-                            "Crear, editar, renovar y cancelar contratos",
-                        ],
-                        ["Seguridad", "Confirmar accesos y revisar bitácora"],
-                        ["Finanzas", "Consultar movimientos y reportes"],
-                        [
-                            "Configuración",
-                            "Gestionar catálogos, alertas y perfiles",
-                        ],
-                    ],
-                    Recepción: [
-                        ["Operación", "Solicitudes, arrendatarios y contratos"],
-                        [
-                            "Seguridad",
-                            "Solicitar y confirmar accesos según reglas",
-                        ],
-                        ["Finanzas", "Consulta limitada de facturas"],
-                        ["Configuración", "Sin acceso a parámetros críticos"],
-                    ],
-                    Finanzas: [
-                        ["Operación", "Consulta de contratos"],
-                        ["Seguridad", "Sin confirmación de accesos"],
-                        [
-                            "Finanzas",
-                            "Facturas, garantías, otros ingresos y reportes",
-                        ],
-                        ["Configuración", "Sin edición de perfiles"],
-                    ],
-                };
-                target.innerHTML = roles[role]
-                    .map(
-                        (item) =>
-                            `<div class="notice"><b>${item[0]}</b><br>${item[1]}</div>`,
-                    )
-                    .join("");
-            }
-            function previewDocument(type) {
-                const contract = activeTenant.contract || "CT-2026-0148";
-                const box = activeTenant.box || "A-101";
-                const details = {
-                    "Contrato de arrendamiento": `Arrendatario: <b>${activeTenant.name}</b><br>Contrato: <b>${contract}</b><br>Caja: <b>${box}</b><br>Vigencia y condiciones: datos de demostración.`,
-                    "Constancia de entrega de llaves": `Caja: <b>${box}</b><br>Llaves entregadas: <b>2</b><br>Responsable y firma: simulados.`,
-                    "Recibo de depósito en garantía": `Arrendatario: <b>${activeTenant.name}</b><br>Depósito de demostración: <b>${fmt(activeTenant.deposit || 1290)}</b><br>Sin efecto fiscal o legal.`,
-                    "Expediente de arrendatario": `Documentos previstos: identificación, contrato, comprobantes y formatos. El almacenamiento documental aún no está conectado.`,
-                };
-                document.getElementById("documentPreviewTitle").textContent =
-                    type;
-                document.getElementById("documentPreview").innerHTML =
-                    details[type];
-                flash(`${type}: vista previa actualizada.`);
-            }
-            function renderFinance() {
-                const body = document.getElementById("financeRows");
-                if (!body) return;
-                body.innerHTML = financeMovements
-                    .map(
-                        (m) =>
-                            `<tr><td>${m[0]}</td><td>${m[1]}</td><td>${m[2]}</td><td>${m[3]}</td><td>${fmt(m[4])}</td><td>${badge(m[5])}</td></tr>`,
-                    )
-                    .join("");
-            }
-            function registerOtherIncome() {
-                const concept = document.getElementById("incomeConcept").value;
-                const tenant = document.getElementById("incomeTenant").value;
-                const amount = Number(
-                    document.getElementById("incomeAmount").value,
-                );
-                const method = document.getElementById("incomeMethod").value;
-                if (!amount || amount <= 0)
-                    return flash("Indica un importe mayor que cero.");
-                financeMovements.unshift([
-                    `OI-2026-${String(33 + financeMovements.length).padStart(4, "0")}`,
-                    tenant,
-                    concept,
-                    method,
-                    amount,
-                    "Registrado",
-                ]);
-                renderFinance();
-                logAudit(
-                    "Registró otro ingreso",
-                    `${concept} · ${fmt(amount)}`,
-                    "Registrado",
-                );
-                flash("Otro ingreso registrado en la demostración.");
-            }
-            function renderReport() {
-                const type = document.getElementById("reportType").value;
-                const meta = {
-                    general: [
-                        "Vista previa: reporte general para consejo",
-                        ["Indicador", "Resultado"],
-                        [
-                            ["Solicitudes recibidas", requests.length],
-                            [
-                                "Cajas ocupadas",
-                                boxes.filter((x) => x[3] === "Ocupada").length,
-                            ],
-                            ["Contratos activos", 148],
-                            ["Ingresos estimados", "$327,900"],
-                        ],
-                    ],
-                    availability: [
-                        "Vista previa: disponibilidad de cajas",
-                        ["Estado", "Cantidad"],
-                        [
-                            "Disponible",
-                            "Ocupada",
-                            "Reservada",
-                            "Mantenimiento",
-                        ].map((s) => [
-                            s,
-                            boxes.filter((x) => x[3] === s).length,
-                        ]),
-                    ],
-                    access: [
-                        "Vista previa: accesos por arrendatario",
-                        ["Persona", "Caja", "Tipo", "Estado"],
-                        [
-                            [
-                                "José Luis López",
-                                "A-101",
-                                "Autorizado",
-                                "Simulado",
-                            ],
-                            ["Rejón Pérez", "D-127", "Titular", "Simulado"],
-                        ],
-                    ],
-                    finance: [
-                        "Vista previa: ingresos y garantías",
-                        ["Concepto", "Importe", "Estado"],
-                        financeMovements.map((m) => [m[2], fmt(m[4]), m[5]]),
-                    ],
-                }[type];
-                document.getElementById("reportPreviewTitle").textContent =
-                    meta[0];
-                document.getElementById("reportPreviewHead").innerHTML =
-                    `<tr>${meta[1].map((x) => `<th>${x}</th>`).join("")}</tr>`;
-                document.getElementById("reportPreviewRows").innerHTML = meta[2]
-                    .map(
-                        (row) =>
-                            `<tr>${row.map((x) => `<td>${x}</td>`).join("")}</tr>`,
-                    )
-                    .join("");
-            }
-            function exportReport() {
-                const name =
-                    document.getElementById("reportType").options[
-                        document.getElementById("reportType").selectedIndex
-                    ].text;
-                flash(`Exportación XLS simulada: ${name}.`);
-            }
-            function renderRenewal() {
-                const current =
-                    boxes.find((x) => x[0] === activeTenant.box) || boxes[0];
-                const mode = document.getElementById("rMode").value;
-                const requestedBox = document.getElementById("rBox").value;
-                const next =
-                    mode === "move" && requestedBox
-                        ? boxes.find((x) => x[0] === requestedBox)
-                        : current;
-                const rent =
-                    Number(document.getElementById("rRent").value) ||
-                    current[4];
-                const duration =
-                    Number(document.getElementById("rDuration").value) || 12;
-                const start = document.getElementById("rStart").value;
-                const end = new Date(`${start}T12:00:00`);
-                end.setMonth(end.getMonth() + duration);
-                end.setDate(end.getDate() - 1);
-                const delta = rent - current[4];
-                document.getElementById("renewalSummary").innerHTML =
-                    `<p class="muted">CONTRATO ACTUAL</p><b>${activeTenant.contract}</b><div class="summary-row"><span>Caja actual</span><b>${current[0]} · ${current[1]}</b></div><div class="summary-row"><span>${mode === "move" ? "Nueva caja" : "Caja a conservar"}</span><b>${next[0]} · ${next[1]}</b></div><div class="summary-row"><span>Vigencia nueva</span><b>${duration} meses · hasta ${end.toISOString().slice(0, 10)}</b></div><div class="summary-row"><span>Renta actual</span><b>${fmt(current[4])}</b></div><div class="summary-row"><span>Nueva renta</span><b>${fmt(rent)}</b></div><div class="summary-total"><span>Diferencia mensual</span><span style="float:right">${delta >= 0 ? "+" : ""}${fmt(delta)}</span></div>`;
-            }
-            function requestRenewalConfirmation() {
-                if (!document.getElementById("rReviewed").checked)
-                    return flash(
-                        "Confirma la revisión de caja, llaves, importes y documentos.",
-                    );
-                const mode = document.getElementById("rMode").value;
-                const requestedBox = document.getElementById("rBox").value;
-                if (mode === "move" && !requestedBox)
-                    return flash(
-                        "Selecciona una nueva caja disponible para realizar el cambio.",
-                    );
-                const next =
-                    mode === "move"
-                        ? boxes.find((x) => x[0] === requestedBox)
-                        : boxes.find((x) => x[0] === activeTenant.box);
-                if (next[3] === "Ocupada")
-                    return flash(
-                        "La caja seleccionada ya no está disponible en esta demo.",
-                    );
-                document.getElementById("lifecycleConfirmEyebrow").textContent =
-                    "RENOVACIÓN · DEMO";
-                document.getElementById("lifecycleConfirmTitle").textContent =
-                    mode === "move"
-                        ? "Confirmar renovación y cambio de caja"
-                        : "Confirmar renovación";
-                document.getElementById("lifecycleConfirmText").textContent =
-                    "Se actualizarán condiciones de vigencia y renta; si corresponde, se liberará la caja anterior y se ocupará la nueva.";
-                document.getElementById("lifecycleConfirmSummary").innerHTML =
-                    document.getElementById("renewalSummary").innerHTML;
-                document.getElementById("lifecycleConfirmAction").onclick =
-                    completeRenewal;
-                document.getElementById("lifecycleConfirm").classList.add("on");
-            }
-            function completeRenewal() {
-                const oldBox = boxes.find((x) => x[0] === activeTenant.box);
-                const mode = document.getElementById("rMode").value;
-                const requestedBox = document.getElementById("rBox").value;
-                if (mode === "move") {
-                    const next = boxes.find((x) => x[0] === requestedBox);
-                    oldBox[3] = "Disponible";
-                    next[3] = "Ocupada";
-                    activeTenant.box = next[0];
-                }
-                activeTenant.duration = `${document.getElementById("rDuration").value} meses`;
-                activeTenant.startDate =
-                    document.getElementById("rStart").value;
-                activeTenant.rent =
-                    Number(document.getElementById("rRent").value) || oldBox[4];
-                activeTenant.endDate = "Renovación simulada";
-                closeLifecycleConfirmation();
-                logAudit(
-                    mode === "move"
-                        ? "Renovó contrato y cambió caja"
-                        : "Renovó contrato",
-                    activeTenant.contract,
-                    "Correcto",
-                );
-                renderHome();
-                renderTenant();
-                flash(
-                    mode === "move"
-                        ? "Renovación y cambio de caja simulados correctamente."
-                        : "Renovación simulada correctamente.",
-                );
-                showView("tenant");
-            }
-            function renderCancellation() {
-                const deposit = activeTenant.deposit || 1290;
-                const box = boxes.find((x) => x[0] === activeTenant.box);
-                document.getElementById("cancellationSummary").innerHTML =
-                    `<div class="summary-row"><span>Contrato activo</span><b>${activeTenant.contract}</b></div><div class="summary-row"><span>Caja actual</span><b>${box ? box[0] : "Sin caja"}</b></div><div class="summary-row"><span>Importe de garantía</span><b>${fmt(deposit)}</b></div><div class="summary-row"><span>Llaves reportadas</span><b>${document.getElementById("xKeys").value}</b></div><div class="summary-total"><span>Devolución propuesta</span><span style="float:right">${fmt(deposit)}</span></div>`;
-            }
-            function requestCancellationConfirmation() {
-                if (!document.getElementById("xReviewed").checked)
-                    return flash(
-                        "Confirma la revisión de llaves, garantía y documentos.",
-                    );
-                document.getElementById("lifecycleConfirmEyebrow").textContent =
-                    "CANCELACIÓN · DEMO";
-                document.getElementById("lifecycleConfirmTitle").textContent =
-                    "Confirmar cancelación de contrato";
-                document.getElementById("lifecycleConfirmText").textContent =
-                    "Se simulará la liberación de la caja, la devolución propuesta de garantía y la generación de formatos.";
-                document.getElementById("lifecycleConfirmSummary").innerHTML =
-                    document.getElementById("cancellationSummary").innerHTML;
-                document.getElementById("lifecycleConfirmAction").onclick =
-                    completeCancellation;
-                document.getElementById("lifecycleConfirm").classList.add("on");
-            }
-            function completeCancellation() {
-                const box = boxes.find((x) => x[0] === activeTenant.box);
-                const cancelledContract = activeTenant.contract;
-                if (box) box[3] = "Disponible";
-                activeTenant.contract = "Contrato cancelado · simulación";
-                activeTenant.box = "Sin caja activa";
-                closeLifecycleConfirmation();
-                logAudit("Canceló contrato", cancelledContract, "Simulado");
-                renderHome();
-                renderTenant();
-                flash(
-                    "Cancelación simulada; caja liberada y formatos pendientes de generar.",
-                );
-                showView("tenant");
-            }
-            function closeLifecycleConfirmation() {
-                document
-                    .getElementById("lifecycleConfirm")
-                    .classList.remove("on");
-            }
-            function flash(msg) {
-                let x = document.getElementById("toast");
-                x.textContent = "✓ " + msg;
-                x.style.display = "block";
-                setTimeout(() => (x.style.display = "none"), 3200);
-            }
-            function closeHeaderPanels(except = null) {
-                ["notificationPanel", "profilePanel"].forEach((id) => {
-                    if (id === except) return;
-                    const panel = document.getElementById(id);
-                    const button = document.getElementById(id === "notificationPanel" ? "notificationButton" : "profileButton");
-                    if (panel) panel.hidden = true;
-                    if (button) button.setAttribute("aria-expanded", "false");
-                });
-            }
-            function toggleHeaderPanel(id) {
-                const panel = document.getElementById(id);
-                const button = document.getElementById(id === "notificationPanel" ? "notificationButton" : "profileButton");
-                const shouldOpen = panel.hidden;
-                closeHeaderPanels(id);
-                panel.hidden = !shouldOpen;
-                button.setAttribute("aria-expanded", String(shouldOpen));
-            }
-            function setTheme(dark) {
-                document.body.dataset.theme = dark ? "dark" : "light";
-                const toggle = document.getElementById("themeToggle");
-                if (toggle) toggle.checked = dark;
-                try { localStorage.setItem("saferoom-theme", dark ? "dark" : "light"); } catch (_) {}
-            }
-            function initialiseHeaderControls() {
-                try { setTheme(localStorage.getItem("saferoom-theme") === "dark"); } catch (_) { setTheme(false); }
-                document.addEventListener("click", (event) => {
-                    if (!event.target.closest(".header-popover-wrap")) closeHeaderPanels();
-                });
-            }
-            function resetDemo() {
-                boxes = structuredClone(seedBoxes);
-                requests = structuredClone(seedRequests);
-                financeMovements = structuredClone(seedFinanceMovements);
-                accessQueue = structuredClone(seedAccessQueue);
-                auditLog = structuredClone(seedAuditLog);
-                draft = {};
-                activeTenant = {
-                    name: "Mariana López Canto",
-                    email: "mariana.lopez@ejemplo.mx",
-                    phone: "999 261 4587",
-                    rfc: "LOCM9004127A4",
-                    box: "A-101",
-                    contract: "CT-2026-0148",
-                    auth: "José Luis López",
-                };
-                renderHome();
-                renderAccessQueue();
-                renderAuditLog();
-                flash("Datos de demo restablecidos.");
-            }
             const safeDateFormat = new Intl.DateTimeFormat("es-MX", {
                 day: "2-digit",
                 month: "short",
@@ -4870,6 +4079,7 @@
                 return `${url.pathname}${url.search}`;
             }
             function showView(id, options = {}) {
+                if (["vault", "c4"].includes(state.ui.activeProfile) && id !== "access") id = "access";
                 if (!byId(id)) id = "home";
                 document.querySelectorAll(".view").forEach((view) => view.classList.remove("on"));
                 byId(id).classList.add("on");
@@ -4887,7 +4097,7 @@
                 if (id === "renewals") renderRenewal();
                 if (id === "cancellations") renderCancellation();
                 if (id === "finance") renderFinance();
-                if (id === "access") { renderAccessQueue(); renderAuditLog(); }
+                if (id === "access") { renderAccessQueue(); renderAuditLog(); renderC4Control(); }
                 if (id === "reports") renderReport();
                 if (id === "users") { renderRolePermissions(); renderDemoUsers(); }
                 if (id === "settings") renderSettings();
@@ -5008,7 +4218,15 @@
                 const size = byId("boxSize").value;
                 const draft = state.ui.draft || {};
                 byId("selectionMode").style.display = draft.requestId || Object.keys(draft).length ? "block" : "none";
-                byId("boxGrid").innerHTML = state.boxes.filter((box) => (status === "Todas" || box.status === status) && (size === "Todas" || box.size === size)).map((box) => `<button class="box-card ${box.status === "Disponible" ? "available" : ""} ${draft.boxId === box.id ? "chosen" : ""}" ${box.status !== "Disponible" ? "disabled" : ""} onclick="selectBox('${box.id}')"><span class="tag ${tone(box.status)}">${esc(box.status)}</span><b>▣ ${esc(box.code)}</b><small class="muted">${esc(box.area)} · Tamaño ${esc(box.size)}</small><p style="margin:14px 0 0;border-top:1px solid #0000000b;padding-top:8px;font-size:12px">Renta base <strong style="float:right">${fmtCents(box.rentCents)}</strong></p></button>`).join("") || `<div class="empty">No hay cajas para este filtro.</div>`;
+                const filtered = state.boxes.filter((box) => (status === "Todas" || box.status === status) && (size === "Todas" || box.size === size));
+                const totals = (boxStatus) => state.boxes.filter((box) => box.status === boxStatus).length;
+                const available = totals("Disponible");
+                byId("boxAvailableCount").textContent = available;
+                byId("boxOccupiedCount").textContent = totals("Ocupada");
+                byId("boxReservedCount").textContent = totals("Reservada");
+                byId("boxAvailabilityRate").textContent = `${Math.round((available / Math.max(state.boxes.length, 1)) * 100)}%`;
+                byId("availabilityMap").innerHTML = filtered.map((box) => `<button class="availability-slot availability-slot--${esc(box.status)} ${draft.boxId === box.id ? "chosen" : ""}" ${box.status !== "Disponible" ? "disabled" : ""} onclick="selectBox('${box.id}')" title="${esc(`${box.code} · ${box.area} · ${box.size} · ${box.status}`)}">${esc(box.code)}<small>${esc(box.size)} · ${esc(box.area)}</small></button>`).join("") || `<div class="empty">No hay cajas para estos filtros.</div>`;
+                byId("boxGrid").innerHTML = filtered.map((box) => `<button class="box-card ${box.status === "Disponible" ? "available" : ""} ${draft.boxId === box.id ? "chosen" : ""}" ${box.status !== "Disponible" ? "disabled" : ""} onclick="selectBox('${box.id}')"><span class="tag ${tone(box.status)}">${esc(box.status)}</span><b>▣ ${esc(box.code)}</b><small class="muted">${esc(box.area)} · Tamaño ${esc(box.size)}</small><p style="margin:14px 0 0;border-top:1px solid #0000000b;padding-top:8px;font-size:12px">Renta base <strong style="float:right">${fmtCents(box.rentCents)}</strong></p></button>`).join("") || `<div class="empty">No hay cajas para este filtro.</div>`;
             }
             function selectBox(id) {
                 const box = boxById(id);
@@ -5160,7 +4378,7 @@
                 if (!request || !box || request.contractId || box.status !== "Disponible" || request.status !== "Aprobada") return flash("No se puede generar el contrato: la solicitud debe estar aprobada y la caja disponible.");
                 isSavingContract = true;
                 const number = nextSequence(state.contracts, "folio", 149);
-                const contract = { id: `contract-${crypto.randomUUID()}`, folio: `CT-2026-${String(number).padStart(4, "0")}`, tenantId: request.tenantId, boxId: box.id, startDate: byId("cStart").value, endDate: byId("cEnd").value, durationMonths: Number(byId("cDuration").value.split(" ")[0]) || 12, rentCents: Math.round((Number(byId("rent").value) || 0) * 100), depositCents: Math.round((Number(byId("deposit").value) || 0) * 100), paymentDay: Number(byId("cPaymentDay").value.replace(/\D/g, "")) || 1, paymentMethod: byId("cPaymentMethod").value, status: "Activo", createdAt: new Date().toISOString(), beneficiary: byId("cBeneficiary").value.trim(), support: byId("cSupport").value.trim() };
+                const contract = { id: `contract-${crypto.randomUUID()}`, folio: `CT-2026-${String(number).padStart(4, "0")}`, tenantId: request.tenantId, boxId: box.id, startDate: byId("cStart").value, endDate: byId("cEnd").value, durationMonths: Number(byId("cDuration").value.split(" ")[0]) || 12, rentCents: Math.round((Number(byId("rent").value) || 0) * 100), depositCents: Math.round((Number(byId("deposit").value) || 0) * 100), paymentDay: Number(byId("cPaymentDay").value.replace(/\D/g, "")) || 1, paymentMethod: byId("cPaymentMethod").value, status: "Activo", createdAt: new Date().toISOString() };
                 state.contracts.push(contract);
                 request.contractId = contract.id;
                 request.status = "Contratada";
@@ -5176,7 +4394,7 @@
                 logAudit("Generó contrato", contract.folio, "Correcto", false);
                 persistState();
                 isSavingContract = false;
-                flash(`Contrato ${contract.folio} generado; caja ${box.code} ocupada.`);
+                flash(`Contrato ${contract.folio} guardado; caja ${box.code} ocupada y timbrado simulado registrado.`);
                 showView("tenant");
             }
             function openTenant(tenantId, tab = "Resumen") {
@@ -5283,7 +4501,12 @@
                 }
             }
             function logAudit(action, entity, result = "Correcto", save = true) {
-                state.auditLog.unshift({ id: `audit-${crypto.randomUUID()}`, occurredAt: new Date().toISOString(), user: "Andrea Castillo", action, entity, result });
+                const user = state.ui.activeProfile === "vault"
+                    ? "Sergio Paredes"
+                    : state.ui.activeProfile === "c4"
+                        ? "Valeria Cárdenas"
+                        : "Andrea Castillo";
+                state.auditLog.unshift({ id: `audit-${crypto.randomUUID()}`, occurredAt: new Date().toISOString(), user, action, entity, result });
                 if (save) persistState();
                 if (byId("auditRows")) renderAuditLog();
             }
@@ -5311,35 +4534,88 @@
                     return !["Confirmado", "Rechazado"].includes(item.status) && (filter === "Todas" || context.type === filter) && `${context.name} ${context.box?.code || ""}`.toLocaleLowerCase("es").includes(query);
                 });
                 target.innerHTML = items.map((item) => { const context = accessContext(item); return `<div class="activity"><span><b>${esc(context.name)}</b><br><small class="muted">${esc(context.box?.code || "Sin caja")} · ${esc(context.type)} · ${esc(context.contract?.folio || "Sin contrato")}</small></span><span>${badge(item.status)} <button class="btn primary" style="margin-left:8px" onclick="selectAccess('${item.id}')">Validar</button></span></div>`; }).join("") || `<div class="empty">No hay accesos pendientes con esos filtros.</div>`;
+                renderAccessExitQueue();
+            }
+            function renderAccessExitQueue() {
+                const target = byId("accessExitQueue");
+                if (!target) return;
+                const entries = state.accessEvents.filter((event) => event.direction === "Entrada" && event.status === "Confirmado" && !state.accessEvents.some((exit) => exit.direction === "Salida" && exit.entryId === event.id));
+                target.innerHTML = entries.map((entry) => { const context = accessContext({ tenantId: entry.tenantId, contractId: entry.contractId, authorizationId: entry.authorizationId }); return `<div class="activity"><span><b>${esc(context.name)}</b><br><small class="muted">${esc(context.box?.code || "Sin caja")} · Entrada ${esc(new Date(entry.occurredAt).toLocaleTimeString("es-MX", { hour: "2-digit", minute: "2-digit" }))}</small></span><button class="btn outline" onclick="prepareAccessExit('${entry.id}')">Actualizar salida</button></div>`; }).join("") || `<div class="empty">No hay personas dentro de la bóveda.</div>`;
+            }
+            function renderC4Control() {
+                const panel = byId("c4ControlPanel");
+                if (!panel) return;
+                const isC4Profile = state.ui.activeProfile === "c4";
+                panel.style.display = isC4Profile ? "block" : "none";
+                if (!isC4Profile) return;
+                const isOpen = state.ui.c4DoorState === "Abierta";
+                byId("c4DoorState").textContent = isOpen ? "Abierta" : "Cerrada";
+                byId("c4DoorUpdated").textContent = state.ui.c4DoorUpdatedAt
+                    ? new Intl.DateTimeFormat("es-MX", { dateStyle: "short", timeStyle: "short" }).format(new Date(state.ui.c4DoorUpdatedAt))
+                    : "Sin movimientos en esta sesión";
+                byId("c4GrantButton").disabled = isOpen;
+                byId("c4CloseButton").disabled = !isOpen;
+                byId("c4ControlFeedback").textContent = isOpen
+                    ? "Acceso físico concedido por C4. Cierra la puerta cuando la persona haya ingresado."
+                    : "La puerta está cerrada. C4 puede conceder el acceso físico cuando corresponda.";
+            }
+            function grantC4Access() {
+                if (state.ui.c4DoorState === "Abierta") return flash("La puerta ya está abierta en esta simulación.");
+                state.ui.c4DoorState = "Abierta";
+                state.ui.c4DoorUpdatedAt = new Date().toISOString();
+                logAudit("Concedió acceso físico por C4", "Puerta de bóveda", "Abierta", false);
+                persistState();
+                renderC4Control();
+                flash("Acceso físico concedido por C4 (simulación).");
+            }
+            function closeC4Door() {
+                if (state.ui.c4DoorState !== "Abierta") return flash("La puerta ya está cerrada en esta simulación.");
+                state.ui.c4DoorState = "Cerrada";
+                state.ui.c4DoorUpdatedAt = new Date().toISOString();
+                logAudit("Cerró puerta de bóveda por C4", "Puerta de bóveda", "Cerrada", false);
+                persistState();
+                renderC4Control();
+                flash("Puerta de bóveda cerrada por C4 (simulación).");
             }
             function selectAccess(id) {
                 const item = state.accessQueue.find((record) => record.id === id);
                 if (!item) return;
                 const context = accessContext(item);
                 const result = context.valid ? "Contrato y caja vigentes en demo" : "Requiere revisión operativa";
-                const actions = context.valid ? `<button class="btn primary" onclick="confirmAccess('${item.id}')">Confirmar ${esc(item.direction.toLowerCase())}</button><button class="btn outline" style="margin-left:8px" onclick="denyAccess('${item.id}')">Rechazar</button>` : `<button class="btn outline" onclick="denyAccess('${item.id}')">Registrar rechazo</button>`;
-                byId("accessVerification").innerHTML = `<b>${esc(context.name)}</b><br><span class="muted">${esc(context.type)} · Caja ${esc(context.box?.code || "Sin caja")}</span><div class="summary-row"><span>Contrato</span><b>${esc(context.contract?.folio || "Sin contrato")}</b></div><div class="summary-row"><span>Resultado de validación</span><b>${esc(result)}</b></div><div style="margin-top:14px">${actions}</div>`;
+                const actions = context.valid ? `<button class="btn primary" onclick="confirmAccess('${item.id}')">Confirmar entrada</button><button class="btn outline" style="margin-left:8px" onclick="denyAccess('${item.id}')">Rechazar</button>` : `<button class="btn outline" onclick="denyAccess('${item.id}')">Registrar rechazo</button>`;
+                byId("accessVerification").innerHTML = `<b>${esc(context.name)}</b><br><span class="muted">${esc(context.type)} · Caja ${esc(context.box?.code || "Sin caja")}</span><div class="summary-row"><span>Contrato</span><b>${esc(context.contract?.folio || "Sin contrato")}</b></div><div class="summary-row"><span>Resultado de validación</span><b>${esc(result)}</b></div><p class="notice" style="margin-top:12px"><b>Encargado de bóveda:</b> Sergio Paredes confirma el acceso de esta persona.</p><div style="margin-top:14px">${actions}</div>`;
             }
             function confirmAccess(id) {
                 const item = state.accessQueue.find((record) => record.id === id);
                 const context = item && accessContext(item);
                 if (!item || !context?.valid) return flash("No se puede confirmar: valida contrato, caja y autorizado.");
                 item.status = "Confirmado";
-                state.accessEvents.unshift({ id: `access-${crypto.randomUUID()}`, tenantId: context.tenant.id, contractId: context.contract.id, authorizationId: context.authorization?.id || null, direction: item.direction, status: "Confirmado", reason: "Validación local de demostración", occurredAt: new Date().toISOString() });
-                logAudit(`Confirmó ${item.direction.toLowerCase()}`, `${context.name} · ${context.box.code}`, "Confirmado", false);
+                const entry = { id: `access-${crypto.randomUUID()}`, tenantId: context.tenant.id, contractId: context.contract.id, authorizationId: context.authorization?.id || null, direction: "Entrada", status: "Confirmado", reason: "Acceso confirmado por encargado de bóveda", confirmedBy: "Andrea Castillo", occurredAt: new Date().toISOString(), image: "Referencia biométrica simulada" };
+                state.accessEvents.unshift(entry);
+                logAudit("Confirmó entrada a bóveda", `${context.name} · ${context.box.code}`, "Confirmado", false);
                 persistState();
                 renderAccessQueue();
-                byId("accessVerification").innerHTML = `<b>${esc(item.direction)} confirmada</b><br><span class="muted">El evento quedó relacionado a la ficha de ${esc(context.tenant.name)}.</span><div style="margin-top:14px"><button class="btn outline" onclick="registerAccessExit('${context.contract.id}')">Registrar salida</button></div>`;
-                flash(`${item.direction} confirmada (simulación).`);
+                byId("accessVerification").innerHTML = `<b>Entrada confirmada</b><br><span class="muted">El encargado registró el acceso de ${esc(context.tenant.name)} a la bóveda.</span><div style="margin-top:14px"><button class="btn outline" onclick="prepareAccessExit('${entry.id}')">Actualizar salida y firma</button></div>`;
+                flash("Entrada a bóveda confirmada por el encargado (simulación).");
             }
-            function registerAccessExit(contractId) {
-                const contract = contractById(contractId);
-                if (!isOpenContract(contract)) return flash("No hay un contrato vigente para registrar salida.");
-                state.accessEvents.unshift({ id: `access-${crypto.randomUUID()}`, tenantId: contract.tenantId, contractId: contract.id, authorizationId: null, direction: "Salida", status: "Confirmado", reason: "Salida registrada en demo", occurredAt: new Date().toISOString() });
-                logAudit("Registró salida", contract.folio, "Confirmado", false);
+            function prepareAccessExit(entryId) {
+                const entry = state.accessEvents.find((event) => event.id === entryId);
+                if (!entry) return flash("No encontramos la entrada pendiente.");
+                const context = accessContext({ tenantId: entry.tenantId, contractId: entry.contractId, authorizationId: entry.authorizationId });
+                byId("accessVerification").innerHTML = `<b>Actualizar salida · ${esc(context.name)}</b><br /><span class="muted">Caja ${esc(context.box?.code || "Sin caja")} · la persona confirma su salida con firma.</span><div class="field" style="margin-top:14px"><label>NOMBRE PARA FIRMA SIMULADA</label><input id="exitSignature" placeholder="Nombre de la persona" value="${esc(context.name)}" /></div><button class="btn primary" style="margin-top:14px" onclick="registerAccessExit('${entry.id}')">Guardar salida y firma</button>`;
+            }
+            function registerAccessExit(entryId) {
+                const entry = state.accessEvents.find((event) => event.id === entryId);
+                if (!entry) return flash("No encontramos la entrada pendiente.");
+                const signature = byId("exitSignature")?.value.trim();
+                if (!signature) return flash("La persona debe registrar su firma para actualizar la salida.");
+                const contract = contractById(entry.contractId);
+                state.accessEvents.unshift({ id: `access-${crypto.randomUUID()}`, entryId: entry.id, tenantId: entry.tenantId, contractId: entry.contractId, authorizationId: entry.authorizationId || null, direction: "Salida", status: "Confirmado", reason: "Salida firmada en demo", signature, occurredAt: new Date().toISOString() });
+                logAudit("Actualizó salida con firma", contract?.folio || "Acceso a bóveda", "Confirmado", false);
                 persistState();
-                byId("accessVerification").innerHTML = `<b>Salida registrada</b><br><span class="muted">El historial de la ficha y los reportes se actualizó.</span>`;
-                flash("Salida registrada (simulación).");
+                renderAccessQueue();
+                byId("accessVerification").innerHTML = `<b>Salida registrada</b><br><span class="muted">Firma simulada de ${esc(signature)} guardada en el historial de bóveda.</span>`;
+                flash("Salida y firma simulada registradas.");
             }
             function denyAccess(id) {
                 const item = state.accessQueue.find((record) => record.id === id);
@@ -5389,10 +4665,27 @@
                     "Recibo de depósito en garantía": `<p>Comprobante demostrativo del depósito asociado al contrato <b>${esc(contract.folio)}</b>.</p><div class="document-paper__summary"><div><span>Importe recibido</span><b>${fmtCents(contract.depositCents)}</b></div><div><span>Forma de pago</span><b>Simulación de registro</b></div><div><span>Referencia</span><b>${esc(folio)}</b></div></div><p>Sin timbrado, CFDI, cobro ni efecto fiscal.</p>`,
                     "Expediente de arrendatario": `<p>Índice visual del expediente de <b>${esc(tenant.name)}</b> para consulta durante la presentación.</p><div class="document-paper__summary"><div><span>Identificación</span><b>Disponible en demo</b></div><div><span>Contrato</span><b>${esc(contract.folio)}</b></div><div><span>Documentos relacionados</span><b>${state.documents.filter((item) => item.contractId === contract.id).length} registros</b></div></div><p>Los archivos, la validación documental y el resguardo legal son simulados.</p>`,
                 };
+                const content = `<article class="document-paper"><header class="document-paper__head"><img class="document-paper__logo" src="{{ asset('images/saferoom-logo.png') }}" alt="SafeRoom"><div class="document-paper__meta"><b>${esc(folio)}</b><span>Emitido: ${esc(dateLabel(createdAt))}</span><span>ESTADO: SIMULACIÓN</span></div></header><div class="document-paper__title"><p>SAFE ROOM · FORMATO OPERATIVO</p><h2>${esc(type)}</h2></div><div class="document-paper__body"><p><b>Arrendatario:</b> ${esc(tenant.name)}</p><p><b>Contrato:</b> ${esc(contract.folio)} · <b>Caja:</b> ${esc(box?.code || "Sin asignar")}</p>${documentBodies[type] || documentBodies["Expediente de arrendatario"]}</div><footer class="document-paper__signatures"><div>Nombre y firma del arrendatario</div><div>Nombre y firma de SafeRoom</div></footer></article>`;
                 byId("documentPreviewTitle").textContent = `${type} · ${folio}`;
-                byId("documentPreview").innerHTML = `<article class="document-paper"><header class="document-paper__head"><img class="document-paper__logo" src="{{ asset('images/saferoom-logo.png') }}" alt="SafeRoom"><div class="document-paper__meta"><b>${esc(folio)}</b><span>Emitido: ${esc(dateLabel(createdAt))}</span><span>ESTADO: SIMULACIÓN</span></div></header><div class="document-paper__title"><p>SAFE ROOM · FORMATO OPERATIVO</p><h2>${esc(type)}</h2></div><div class="document-paper__body"><p><b>Arrendatario:</b> ${esc(tenant.name)}</p><p><b>Contrato:</b> ${esc(contract.folio)} · <b>Caja:</b> ${esc(box?.code || "Sin asignar")}</p>${documentBodies[type] || documentBodies["Expediente de arrendatario"]}</div><footer class="document-paper__signatures"><div>Nombre y firma del arrendatario</div><div>Nombre y firma de SafeRoom</div></footer></article>`;
+                byId("documentPreview").innerHTML = content;
+                byId("documentViewerTitle").textContent = `${type} · ${folio}`;
+                byId("documentViewerContent").innerHTML = content;
+                byId("documentViewerModal").dataset.filename = `${type}-${folio}`;
+                byId("documentViewerModal").classList.add("on");
                 byId("printDocumentButton").disabled = false;
                 flash(`${type}: vista previa actualizada.`);
+            }
+            function closeDocumentViewer() { byId("documentViewerModal")?.classList.remove("on"); }
+            function downloadPreviewDocument() {
+                const viewer = byId("documentViewerModal");
+                const content = byId("documentViewerContent")?.innerText;
+                if (!content) return flash("Abre primero un documento para descargarlo.");
+                const link = document.createElement("a");
+                link.href = URL.createObjectURL(new Blob([content], { type: "text/plain;charset=utf-8" }));
+                link.download = `${viewer.dataset.filename || "documento-saferoom"}.txt`;
+                link.click();
+                URL.revokeObjectURL(link.href);
+                flash("Ejemplo descargado. La descarga solo ocurre por decisión del usuario.");
             }
             function printDocument() {
                 if (byId("printDocumentButton")?.disabled) return flash("Selecciona un documento antes de imprimir.");
@@ -5404,17 +4697,38 @@
                 const to = byId("reportTo").value || "9999-12-31";
                 const between = (value) => value && value.slice(0, 10) >= from && value.slice(0, 10) <= to;
                 if (type === "availability") return { title: "Vista previa: disponibilidad de cajas", headers: ["Estado", "Cantidad"], rows: ["Disponible", "Ocupada", "Reservada", "Mantenimiento"].map((status) => [status, state.boxes.filter((box) => box.status === status).length]) };
-                if (type === "access") return { title: "Vista previa: accesos por arrendatario", headers: ["Fecha", "Persona", "Caja", "Movimiento", "Resultado"], rows: state.accessEvents.filter((event) => between(event.occurredAt)).map((event) => { const contract = contractById(event.contractId); return [dateLabel(event.occurredAt.slice(0, 10)), tenantById(event.tenantId)?.name || "Sin persona", boxById(contract?.boxId)?.code || "Sin caja", event.direction, event.status]; }) };
+                if (type === "access") return { title: "Vista previa: accesos a bóveda", headers: ["Fecha", "Nombre", "Tipo", "Caja", "Hora entrada", "Imagen", "Hora salida", "Firma"], rows: state.accessEvents.filter((event) => event.direction === "Entrada" && between(event.occurredAt)).map((entry) => { const contract = contractById(entry.contractId); const authorization = entry.authorizationId && state.authorizations.find((item) => item.id === entry.authorizationId); const exit = state.accessEvents.find((event) => event.direction === "Salida" && event.entryId === entry.id); return [dateLabel(entry.occurredAt.slice(0, 10)), authorization?.name || tenantById(entry.tenantId)?.name || "Sin persona", authorization ? "Autorizado" : "Titular", boxById(contract?.boxId)?.code || "Sin caja", new Date(entry.occurredAt).toLocaleTimeString("es-MX", { hour: "2-digit", minute: "2-digit" }), entry.image || "Referencia simulada", exit ? new Date(exit.occurredAt).toLocaleTimeString("es-MX", { hour: "2-digit", minute: "2-digit" }) : "Pendiente", exit?.signature || "Pendiente"]; }) };
                 if (type === "finance") return { title: "Vista previa: ingresos y garantías", headers: ["Fecha", "Folio", "Concepto", "Importe", "Estado"], rows: state.movements.filter((movement) => between(movement.occurredAt)).map((movement) => [dateLabel(movement.occurredAt), movement.folio, movement.concept, fmtCents(movement.amountCents), movement.status]) };
+                if (type === "new-contracts") return { title: "Vista previa: contratos nuevos", headers: ["Fecha", "Cliente", "Caja", "Medida", "Renta", "Garantía", "Estatus"], rows: state.contracts.filter((contract) => between(contract.createdAt || contract.startDate)).map((contract) => { const box = boxById(contract.boxId); return [dateLabel((contract.createdAt || contract.startDate).slice(0, 10)), tenantById(contract.tenantId)?.name || "Sin cliente", box?.code || "Sin caja", box?.size || "—", fmtCents(contract.rentCents), fmtCents(contract.depositCents), contract.status]; }) };
+                if (type === "annual") {
+                    const years = [2024, 2025, 2026];
+                    const totals = (year, label) => state.operations.filter((operation) => operation.type === label && operation.occurredAt.startsWith(String(year))).length;
+                    return { title: "Vista previa: resumen anual de operaciones", headers: ["Año", "Nuevos", "Renovaciones", "Cambios", "Cancelaciones"], rows: years.map((year) => [year, state.contracts.filter((contract) => (contract.createdAt || "").startsWith(String(year))).length, totals(year, "Renovación") + totals(year, "Renovación con cambio de caja") + totals(year, "Renovación con cambio de medida"), totals(year, "Cambio de ubicación") + totals(year, "Cambio de medida"), totals(year, "Cancelación")]) };
+                }
                 return { title: "Vista previa: reporte general para consejo", headers: ["Indicador", "Resultado"], rows: [["Solicitudes recibidas", state.requests.filter((request) => between(request.createdAt)).length], ["Cajas ocupadas", state.boxes.filter((box) => box.status === "Ocupada").length], ["Contratos activos", activeContracts().length], ["Ingresos registrados", fmtCents(state.movements.filter((movement) => between(movement.occurredAt)).reduce((total, movement) => total + movement.amountCents, 0))]] };
             }
             function renderReport() {
                 const report = reportData();
+                const from = byId("reportFrom").value || "Inicio";
+                const to = byId("reportTo").value || "Hoy";
+                const periodMovements = state.movements.filter((movement) => movement.occurredAt >= from && movement.occurredAt <= to);
+                const income = periodMovements.reduce((total, movement) => total + Math.max(0, movement.amountCents), 0);
+                const occupied = state.boxes.filter((box) => box.status === "Ocupada").length;
+                const available = state.boxes.filter((box) => box.status === "Disponible").length;
                 byId("reportPreviewTitle").textContent = report.title;
                 byId("reportPreviewHead").innerHTML = `<tr>${report.headers.map((header) => `<th>${esc(header)}</th>`).join("")}</tr>`;
                 byId("reportPreviewRows").innerHTML = report.rows.map((row) => `<tr>${row.map((cell) => `<td>${esc(cell)}</td>`).join("")}</tr>`).join("") || `<tr><td colspan="${report.headers.length}" class="muted">No hay resultados para el periodo.</td></tr>`;
                 if (byId("reportOccupied")) byId("reportOccupied").textContent = state.boxes.filter((box) => box.status === "Ocupada").length;
                 if (byId("reportRequests")) byId("reportRequests").textContent = state.requests.length;
+                if (byId("reportIncome")) byId("reportIncome").textContent = fmtCents(income);
+                if (byId("reportContracts")) byId("reportContracts").textContent = activeContracts().length;
+                if (byId("reportHighlights")) byId("reportHighlights").innerHTML = `<div class="notice"><b>${occupied}</b><br /><small>Cajas ocupadas</small></div><div class="notice"><b>${available}</b><br /><small>Cajas disponibles</small></div><div class="notice"><b>${state.requests.filter((request) => request.status === "Aprobada").length}</b><br /><small>Solicitudes aprobadas</small></div><div class="notice"><b>${periodMovements.length}</b><br /><small>Movimientos en el periodo</small></div>`;
+                if (byId("reportVisual")) {
+                    const total = Math.max(state.boxes.length, 1);
+                    const occupiedPercent = Math.round((occupied / total) * 100);
+                    const availablePercent = Math.round((available / total) * 100);
+                    byId("reportVisual").innerHTML = `<b>Lectura rápida · ${esc(dateLabel(from))} a ${esc(dateLabel(to))}</b><div class="summary-row"><span>Ocupación</span><b>${occupiedPercent}%</b></div><div class="bar"><i style="width:${occupiedPercent}%"></i></div><div class="summary-row" style="margin-top:12px"><span>Disponibilidad</span><b>${availablePercent}%</b></div><div class="bar"><i style="width:${availablePercent}%;background:var(--blue)"></i></div>`;
+                }
             }
             function exportReport() {
                 const report = reportData();
@@ -5458,23 +4772,27 @@
                 }
                 if (!byId("rRent").value || byId("rContract").dataset.contractId !== contract.id) byId("rRent").value = (contract.rentCents / 100).toFixed(2);
                 byId("rContract").dataset.contractId = contract.id;
-                const nextBox = mode === "move" ? boxById(boxSelect.value) : box;
+                const changesBox = ["move", "renew-size", "location", "size"].includes(mode);
+                const nextBox = changesBox ? boxById(boxSelect.value) : box;
                 const duration = Number(byId("rDuration").value) || 12;
                 const endDate = addMonthsMinusOne(byId("rStart").value, duration);
                 const rentCents = Math.round((Number(byId("rRent").value) || 0) * 100);
-                byId("renewalSummary").innerHTML = `<p class="muted">CONTRATO ACTUAL</p><b>${esc(contract.folio)}</b><div class="summary-row"><span>Caja actual</span><b>${esc(`${box.code} · ${box.size}`)}</b></div><div class="summary-row"><span>${mode === "move" ? "Nueva caja" : "Caja a conservar"}</span><b>${esc(nextBox ? `${nextBox.code} · ${nextBox.size}` : "Selecciona una caja")}</b></div><div class="summary-row"><span>Vigencia nueva</span><b>${esc(`${duration} meses · hasta ${dateLabel(endDate)}`)}</b></div><div class="summary-row"><span>Renta actual</span><b>${fmtCents(contract.rentCents)}</b></div><div class="summary-total"><span>Nueva renta</span><span style="float:right">${fmtCents(rentCents)}</span></div>`;
+                const operationLabel = { renew: "Renovación", move: "Renovación con cambio de caja", "renew-size": "Renovación con cambio de medida", location: "Cambio de ubicación", size: "Cambio de medida" }[mode];
+                const difference = rentCents - contract.rentCents;
+                byId("renewalSummary").innerHTML = `<p class="muted">${esc(operationLabel)}</p><b>${esc(contract.folio)}</b><div class="summary-row"><span>Caja actual</span><b>${esc(`${box.code} · ${box.size}`)}</b></div><div class="summary-row"><span>${changesBox ? "Nueva caja" : "Caja a conservar"}</span><b>${esc(nextBox ? `${nextBox.code} · ${nextBox.size}` : "Selecciona una caja")}</b></div>${["renew", "move", "renew-size"].includes(mode) ? `<div class="summary-row"><span>Vigencia nueva</span><b>${esc(`${duration} meses · hasta ${dateLabel(endDate)}`)}</b></div>` : `<div class="summary-row"><span>Vigencia</span><b>Se conserva sin renovar</b></div>`}<div class="summary-row"><span>Renta actual</span><b>${fmtCents(contract.rentCents)}</b></div><div class="summary-total"><span>${["size", "renew-size"].includes(mode) ? "Nueva renta / diferencia" : "Nueva renta"}</span><span style="float:right">${fmtCents(rentCents)}${["size", "renew-size"].includes(mode) ? ` · ${difference >= 0 ? "+" : ""}${fmtCents(difference)}` : ""}</span></div>`;
             }
             function requestRenewalConfirmation() {
                 const contract = contractById(byId("rContract").value);
                 if (!isOpenContract(contract)) return flash("Solo pueden renovarse contratos vigentes.");
                 if (!byId("rReviewed").checked) return flash("Confirma la revisión de caja, llaves, importes y documentos.");
                 const mode = byId("rMode").value;
-                const nextBox = mode === "move" ? boxById(byId("rBox").value) : boxById(contract.boxId);
-                if (!nextBox || (mode === "move" && (nextBox.id === contract.boxId || nextBox.status !== "Disponible"))) return flash("Selecciona otra caja disponible para el cambio.");
-                if (!byId("rStart").value) return flash("Indica la fecha de inicio de la nueva vigencia.");
-                byId("lifecycleConfirmEyebrow").textContent = "RENOVACIÓN · DEMO";
-                byId("lifecycleConfirmTitle").textContent = mode === "move" ? "Confirmar renovación y cambio de caja" : "Confirmar renovación";
-                byId("lifecycleConfirmText").textContent = "Se conservará el historial de la operación y se recalculará la vigencia. No se emite un documento real.";
+                const changesBox = ["move", "renew-size", "location", "size"].includes(mode);
+                const nextBox = changesBox ? boxById(byId("rBox").value) : boxById(contract.boxId);
+                if (!nextBox || (changesBox && (nextBox.id === contract.boxId || nextBox.status !== "Disponible"))) return flash("Selecciona otra caja disponible para el cambio.");
+                if (["renew", "move", "renew-size"].includes(mode) && !byId("rStart").value) return flash("Indica la fecha de inicio de la nueva vigencia.");
+                byId("lifecycleConfirmEyebrow").textContent = `${{ renew: "RENOVACIÓN", move: "RENOVACIÓN", "renew-size": "RENOVACIÓN", location: "CAMBIO DE UBICACIÓN", size: "CAMBIO DE MEDIDA" }[mode]} · DEMO`;
+                byId("lifecycleConfirmTitle").textContent = { renew: "Confirmar renovación", move: "Confirmar renovación y cambio de caja", "renew-size": "Confirmar renovación con cambio de medida", location: "Confirmar cambio de ubicación", size: "Confirmar cambio de medida y recálculo" }[mode];
+                byId("lifecycleConfirmText").textContent = ["renew", "move", "renew-size"].includes(mode) ? "Se conservará el historial de la operación, se simulará el timbrado y se actualizará la vigencia." : "Se registra primero la modificación contractual. Después puede continuar con una renovación.";
                 byId("lifecycleConfirmSummary").innerHTML = byId("renewalSummary").innerHTML;
                 byId("lifecycleConfirmAction").onclick = completeRenewal;
                 byId("lifecycleConfirm").classList.add("on");
@@ -5484,23 +4802,23 @@
                 if (!isOpenContract(contract)) return flash("El contrato ya no está disponible para renovación.");
                 const mode = byId("rMode").value;
                 const oldBox = boxById(contract.boxId);
-                const nextBox = mode === "move" ? boxById(byId("rBox").value) : oldBox;
-                if (!nextBox || (mode === "move" && nextBox.status !== "Disponible")) return flash("La caja seleccionada dejó de estar disponible.");
+                const changesBox = ["move", "renew-size", "location", "size"].includes(mode);
+                const nextBox = changesBox ? boxById(byId("rBox").value) : oldBox;
+                if (!nextBox || (changesBox && nextBox.status !== "Disponible")) return flash("La caja seleccionada dejó de estar disponible.");
                 const previous = { boxId: contract.boxId, startDate: contract.startDate, endDate: contract.endDate, rentCents: contract.rentCents };
                 const duration = Number(byId("rDuration").value) || 12;
-                contract.startDate = byId("rStart").value;
-                contract.endDate = addMonthsMinusOne(contract.startDate, duration);
-                contract.durationMonths = duration;
+                if (["renew", "move", "renew-size"].includes(mode)) { contract.startDate = byId("rStart").value; contract.endDate = addMonthsMinusOne(contract.startDate, duration); contract.durationMonths = duration; }
                 contract.rentCents = Math.round((Number(byId("rRent").value) || 0) * 100);
                 contract.status = "Activo";
-                if (mode === "move") { oldBox.status = "Disponible"; nextBox.status = "Ocupada"; contract.boxId = nextBox.id; }
-                state.operations.unshift({ id: `operation-${crypto.randomUUID()}`, contractId: contract.id, type: mode === "move" ? "Renovación con cambio de caja" : "Renovación", occurredAt: new Date().toISOString(), detail: `Anterior: ${boxById(previous.boxId).code} · ${dateLabel(previous.startDate)} a ${dateLabel(previous.endDate)} · ${fmtCents(previous.rentCents)}` });
+                if (changesBox) { oldBox.status = "Disponible"; nextBox.status = "Ocupada"; contract.boxId = nextBox.id; }
+                const operationType = { renew: "Renovación", move: "Renovación con cambio de caja", "renew-size": "Renovación con cambio de medida", location: "Cambio de ubicación", size: "Cambio de medida" }[mode];
+                state.operations.unshift({ id: `operation-${crypto.randomUUID()}`, contractId: contract.id, type: operationType, occurredAt: new Date().toISOString(), detail: `Anterior: ${boxById(previous.boxId).code} · ${dateLabel(previous.startDate)} a ${dateLabel(previous.endDate)} · ${fmtCents(previous.rentCents)}` });
                 state.ui.selectedTenantId = contract.tenantId;
                 state.ui.selectedContractId = contract.id;
                 closeLifecycleConfirmation();
-                logAudit(mode === "move" ? "Renovó y cambió caja" : "Renovó contrato", contract.folio, "Correcto", false);
+                logAudit(operationType, contract.folio, "Correcto", false);
                 persistState();
-                flash(mode === "move" ? "Renovación y cambio de caja guardados." : "Renovación guardada.");
+                flash(`${operationType} guardado${["renew", "move", "renew-size"].includes(mode) ? "; timbrado simulado." : ". Ya puede renovar el contrato cuando corresponda."}`);
                 showView("tenant", { tab: "Contratos" });
             }
             function renderCancellation() {
@@ -5554,23 +4872,36 @@
                 availabilityAlert.value = settings.availabilityAlert === "Inactiva" ? "Inactiva" : "Activa";
                 availabilityLimit.value = settings.availabilityLimit || "25%";
                 availabilityMessage.value = settings.availabilityMessage || "Disponibilidad de cajas por debajo del límite";
+                byId("birthdayAlert").value = settings.birthdayAlert === "Inactivo" ? "Inactivo" : "Activo";
+                byId("birthdayLeadDays").value = settings.birthdayLeadDays || "0";
+                byId("biometricProvider").value = settings.biometricProvider || "BioStar 2";
+                byId("biometricEnabled").value = settings.biometricEnabled || "Configuración pendiente";
+                byId("biometricEndpoint").value = settings.biometricEndpoint || "";
                 const available = state.boxes.filter((box) => box.status === "Disponible").length;
                 const percentage = Math.round((available / Math.max(state.boxes.length, 1)) * 100);
                 const target = byId("settingsFeedback");
-                if (target) target.innerHTML = availabilityAlert.value === "Activa"
-                    ? `<b>Indicador actual:</b> ${percentage}% de cajas disponibles. La alerta se mostrará en Inicio cuando la disponibilidad sea igual o menor al límite.`
-                    : `<b>Alertas inactivas.</b> El tablero conservará el indicador de disponibilidad sin mostrar una alerta operativa.`;
+                const birthdayCount = state.tenants.filter((tenant) => tenant.birthDate).length;
+                if (target) target.innerHTML = `${availabilityAlert.value === "Activa" ? `<b>Indicador actual:</b> ${percentage}% de cajas disponibles. La alerta se mostrará en Inicio cuando la disponibilidad sea igual o menor al límite.` : `<b>Alertas de disponibilidad inactivas.</b>`}<br /><br />${byId("birthdayAlert").value === "Activo" ? `<b>Cumpleaños:</b> recordatorio configurado para ${byId("birthdayLeadDays").selectedOptions[0].text.toLowerCase()}. Se revisarán ${birthdayCount} perfiles con fecha de nacimiento; esta demo no envía correos o mensajes.` : `<b>Cumpleaños:</b> recordatorios inactivos.`}`;
             }
             function saveSettings() {
                 const limitInput = byId("availabilityLimit").value.replace(",", ".").replace(/[^0-9.]/g, "");
                 const limit = Math.min(100, Math.max(0, Number(limitInput) || 0));
                 const message = byId("availabilityMessage").value.trim().slice(0, 140) || "Disponibilidad de cajas por debajo del límite";
-                state.settings = { availabilityAlert: byId("availabilityAlert").value, availabilityLimit: `${limit}%`, availabilityMessage: message };
+                state.settings = { availabilityAlert: byId("availabilityAlert").value, availabilityLimit: `${limit}%`, availabilityMessage: message, birthdayAlert: byId("birthdayAlert").value, birthdayLeadDays: byId("birthdayLeadDays").value, biometricProvider: byId("biometricProvider").value, biometricEnabled: byId("biometricEnabled").value, biometricEndpoint: byId("biometricEndpoint").value.trim().slice(0, 120) };
                 logAudit("Actualizó alertas", `Disponibilidad ≤ ${limit}%`, "Correcto", false);
                 persistState();
                 renderSettings();
                 renderHome();
                 flash("Configuración de alertas guardada en esta demo.");
+            }
+            function testBiometricConfiguration() {
+                const provider = byId("biometricProvider").value;
+                const status = byId("biometricEnabled").value;
+                const reference = byId("biometricEndpoint").value.trim();
+                byId("biometricFeedback").innerHTML = status === "Simulación conectada"
+                    ? `<b>${esc(provider)} listo para simulación.</b> ${reference ? `Referencia: ${esc(reference)}.` : "Sin servidor externo configurado."} No se conectó ningún dispositivo ni se transmitieron datos biométricos.`
+                    : `<b>Conexión no activa.</b> Configura proveedor, estado y referencia antes de una integración real.`;
+                flash("Validación biométrica ejecutada solo en modo demostración.");
             }
             function closeInvoiceModal() {
                 byId("invoiceModal")?.classList.remove("on");
@@ -5586,6 +4917,19 @@
                 }).join("");
                 const contract = contractById(select.value);
                 if (contract) byId("invoiceAmount").value = (contract.rentCents / 100).toFixed(2);
+                syncInvoiceProfile();
+            }
+            function syncInvoiceProfile() {
+                const tenant = tenantById(byId("invoiceTenant")?.value);
+                const profile = byId("invoiceProfile")?.value || "general";
+                const help = byId("invoiceProfileHelp");
+                if (!help || !tenant) return;
+                const hasFiscalData = Boolean(tenant.rfc && tenant.taxRegime && tenant.billingEmail);
+                help.innerHTML = profile === "general"
+                    ? `<b>Público general:</b> se usa el perfil genérico configurado; no se emite a nombre del arrendatario.`
+                    : hasFiscalData
+                        ? `<b>Datos del arrendatario listos:</b> ${esc(tenant.rfc)} · ${esc(tenant.taxRegime)} · ${esc(tenant.billingEmail)}.`
+                        : `<b>Datos fiscales incompletos.</b> Registra RFC, régimen y correo de facturación o usa Público general.`;
             }
             function openInvoiceModal() {
                 const tenantSelect = byId("invoiceTenant");
@@ -5595,6 +4939,7 @@
                 if (tenantById(currentTenant)) tenantSelect.value = currentTenant;
                 byId("invoiceConcept").value = "Renta mensual";
                 byId("invoiceMethod").value = "Transferencia";
+                byId("invoiceProfile").value = "general";
                 syncInvoiceContracts();
                 if (!byId("invoiceContract").value) return flash("El arrendatario seleccionado no tiene un contrato vigente para facturar.");
                 byId("invoiceModal").classList.add("on");
@@ -5603,11 +4948,13 @@
             function registerInvoice() {
                 const tenantId = byId("invoiceTenant").value;
                 const contract = contractById(byId("invoiceContract").value);
+                const tenant = tenantById(tenantId);
                 const amountCents = Math.round((Number(byId("invoiceAmount").value) || 0) * 100);
                 if (!tenantById(tenantId) || !contract || contract.tenantId !== tenantId || !isOpenContract(contract) || amountCents <= 0) return flash("Completa un arrendatario, contrato vigente e importe mayor a cero.");
+                if (byId("invoiceProfile").value === "tenant" && (!tenant.rfc || !tenant.taxRegime || !tenant.billingEmail)) return flash("Completa RFC, régimen fiscal y correo de facturación, o selecciona Público general.");
                 const number = nextSequence(state.movements, "folio", 48);
                 const folio = `FAC-2026-${String(number).padStart(4, "0")}`;
-                state.movements.unshift({ id: `movement-${crypto.randomUUID()}`, folio, tenantId, contractId: contract.id, concept: byId("invoiceConcept").value.trim().slice(0, 80) || "Renta mensual", method: byId("invoiceMethod").value, amountCents, type: "Factura", status: "Simulada", occurredAt: new Date().toISOString().slice(0, 10) });
+                state.movements.unshift({ id: `movement-${crypto.randomUUID()}`, folio, tenantId, contractId: contract.id, concept: byId("invoiceConcept").value.trim().slice(0, 80) || "Renta mensual", method: byId("invoiceMethod").value, amountCents, type: "Factura", profile: byId("invoiceProfile").value, status: "Simulada", occurredAt: new Date().toISOString().slice(0, 10) });
                 logAudit("Registró factura", `${folio} · ${contract.folio}`, "Simulado", false);
                 persistState();
                 closeInvoiceModal();
@@ -5616,6 +4963,48 @@
             }
             function closeUserModal() {
                 byId("userModal")?.classList.remove("on");
+            }
+            function applyDemoProfile() {
+                const isVaultProfile = state.ui.activeProfile === "vault";
+                const isC4Profile = state.ui.activeProfile === "c4";
+                const profile = isVaultProfile
+                    ? { name: "Sergio Paredes", role: "Encargado de bóveda", initials: "SP" }
+                    : isC4Profile
+                        ? { name: "Valeria Cárdenas", role: "Operador C4", initials: "C4" }
+                        : { name: "Andrea Castillo", role: "Administración", initials: "AC" };
+                byId("side").classList.toggle("vault-mode", isVaultProfile);
+                byId("side").classList.toggle("c4-mode", isC4Profile);
+                byId("exitVaultProfile").style.display = (isVaultProfile || isC4Profile) ? "inline-flex" : "none";
+                if (byId("vaultOperations")) byId("vaultOperations").style.display = isC4Profile ? "none" : "";
+                if (byId("vaultVerification")) byId("vaultVerification").style.display = isC4Profile ? "none" : "";
+                if (byId("vaultAudit")) byId("vaultAudit").style.display = isC4Profile ? "none" : "";
+                if (byId("accessEyebrow")) byId("accessEyebrow").textContent = isC4Profile ? "BÓVEDA · CONTROL DE PUERTA" : "BÓVEDA · CONTROL OPERATIVO";
+                if (byId("accessHeading")) byId("accessHeading").textContent = isC4Profile ? "Puerta de bóveda · C4" : "Accesos a la bóveda";
+                if (byId("accessDescription")) byId("accessDescription").textContent = isC4Profile ? "C4 concede el acceso físico y cierra la puerta. La validación y las firmas las registra el encargado de bóveda." : "El encargado valida la entrada de una persona; la salida se actualiza con su firma simulada.";
+                ["profileName", "profilePanelName"].forEach((id) => byId(id).textContent = profile.name);
+                ["profileRole", "profilePanelRole"].forEach((id) => byId(id).textContent = profile.role);
+                ["profileInitials", "profilePanelInitials"].forEach((id) => byId(id).textContent = profile.initials);
+            }
+            function enterVaultProfile() {
+                state.ui.activeProfile = "vault";
+                applyDemoProfile();
+                persistState();
+                flash("Vista activa: Encargado de bóveda. Solo se muestra Accesos a la bóveda.");
+                showView("access");
+            }
+            function enterC4Profile() {
+                state.ui.activeProfile = "c4";
+                applyDemoProfile();
+                persistState();
+                flash("Vista activa: Operador C4. Solo se muestra el control de puerta de Bóveda.");
+                showView("access");
+            }
+            function exitVaultProfile() {
+                state.ui.activeProfile = "admin";
+                applyDemoProfile();
+                persistState();
+                flash("Regresaste a la vista de Administración.");
+                showView("users");
             }
             function openUserModal() {
                 byId("userName").value = "";
@@ -5627,7 +5016,13 @@
             function renderDemoUsers() {
                 const target = byId("demoUserList");
                 if (!target) return;
-                target.innerHTML = state.users.map((user) => `<div class="activity"><span><b>${esc(user.name)}</b><br><small class="muted">${esc(user.email)} · ${esc(user.role)}</small></span>${badge(user.status)}</div>`).join("") || `<div class="empty">Sin usuarios configurados.</div>`;
+                target.innerHTML = state.users.map((user) => {
+                    const isVaultUser = user.role === "Encargado de bóveda";
+                    const isC4User = user.role === "Operador C4";
+                    const restriction = isVaultUser ? "Registra entradas, salidas y firmas" : isC4User ? "Acceso exclusivo: Bóveda · Control de puerta" : "";
+                    const action = isVaultUser ? `<button class="btn primary" style="margin-top:8px" onclick="enterVaultProfile()">Entrar a Bóveda</button>` : isC4User ? `<button class="btn primary" style="margin-top:8px" onclick="enterC4Profile()">Entrar a C4</button>` : "";
+                    return `<div class="activity"><span><b>${esc(user.name)}</b><br><small class="muted">${esc(user.email)} · ${esc(user.role)}</small>${restriction ? `<br><small class="muted">${restriction}</small>` : ""}</span><span>${badge(user.status)}${action}</span></div>`;
+                }).join("") || `<div class="empty">Sin usuarios configurados.</div>`;
             }
             function saveDemoUser() {
                 const name = byId("userName").value.trim().slice(0, 90);
@@ -5651,16 +5046,18 @@
                 byId("lifecycleConfirm").classList.remove("on");
                 closeInvoiceModal();
                 closeUserModal();
+                applyDemoProfile();
                 persistState();
                 flash("Datos de demo restablecidos.");
                 showView("home");
             }
             document.addEventListener("keydown", (event) => {
-                if (event.key === "Escape") { closeContractConfirmation(); closeLifecycleConfirmation(); closeInvoiceModal(); closeUserModal(); closeHeaderPanels(); }
+                if (event.key === "Escape") { closeContractConfirmation(); closeLifecycleConfirmation(); closeInvoiceModal(); closeUserModal(); closeDocumentViewer(); closeHeaderPanels(); }
             });
             syncSelectionFromUrl();
             initialiseSafeDates();
             initialiseHeaderControls();
+            applyDemoProfile();
             showView(initialView, { sync: false, scroll: false, tab: currentTenantTab });
         </script>
     </body>
