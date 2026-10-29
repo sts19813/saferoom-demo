@@ -2921,20 +2921,39 @@
                     <section class="panel section" id="c4ControlPanel" style="display:none; margin-top:20px">
                         <div class="panel-head">
                             <div>
-                                <h2>Control C4 · puerta de bóveda</h2>
-                                <p class="muted">Este perfil solo concede el acceso físico y cierra la puerta. No valida contratos ni registra entradas, salidas o firmas.</p>
+                                <p class="eyebrow">C4 · MONITOREO DE PUERTA</p>
+                                <h2>Conceder acceso físico</h2>
+                                <p class="muted">C4 recibe personas previamente autorizadas por Bóveda. Solo acciona la puerta y confirma el paso; no valida documentos ni captura firmas.</p>
                             </div>
                             <span class="tag blue">OPERACIÓN C4</span>
                         </div>
-                        <div class="small-grid" style="margin-top:16px">
-                            <div class="notice"><b>Estado de puerta</b><br /><span id="c4DoorState">Cerrada</span></div>
-                            <div class="notice"><b>Última acción</b><br /><span id="c4DoorUpdated">Sin movimientos en esta sesión</span></div>
+                        <div class="two" style="margin-top:18px">
+                            <section class="panel" style="box-shadow:none">
+                                <div class="panel-head">
+                                    <div><b>Registros autorizados (<span id="c4RecordCount">0</span>)</b><p class="muted">Cola enviada por el encargado de bóveda.</p></div>
+                                    <button class="btn outline" type="button" onclick="renderC4Control()">↻ Actualizar vista</button>
+                                </div>
+                                <div id="c4RecordList"></div>
+                            </section>
+                            <section class="panel section" style="box-shadow:none">
+                                <p class="eyebrow">REGISTRO SELECCIONADO</p>
+                                <div id="c4SelectedRecord" class="notice">Selecciona una persona de la cola para operar la puerta.</div>
+                                <div class="small-grid" style="margin-top:14px">
+                                    <div class="notice"><b>Estado de puerta</b><br /><span id="c4DoorState">Cerrada</span></div>
+                                    <div class="notice"><b>Última acción</b><br /><span id="c4DoorUpdated">Sin movimientos en esta sesión</span></div>
+                                </div>
+                                <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:18px">
+                                    <button class="btn primary" id="c4GrantButton" type="button" onclick="grantC4Access()">⌁ Conceder acceso</button>
+                                    <button class="btn gold" id="c4ConfirmButton" type="button" onclick="confirmC4Access()">✓ Confirmar acceso</button>
+                                    <button class="btn outline" id="c4CloseButton" type="button" onclick="closeC4Door()">Cerrar puerta</button>
+                                </div>
+                                <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px">
+                                    <button class="btn outline" id="c4RemoveButton" type="button" onclick="removeC4Record()">Retirar de vista</button>
+                                    <button class="btn outline" type="button" onclick="clearC4Selection()">Cerrar</button>
+                                </div>
+                                <p class="notice" id="c4ControlFeedback" style="margin-top:16px">La puerta permanece cerrada hasta que C4 conceda el acceso físico a un registro seleccionado.</p>
+                            </section>
                         </div>
-                        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:18px">
-                            <button class="btn primary" id="c4GrantButton" onclick="grantC4Access()">Conceder acceso</button>
-                            <button class="btn outline" id="c4CloseButton" onclick="closeC4Door()">Cerrar puerta</button>
-                        </div>
-                        <p class="notice" id="c4ControlFeedback" style="margin-top:16px">La puerta permanece cerrada hasta que C4 conceda el acceso físico.</p>
                     </section>
                     <section class="panel section" id="vaultVerification" style="margin-top:20px">
                         <h2>Validación del encargado</h2>
@@ -3812,7 +3831,7 @@
         </div>
         <script>
             const DEMO_STORAGE_KEY = "saferoom-demo-state";
-            const DEMO_SCHEMA_VERSION = 10;
+            const DEMO_SCHEMA_VERSION = 11;
             const CURRENT_USER = @json(request()->attributes->get('demoUser'));
             const CURRENT_PERMISSIONS = @json(config('demo.permissions.'.(request()->attributes->get('demoUser')['role'] ?? ''), []));
             const seedState = {
@@ -3842,6 +3861,7 @@
                 authorizations: [
                     { id: "auth-jose", tenantId: "tenant-mariana", name: "José Luis López", phone: "999 852 9911", type: "Autorizado" },
                     { id: "auth-rejon", tenantId: "tenant-blanca", name: "Rejón Pérez Juan Manuel", phone: "999 620 4432", type: "Autorizado" },
+                    { id: "auth-pacho", tenantId: "tenant-mariana", name: "Pacho Lozano María Ofelia Lucía", phone: "999 821 4087", type: "Autorizado" },
                 ],
                 requests: [
                     { id: "request-0032", folio: "SOL-0032", tenantId: "tenant-sofia", boxId: "box-b201", createdAt: "2026-10-27T09:42:00", status: "Nueva", contractId: null, services: { "5 × 10": 1 }, documents: { identification: false, constitutive: false, fiscal: false } },
@@ -3866,8 +3886,10 @@
                     { id: "queue-1", tenantId: "tenant-mariana", authorizationId: "auth-jose", contractId: "contract-0148", direction: "Entrada", status: "Pendiente", createdAt: "2026-10-27T09:42:00" },
                     { id: "queue-2", tenantId: "tenant-blanca", authorizationId: null, contractId: "contract-0141", direction: "Entrada", status: "Pendiente", createdAt: "2026-10-27T09:15:00" },
                     { id: "queue-3", tenantId: "tenant-daniela", authorizationId: null, contractId: null, direction: "Entrada", status: "Requiere revisión", createdAt: "2026-10-27T09:02:00" },
+                    { id: "queue-c4-1", tenantId: "tenant-mariana", authorizationId: "auth-pacho", contractId: "contract-0148", direction: "Entrada", status: "Autorizado para C4", c4EntryId: "access-c4-pacho", createdAt: "2026-10-28T17:18:00" },
                 ],
                 accessEvents: [
+                    { id: "access-c4-pacho", tenantId: "tenant-mariana", contractId: "contract-0148", authorizationId: "auth-pacho", direction: "Entrada", status: "Pendiente C4", reason: "Autorizado por bóveda; pendiente de acceso físico por C4", confirmedBy: "Sergio Paredes", occurredAt: "2026-10-28T17:18:00", image: "Referencia biométrica simulada" },
                     { id: "access-entry-c4", tenantId: "tenant-mariana", contractId: "contract-0148", authorizationId: null, direction: "Entrada", status: "Confirmado", reason: "Acceso confirmado por encargado de bóveda", confirmedBy: "Sergio Paredes", occurredAt: "2026-10-27T10:04:00", image: "Referencia biométrica simulada" },
                     { id: "access-exit-c4", entryId: "access-entry-c4", tenantId: "tenant-mariana", contractId: "contract-0148", authorizationId: null, direction: "Salida", status: "Confirmado", reason: "Salida firmada en demo", signature: "Mariana López", occurredAt: "2026-10-27T10:18:00" },
                 ],
@@ -4539,7 +4561,7 @@
                 const filter = byId("accessFilter")?.value || "Todas";
                 const items = state.accessQueue.filter((item) => {
                     const context = accessContext(item);
-                    return !["Confirmado", "Rechazado"].includes(item.status) && (filter === "Todas" || context.type === filter) && `${context.name} ${context.box?.code || ""}`.toLocaleLowerCase("es").includes(query);
+                    return !["Confirmado", "Rechazado", "Autorizado para C4", "Concedido por C4", "Retirado por C4"].includes(item.status) && (filter === "Todas" || context.type === filter) && `${context.name} ${context.box?.code || ""}`.toLocaleLowerCase("es").includes(query);
                 });
                 target.innerHTML = items.map((item) => { const context = accessContext(item); return `<div class="activity"><span><b>${esc(context.name)}</b><br><small class="muted">${esc(context.box?.code || "Sin caja")} · ${esc(context.type)} · ${esc(context.contract?.folio || "Sin contrato")}</small></span><span>${badge(item.status)} <button class="btn primary" style="margin-left:8px" onclick="selectAccess('${item.id}')">Validar</button></span></div>`; }).join("") || `<div class="empty">No hay accesos pendientes con esos filtros.</div>`;
                 renderAccessExitQueue();
@@ -4556,25 +4578,74 @@
                 const isC4Profile = state.ui.activeProfile === "c4";
                 panel.style.display = isC4Profile ? "block" : "none";
                 if (!isC4Profile) return;
+                const records = state.accessQueue.filter((item) => item.status === "Autorizado para C4");
+                if (!records.some((item) => item.id === state.ui.c4SelectedQueueId)) state.ui.c4SelectedQueueId = records[0]?.id || null;
+                const selected = records.find((item) => item.id === state.ui.c4SelectedQueueId);
                 const isOpen = state.ui.c4DoorState === "Abierta";
+                byId("c4RecordCount").textContent = String(records.length);
+                byId("c4RecordList").innerHTML = records.map((item) => {
+                    const context = accessContext(item);
+                    const selectedClass = item.id === selected?.id ? "background:#fff8df" : "background:transparent";
+                    return `<button type="button" class="activity" style="width:100%;text-align:left;${selectedClass}" onclick="selectC4Record('${item.id}')"><span><b>${esc(context.name)}</b><br><small class="muted">${esc(context.type)} · Caja ${esc(context.box?.code || "Sin caja")} · ${esc(context.contract?.folio || "Sin contrato")}</small></span><span>${badge(item.status)}</span></button>`;
+                }).join("") || `<div class="empty">No hay registros autorizados para C4.</div>`;
                 byId("c4DoorState").textContent = isOpen ? "Abierta" : "Cerrada";
                 byId("c4DoorUpdated").textContent = state.ui.c4DoorUpdatedAt
                     ? new Intl.DateTimeFormat("es-MX", { dateStyle: "short", timeStyle: "short" }).format(new Date(state.ui.c4DoorUpdatedAt))
                     : "Sin movimientos en esta sesión";
-                byId("c4GrantButton").disabled = isOpen;
+                const context = selected && accessContext(selected);
+                byId("c4SelectedRecord").innerHTML = selected
+                    ? `<b>${esc(context.name)}</b><br /><span class="muted">${esc(context.type)} · Caja ${esc(context.box?.code || "Sin caja")}</span><div class="summary-row"><span>Contrato validado por Bóveda</span><b>${esc(context.contract?.folio || "Sin contrato")}</b></div><div class="summary-row"><span>Solicitud autorizada</span><b>${dateLabel(selected.createdAt.slice(0, 10))}</b></div>`
+                    : "Selecciona una persona de la cola para operar la puerta.";
+                byId("c4GrantButton").disabled = !selected || isOpen;
+                byId("c4ConfirmButton").disabled = !selected || !isOpen;
                 byId("c4CloseButton").disabled = !isOpen;
+                byId("c4RemoveButton").disabled = !selected;
                 byId("c4ControlFeedback").textContent = isOpen
-                    ? "Acceso físico concedido por C4. Cierra la puerta cuando la persona haya ingresado."
-                    : "La puerta está cerrada. C4 puede conceder el acceso físico cuando corresponda.";
+                    ? `Puerta abierta para ${context?.name || "el registro seleccionado"}. Confirma el paso y luego cierra la puerta.`
+                    : selected
+                        ? `C4 puede conceder el acceso físico a ${context.name}.`
+                        : "La puerta permanece cerrada hasta que C4 conceda el acceso físico a un registro seleccionado.";
+            }
+            function selectC4Record(id) {
+                if (!state.accessQueue.some((item) => item.id === id && item.status === "Autorizado para C4")) return;
+                state.ui.c4SelectedQueueId = id;
+                persistState();
+                renderC4Control();
+            }
+            function clearC4Selection() {
+                state.ui.c4SelectedQueueId = null;
+                persistState();
+                renderC4Control();
             }
             function grantC4Access() {
                 if (state.ui.c4DoorState === "Abierta") return flash("La puerta ya está abierta en esta simulación.");
+                const selected = state.accessQueue.find((item) => item.id === state.ui.c4SelectedQueueId && item.status === "Autorizado para C4");
+                if (!selected) return flash("Selecciona un registro autorizado por Bóveda antes de accionar la puerta.");
+                const context = accessContext(selected);
                 state.ui.c4DoorState = "Abierta";
                 state.ui.c4DoorUpdatedAt = new Date().toISOString();
-                logAudit("Concedió acceso físico por C4", "Puerta de bóveda", "Abierta", false);
+                logAudit("Concedió acceso físico por C4", `${context.name} · ${context.box?.code || "Sin caja"}`, "Abierta", false);
                 persistState();
                 renderC4Control();
-                flash("Acceso físico concedido por C4 (simulación).");
+                flash(`Acceso físico concedido para ${context.name} (simulación).`);
+            }
+            function confirmC4Access() {
+                const selected = state.accessQueue.find((item) => item.id === state.ui.c4SelectedQueueId && item.status === "Autorizado para C4");
+                if (!selected || state.ui.c4DoorState !== "Abierta") return flash("Primero concede el acceso físico con la puerta abierta.");
+                const context = accessContext(selected);
+                selected.status = "Concedido por C4";
+                selected.c4ConfirmedAt = new Date().toISOString();
+                const entry = state.accessEvents.find((event) => event.id === selected.c4EntryId);
+                if (entry) {
+                    entry.status = "Confirmado";
+                    entry.reason = "Acceso físico concedido por C4";
+                    entry.c4ConfirmedBy = CURRENT_USER.name;
+                }
+                state.ui.c4SelectedQueueId = null;
+                logAudit("Confirmó acceso físico por C4", `${context.name} · ${context.box?.code || "Sin caja"}`, "Confirmado", false);
+                persistState();
+                renderC4Control();
+                flash("Paso confirmado por C4. Bóveda conserva el registro de entrada.");
             }
             function closeC4Door() {
                 if (state.ui.c4DoorState !== "Abierta") return flash("La puerta ya está cerrada en esta simulación.");
@@ -4584,6 +4655,18 @@
                 persistState();
                 renderC4Control();
                 flash("Puerta de bóveda cerrada por C4 (simulación).");
+            }
+            function removeC4Record() {
+                const selected = state.accessQueue.find((item) => item.id === state.ui.c4SelectedQueueId && item.status === "Autorizado para C4");
+                if (!selected) return flash("Selecciona un registro para retirarlo del monitor.");
+                const context = accessContext(selected);
+                selected.status = "Retirado por C4";
+                selected.c4RemovedAt = new Date().toISOString();
+                state.ui.c4SelectedQueueId = null;
+                logAudit("Retiró registro de monitor C4", `${context.name} · ${context.box?.code || "Sin caja"}`, "Correcto", false);
+                persistState();
+                renderC4Control();
+                flash("Registro retirado de la vista de C4; se conserva en la bitácora de la demo.");
             }
             function selectAccess(id) {
                 const item = state.accessQueue.find((record) => record.id === id);
@@ -4597,14 +4680,15 @@
                 const item = state.accessQueue.find((record) => record.id === id);
                 const context = item && accessContext(item);
                 if (!item || !context?.valid) return flash("No se puede confirmar: valida contrato, caja y autorizado.");
-                item.status = "Confirmado";
-                const entry = { id: `access-${crypto.randomUUID()}`, tenantId: context.tenant.id, contractId: context.contract.id, authorizationId: context.authorization?.id || null, direction: "Entrada", status: "Confirmado", reason: "Acceso confirmado por encargado de bóveda", confirmedBy: "Andrea Castillo", occurredAt: new Date().toISOString(), image: "Referencia biométrica simulada" };
+                item.status = "Autorizado para C4";
+                const entry = { id: `access-${crypto.randomUUID()}`, tenantId: context.tenant.id, contractId: context.contract.id, authorizationId: context.authorization?.id || null, direction: "Entrada", status: "Pendiente C4", reason: "Autorizado por encargado; pendiente de acceso físico por C4", confirmedBy: CURRENT_USER.name, occurredAt: new Date().toISOString(), image: "Referencia biométrica simulada" };
                 state.accessEvents.unshift(entry);
-                logAudit("Confirmó entrada a bóveda", `${context.name} · ${context.box.code}`, "Confirmado", false);
+                item.c4EntryId = entry.id;
+                logAudit("Autorizó acceso para C4", `${context.name} · ${context.box.code}`, "Correcto", false);
                 persistState();
                 renderAccessQueue();
-                byId("accessVerification").innerHTML = `<b>Entrada confirmada</b><br><span class="muted">El encargado registró el acceso de ${esc(context.tenant.name)} a la bóveda.</span><div style="margin-top:14px"><button class="btn outline" onclick="prepareAccessExit('${entry.id}')">Actualizar salida y firma</button></div>`;
-                flash("Entrada a bóveda confirmada por el encargado (simulación).");
+                byId("accessVerification").innerHTML = `<b>Solicitud autorizada</b><br><span class="muted">C4 puede conceder el acceso físico a ${esc(context.name)}. La entrada se confirmará cuando C4 registre el paso.</span>`;
+                flash("Solicitud enviada a C4 para acceso físico (simulación).");
             }
             function prepareAccessExit(entryId) {
                 const entry = state.accessEvents.find((event) => event.id === entryId);

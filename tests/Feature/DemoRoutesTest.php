@@ -70,6 +70,12 @@ class DemoRoutesTest extends TestCase
         $this->withSession(['demo_user' => 'vault'])->get('/finanzas')
             ->assertRedirect(route('access.index'));
 
+        $this->withSession(['demo_user' => 'c4'])->get('/accesos')
+            ->assertOk()
+            ->assertSee('C4 · MONITOREO DE PUERTA')
+            ->assertSee('function confirmC4Access')
+            ->assertSee('function removeC4Record');
+
         $this->withSession(['demo_user' => 'finance'])->get('/reportes')
             ->assertOk()
             ->assertSee('Elena Vargas')
