@@ -4057,6 +4057,74 @@
                     if (!event.target.closest(".safe-date")) document.querySelectorAll(".safe-calendar").forEach((panel) => panel.hidden = true);
                 });
             }
+            function closeHeaderPanels() {
+                ["notificationPanel", "profilePanel"].forEach((id) => {
+                    const panel = byId(id);
+                    const button = byId(id === "notificationPanel" ? "notificationButton" : "profileButton");
+                    if (panel) panel.hidden = true;
+                    if (button) button.setAttribute("aria-expanded", "false");
+                });
+            }
+            function toggleHeaderPanel(id) {
+                const panel = byId(id);
+                const button = byId(id === "notificationPanel" ? "notificationButton" : "profileButton");
+                if (!panel || !button) return;
+                const willOpen = panel.hidden;
+                closeHeaderPanels();
+                panel.hidden = !willOpen;
+                button.setAttribute("aria-expanded", String(willOpen));
+            }
+            function setTheme(isDark) {
+                document.body.dataset.theme = isDark ? "dark" : "light";
+                try { localStorage.setItem("saferoom-demo-theme", isDark ? "dark" : "light"); } catch (_) {}
+            }
+            function initialiseHeaderControls() {
+                const savedTheme = (() => {
+                    try { return localStorage.getItem("saferoom-demo-theme"); } catch (_) { return null; }
+                })();
+                const toggle = byId("themeToggle");
+                if (toggle) {
+                    toggle.checked = savedTheme === "dark";
+                    setTheme(toggle.checked);
+                }
+                document.querySelectorAll(".nav[data-view]").forEach((nav) => {
+                    nav.addEventListener("click", () => showView(nav.dataset.view));
+                });
+                document.addEventListener("click", (event) => {
+                    if (!event.target.closest(".header-popover-wrap")) closeHeaderPanels();
+                });
+                window.addEventListener("popstate", () => {
+                    const match = Object.entries(viewRoutes).find(([, route]) => new URL(route, window.location.origin).pathname === location.pathname);
+                    syncSelectionFromUrl();
+                    showView(match?.[0] || fallbackView(), { sync: false, scroll: false });
+                });
+            }
+            function flash(message) {
+                const toast = byId("toast");
+                if (!toast) return;
+                toast.textContent = message;
+                toast.style.display = "block";
+                clearTimeout(window.safeRoomToastTimer);
+                window.safeRoomToastTimer = setTimeout(() => { toast.style.display = "none"; }, 4200);
+            }
+            function closeContractConfirmation() {
+                byId("contractConfirm")?.classList.remove("on");
+            }
+            function closeLifecycleConfirmation() {
+                byId("lifecycleConfirm")?.classList.remove("on");
+            }
+            function renderRolePermissions() {
+                const role = byId("rolePreview")?.value || "Administrador";
+                const permissions = {
+                    Administrador: ["Operación completa", "Gestión de accesos", "Facturación y reportes", "Configuración y usuarios"],
+                    "Recepción": ["Solicitudes y expediente", "Cajas y arrendatarios", "Contratos y renovaciones", "Documentos"],
+                    Finanzas: ["Facturación simulada", "Otros ingresos", "Reportes administrativos", "Sin operación de bóveda"],
+                    "Encargado de bóveda": ["Validar persona autorizada", "Enviar solicitud a C4", "Registrar salida", "Capturar firma simulada"],
+                    "Operador C4": ["Ver cola autorizada", "Conceder acceso físico", "Confirmar el paso", "Cerrar puerta de bóveda"],
+                }[role] || [];
+                const target = byId("rolePermissions");
+                if (target) target.innerHTML = permissions.map((permission) => `<div class="notice"><b>✓</b><br />${esc(permission)}</div>`).join("");
+            }
             /* Estado relacionado de la demo (fase 7). Estas funciones reemplazan
                progresivamente la implementación anterior basada en arreglos. */
             const moneyFormatter = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN", minimumFractionDigits: 2, maximumFractionDigits: 2 });

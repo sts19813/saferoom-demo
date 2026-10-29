@@ -46,7 +46,10 @@ class DemoRoutesTest extends TestCase
             ->assertSee('function registerAccessExit')
             ->assertSee('function exportReport')
             ->assertSee('function grantC4Access')
-            ->assertSee('function closeC4Door');
+            ->assertSee('function closeC4Door')
+            ->assertSee('function initialiseHeaderControls')
+            ->assertSee('nav.addEventListener("click"', false)
+            ->assertSee('function renderRolePermissions');
     }
 
     public function test_login_is_public_and_operational_modules_require_a_demo_session(): void
