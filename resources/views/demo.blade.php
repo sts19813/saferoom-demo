@@ -213,6 +213,7 @@
             .side.c4-mode .restore { display: none; }
             .side.c4-mode .nav[data-view="access"] { display: flex; margin-top: 28px; }
             .side.c4-mode::after { content: "PERFIL ACTIVO\A C4 · CONTROL DE PUERTA"; white-space: pre; margin: auto 18px 20px; padding: 12px; border-radius: 12px; background: #e6f5f8; color: #237994; font-size: 10px; font-weight: 800; line-height: 1.6; }
+            [hidden] { display: none !important; }
             .future {
                 opacity: 0.45;
             }
@@ -1655,38 +1656,38 @@
                 />
             </div>
             <nav>
-                <p class="nav-label">OPERACIÓN</p>
-                <button class="nav on" data-view="home">
+                <p class="nav-label" data-nav-section="operation">OPERACIÓN</p>
+                <button class="nav on" data-section="operation" data-view="home">
                     <span class="ico">◫</span><span>Inicio</span></button
-                ><button class="nav" data-view="requests">
+                ><button class="nav" data-section="operation" data-view="requests">
                     <span class="ico">☷</span><span>Solicitudes</span></button
-                ><button class="nav" data-view="boxes">
+                ><button class="nav" data-section="operation" data-view="boxes">
                     <span class="ico">▣</span><span>Cajas</span></button
-                ><button class="nav" data-view="tenants">
+                ><button class="nav" data-section="operation" data-view="tenants">
                     <span class="ico">♙</span><span>Arrendatarios</span></button
-                ><button class="nav" data-view="contracts">
+                ><button class="nav" data-section="operation" data-view="contracts">
                     <span class="ico">▤</span><span>Contratos</span>
                 </button>
-                <p class="nav-label" style="margin-top: 25px">GESTIÓN</p>
-                <button class="nav" data-view="renewals">
+                <p class="nav-label" data-nav-section="management" style="margin-top: 25px">GESTIÓN</p>
+                <button class="nav" data-section="management" data-view="renewals">
                     <span class="ico">↻</span><span>Renovaciones</span></button
-                ><button class="nav" data-view="cancellations">
+                ><button class="nav" data-section="management" data-view="cancellations">
                     <span class="ico">⊘</span><span>Cancelaciones</span></button
-                ><button class="nav" data-view="access">
+                ><button class="nav" data-section="management" data-view="access">
                     <span class="ico">⌁</span><span>Accesos</span></button
-                ><button class="nav" data-view="documents">
+                ><button class="nav" data-section="management" data-view="documents">
                     <span class="ico">◱</span><span>Documentos</span></button
-                ><button class="nav" data-view="reports">
+                ><button class="nav" data-section="management" data-view="reports">
                     <span class="ico">▥</span><span>Reportes</span>
                 </button>
-                <button class="nav" data-view="finance">
+                <button class="nav" data-section="management" data-view="finance">
                     <span class="ico">$</span><span>Finanzas</span>
                 </button>
-                <p class="nav-label" style="margin-top: 25px">CONFIGURACIÓN</p>
-                <button class="nav" data-view="settings">
+                <p class="nav-label" data-nav-section="settings" style="margin-top: 25px">CONFIGURACIÓN</p>
+                <button class="nav" data-section="settings" data-view="settings">
                     <span class="ico">⚙</span><span>Catálogos y alertas</span>
                 </button>
-                <button class="nav" data-view="users">
+                <button class="nav" data-section="settings" data-view="users">
                     <span class="ico">♧</span><span>Usuarios y permisos</span>
                 </button>
             </nav>
@@ -1716,7 +1717,6 @@
                         title="Los registros se conservan solo en este navegador"
                         >DEMO · DATOS FICTICIOS</span
                     >
-                    <button id="exitVaultProfile" class="btn outline" style="display:none" onclick="exitVaultProfile()">← Volver a administración</button>
                     <div class="header-popover-wrap">
                         <button
                             class="utility-button"
@@ -1823,6 +1823,10 @@
                                         class="theme-switch__track"
                                     ></span></span
                             ></label>
+                            <form method="POST" action="{{ route('logout') }}" style="margin-top:14px">
+                                @csrf
+                                <button class="btn outline" type="submit" style="width:100%">Cerrar sesión</button>
+                            </form>
                         </section>
                     </div>
                 </div>
@@ -3808,7 +3812,9 @@
         </div>
         <script>
             const DEMO_STORAGE_KEY = "saferoom-demo-state";
-            const DEMO_SCHEMA_VERSION = 9;
+            const DEMO_SCHEMA_VERSION = 10;
+            const CURRENT_USER = @json(request()->attributes->get('demoUser'));
+            const CURRENT_PERMISSIONS = @json(config('demo.permissions.'.(request()->attributes->get('demoUser')['role'] ?? ''), []));
             const seedState = {
                 schemaVersion: DEMO_SCHEMA_VERSION,
                 boxes: [
@@ -3871,10 +3877,11 @@
                     { id: "audit-2", occurredAt: "2026-10-27T09:12:00", user: "Seguridad", action: "Actualizó entradas", entity: "Accesos", result: "Simulado" },
                 ],
                 users: [
-                    { id: "user-andrea", name: "Andrea Castillo", email: "andrea.castillo@saferoom.mx", role: "Administrador", status: "Activo" },
-                    { id: "user-marco", name: "Marco Rodríguez", email: "marco.rodriguez@saferoom.mx", role: "Recepción", status: "Activo" },
-                    { id: "user-boveda", name: "Sergio Paredes", email: "boveda@saferoom.mx", role: "Encargado de bóveda", status: "Activo", permissions: ["access"] },
-                    { id: "user-c4", name: "Valeria Cárdenas", email: "c4@saferoom.mx", role: "Operador C4", status: "Activo", permissions: ["door-control"] },
+                    { id: "user-andrea", name: "Andrea Castillo", email: "andrea.castillo@saferoom.demo", role: "Administrador", status: "Activo" },
+                    { id: "user-marco", name: "Marco Rodríguez", email: "marco.rodriguez@saferoom.demo", role: "Recepción", status: "Activo" },
+                    { id: "user-finance", name: "Elena Vargas", email: "elena.vargas@saferoom.demo", role: "Finanzas", status: "Activo" },
+                    { id: "user-boveda", name: "Sergio Paredes", email: "boveda@saferoom.demo", role: "Encargado de bóveda", status: "Activo", permissions: ["access"] },
+                    { id: "user-c4", name: "Valeria Cárdenas", email: "c4@saferoom.demo", role: "Operador C4", status: "Activo", permissions: ["door-control"] },
                 ],
                 settings: { availabilityAlert: "Activa", availabilityLimit: "25%", availabilityMessage: "Disponibilidad de cajas por debajo del límite" },
                 ui: { selectedTenantId: "tenant-mariana", selectedContractId: "contract-0148", selectedRequestId: null, draft: null, activeProfile: "admin" },
@@ -4078,8 +4085,14 @@
                 if (id === "tenant" && tab && tab !== "Resumen") url.searchParams.set("tab", tab);
                 return `${url.pathname}${url.search}`;
             }
+            function isAllowedView(id) {
+                return CURRENT_PERMISSIONS.includes("*") || CURRENT_PERMISSIONS.includes(id);
+            }
+            function fallbackView() {
+                return CURRENT_PERMISSIONS.length === 1 && CURRENT_PERMISSIONS[0] === "access" ? "access" : "home";
+            }
             function showView(id, options = {}) {
-                if (["vault", "c4"].includes(state.ui.activeProfile) && id !== "access") id = "access";
+                if (!isAllowedView(id)) id = fallbackView();
                 if (!byId(id)) id = "home";
                 document.querySelectorAll(".view").forEach((view) => view.classList.remove("on"));
                 byId(id).classList.add("on");
@@ -4501,12 +4514,7 @@
                 }
             }
             function logAudit(action, entity, result = "Correcto", save = true) {
-                const user = state.ui.activeProfile === "vault"
-                    ? "Sergio Paredes"
-                    : state.ui.activeProfile === "c4"
-                        ? "Valeria Cárdenas"
-                        : "Andrea Castillo";
-                state.auditLog.unshift({ id: `audit-${crypto.randomUUID()}`, occurredAt: new Date().toISOString(), user, action, entity, result });
+                state.auditLog.unshift({ id: `audit-${crypto.randomUUID()}`, occurredAt: new Date().toISOString(), user: CURRENT_USER.name, action, entity, result });
                 if (save) persistState();
                 if (byId("auditRows")) renderAuditLog();
             }
@@ -4965,16 +4973,19 @@
                 byId("userModal")?.classList.remove("on");
             }
             function applyDemoProfile() {
-                const isVaultProfile = state.ui.activeProfile === "vault";
-                const isC4Profile = state.ui.activeProfile === "c4";
-                const profile = isVaultProfile
-                    ? { name: "Sergio Paredes", role: "Encargado de bóveda", initials: "SP" }
-                    : isC4Profile
-                        ? { name: "Valeria Cárdenas", role: "Operador C4", initials: "C4" }
-                        : { name: "Andrea Castillo", role: "Administración", initials: "AC" };
+                const isVaultProfile = CURRENT_USER.role === "Encargado de bóveda";
+                const isC4Profile = CURRENT_USER.role === "Operador C4";
+                const profile = { name: CURRENT_USER.name, role: CURRENT_USER.role, initials: CURRENT_USER.initials };
+                state.ui.activeProfile = isVaultProfile ? "vault" : isC4Profile ? "c4" : "standard";
                 byId("side").classList.toggle("vault-mode", isVaultProfile);
                 byId("side").classList.toggle("c4-mode", isC4Profile);
-                byId("exitVaultProfile").style.display = (isVaultProfile || isC4Profile) ? "inline-flex" : "none";
+                document.querySelectorAll(".nav").forEach((nav) => {
+                    nav.hidden = !isAllowedView(nav.dataset.view);
+                });
+                document.querySelectorAll("[data-nav-section]").forEach((label) => {
+                    label.hidden = !Array.from(document.querySelectorAll(`.nav[data-section="${label.dataset.navSection}"]`)).some((nav) => !nav.hidden);
+                });
+                byId("side").querySelector(".restore").hidden = CURRENT_USER.role !== "Administrador";
                 if (byId("vaultOperations")) byId("vaultOperations").style.display = isC4Profile ? "none" : "";
                 if (byId("vaultVerification")) byId("vaultVerification").style.display = isC4Profile ? "none" : "";
                 if (byId("vaultAudit")) byId("vaultAudit").style.display = isC4Profile ? "none" : "";
@@ -4986,25 +4997,13 @@
                 ["profileInitials", "profilePanelInitials"].forEach((id) => byId(id).textContent = profile.initials);
             }
             function enterVaultProfile() {
-                state.ui.activeProfile = "vault";
-                applyDemoProfile();
-                persistState();
-                flash("Vista activa: Encargado de bóveda. Solo se muestra Accesos a la bóveda.");
-                showView("access");
+                flash("Para operar como Encargado de bóveda, inicia sesión con esa cuenta de demostración.");
             }
             function enterC4Profile() {
-                state.ui.activeProfile = "c4";
-                applyDemoProfile();
-                persistState();
-                flash("Vista activa: Operador C4. Solo se muestra el control de puerta de Bóveda.");
-                showView("access");
+                flash("Para operar como C4, inicia sesión con esa cuenta de demostración.");
             }
             function exitVaultProfile() {
-                state.ui.activeProfile = "admin";
-                applyDemoProfile();
-                persistState();
-                flash("Regresaste a la vista de Administración.");
-                showView("users");
+                flash("Cierra sesión para cambiar de perfil.");
             }
             function openUserModal() {
                 byId("userName").value = "";
@@ -5020,8 +5019,7 @@
                     const isVaultUser = user.role === "Encargado de bóveda";
                     const isC4User = user.role === "Operador C4";
                     const restriction = isVaultUser ? "Registra entradas, salidas y firmas" : isC4User ? "Acceso exclusivo: Bóveda · Control de puerta" : "";
-                    const action = isVaultUser ? `<button class="btn primary" style="margin-top:8px" onclick="enterVaultProfile()">Entrar a Bóveda</button>` : isC4User ? `<button class="btn primary" style="margin-top:8px" onclick="enterC4Profile()">Entrar a C4</button>` : "";
-                    return `<div class="activity"><span><b>${esc(user.name)}</b><br><small class="muted">${esc(user.email)} · ${esc(user.role)}</small>${restriction ? `<br><small class="muted">${restriction}</small>` : ""}</span><span>${badge(user.status)}${action}</span></div>`;
+                    return `<div class="activity"><span><b>${esc(user.name)}</b><br><small class="muted">${esc(user.email)} · ${esc(user.role)}</small>${restriction ? `<br><small class="muted">${restriction}</small>` : ""}</span><span>${badge(user.status)}</span></div>`;
                 }).join("") || `<div class="empty">Sin usuarios configurados.</div>`;
             }
             function saveDemoUser() {

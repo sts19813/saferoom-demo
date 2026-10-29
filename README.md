@@ -14,6 +14,20 @@ php artisan serve
 
 Abre la URL indicada por Laravel, normalmente `http://127.0.0.1:8000`.
 
+## Acceso a la demostración
+
+La raíz abre el inicio de sesión. Estas credenciales son ficticias y están pensadas para presentar el alcance de cada rol:
+
+| Rol | Correo | Contraseña | Alcance |
+| --- | --- | --- | --- |
+| Administrador | `andrea.castillo@saferoom.demo` | `Admin2026!` | Todos los módulos. |
+| Recepción | `marco.rodriguez@saferoom.demo` | `Recepcion2026!` | Solicitudes, cajas, arrendatarios, contratos y documentos. |
+| Finanzas | `elena.vargas@saferoom.demo` | `Finanzas2026!` | Facturación y reportes. |
+| Encargado de bóveda | `boveda@saferoom.demo` | `Boveda2026!` | Valida entradas, registra salidas y captura firmas. |
+| Operador C4 | `c4@saferoom.demo` | `C4Seguro2026!` | Solo concede acceso físico y cierra la puerta de bóveda. |
+
+Los permisos se validan en Laravel y también se reflejan en la navegación. Son cuentas de demo; no existe integración con directorio, biométricos o identidades reales.
+
 ## Recorrido recomendado para presentar
 
 1. En **Inicio**, explica ocupación, vencimientos y actividad calculados desde la demo.
@@ -31,7 +45,7 @@ La demo usa `localStorage` con versión de esquema. Al recargar, conserva regist
 
 ## Límites de la demostración
 
-No existe autenticación, base de datos, timbrado CFDI, pagos, conciliación, firma legal, almacenamiento de expedientes, biometría, control de cerraduras, ni conexión con Kommo. Las reglas fiscales y comerciales son visualizaciones de ejemplo. Consulta [docs/alcance-demo.md](docs/alcance-demo.md) y [docs/plan-evolucion-demo.md](docs/plan-evolucion-demo.md) para evidencia, supuestos y pendientes.
+No existe base de datos, timbrado CFDI, pagos, conciliación, firma legal, almacenamiento de expedientes, biometría, control de cerraduras, ni conexión con Kommo. El inicio de sesión usa cuentas estáticas exclusivamente de demostración. Las reglas fiscales y comerciales son visualizaciones de ejemplo. Consulta [docs/alcance-demo.md](docs/alcance-demo.md) y [docs/plan-evolucion-demo.md](docs/plan-evolucion-demo.md) para evidencia, supuestos y pendientes.
 
 ## Verificación
 
