@@ -56,7 +56,7 @@ class DemoRoutesTest extends TestCase
     {
         $this->get('/login')
             ->assertOk()
-            ->assertSee('Cuentas disponibles')
+            ->assertSee('Acceso de demostración')
             ->assertSee('Operador C4');
 
         $this->get('/accesos')
@@ -68,7 +68,9 @@ class DemoRoutesTest extends TestCase
         $this->withSession(['demo_user' => 'vault'])->get('/accesos')
             ->assertOk()
             ->assertSee('Sergio Paredes')
-            ->assertSee('Encargado de bóveda');
+            ->assertSee('Encargado de bóveda')
+            ->assertSee('function initialiseExitSignaturePad')
+            ->assertSee('exitSignaturePad');
 
         $this->withSession(['demo_user' => 'vault'])->get('/finanzas')
             ->assertRedirect(route('access.index'));
@@ -76,7 +78,15 @@ class DemoRoutesTest extends TestCase
         $this->withSession(['demo_user' => 'c4'])->get('/accesos')
             ->assertOk()
             ->assertSee('C4 · MONITOREO DE PUERTA')
-            ->assertSee('function confirmC4Access')
+            ->assertSee('VALIDACIÓN VISUAL')
+            ->assertSee('demo-c4-portrait.png')
+            ->assertSee('FOTO FICTICIA · DEMO')
+            ->assertSee('function refreshC4Monitor')
+            ->assertSee('function addC4DemoRecord')
+            ->assertSee('Abrir puerta')
+            ->assertSee('Registrar acceso remoto')
+            ->assertSee('function recordC4RemoteAccess')
+            ->assertSee('c4-door-open')
             ->assertSee('function removeC4Record');
 
         $this->withSession(['demo_user' => 'finance'])->get('/reportes')

@@ -213,6 +213,33 @@
             .side.c4-mode .restore { display: none; }
             .side.c4-mode .nav[data-view="access"] { display: flex; margin-top: 28px; }
             .side.c4-mode::after { content: "PERFIL ACTIVO\A C4 · CONTROL DE PUERTA"; white-space: pre; margin: auto 18px 20px; padding: 12px; border-radius: 12px; background: #e6f5f8; color: #237994; font-size: 10px; font-weight: 800; line-height: 1.6; }
+            .c4-workspace { display:grid; grid-template-columns:minmax(210px,.85fr) minmax(255px,1fr) minmax(250px,.95fr); gap:16px; margin-top:18px; }
+            .c4-workspace .panel { min-width:0; }
+            .c4-photo-panel { display:flex; flex-direction:column; align-items:center; text-align:center; }
+            .c4-photo-frame { position:relative; display:grid; width:min(100%,250px); margin:12px auto 0; overflow:hidden; aspect-ratio:1; place-items:center; border:1px solid #e2dcd6; border-radius:18px; background:#f2eeea; box-shadow:0 10px 24px rgb(50 39 32 / .09); }
+            .c4-photo-frame::after { position:absolute; inset:10px; border:1px solid rgb(255 255 255 / .55); border-radius:12px; content:""; pointer-events:none; }
+            .c4-photo-frame img { width:100%; height:100%; object-fit:cover; }
+            .c4-photo-placeholder { display:grid; width:100%; height:100%; place-items:center; background:linear-gradient(145deg,#e9f1f2,#f7f4ed); color:#527f8e; font-size:42px; font-weight:800; letter-spacing:.05em; }
+            .c4-identity-name { margin:16px 0 4px; color:var(--ink); font-size:17px; line-height:1.25; }
+            .c4-identity-meta { margin:0; color:var(--muted); font-size:11px; line-height:1.55; }
+            .c4-photo-status { display:inline-flex; align-items:center; gap:6px; margin-top:14px; padding:7px 10px; border-radius:999px; background:#e6f5f8; color:#237994; font-size:9px; font-weight:800; letter-spacing:.07em; }
+            .c4-photo-status::before { width:6px; height:6px; border-radius:50%; background:currentColor; content:""; }
+            #c4ControlPanel { transition:border-color .25s ease, box-shadow .25s ease, background .25s ease; }
+            #c4ControlPanel.c4-door-open { border:2px solid #27a968; background:linear-gradient(135deg,#f4fff8 0%,#e2f7ea 100%); box-shadow:0 0 0 5px rgb(39 169 104 / .14),0 18px 38px rgb(39 169 104 / .16); }
+            #c4ControlPanel.c4-door-closed { border:2px solid #d45b5b; background:linear-gradient(135deg,#fffafa 0%,#fff0f0 100%); box-shadow:0 0 0 5px rgb(212 91 91 / .11),0 18px 38px rgb(212 91 91 / .12); }
+            .c4-door-state { display:inline-flex; margin-top:5px; padding:6px 9px; border-radius:999px; font-size:10px; font-weight:800; letter-spacing:.06em; }
+            .c4-door-state.is-open { background:#daf5e5; color:#147645; }
+            .c4-door-state.is-closed { background:#ffe1e1; color:#a72d2d; }
+            .access-elapsed { display:inline-flex; align-items:center; margin-top:7px; padding:5px 8px; border-radius:999px; background:#e8f3ff; color:#286790; font-size:10px; font-weight:800; letter-spacing:.03em; }
+            .access-elapsed.is-pending { background:#fff1d5; color:#946214; }
+            .signature-pad { margin-top:16px; overflow:hidden; border:1px solid #d7d0c9; border-radius:14px; background:#fff; }
+            .signature-pad__head { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:11px 13px; border-bottom:1px solid #eee7e1; color:#625b55; font-size:10px; font-weight:800; letter-spacing:.07em; }
+            .signature-pad canvas { display:block; width:100%; height:160px; touch-action:none; cursor:crosshair; }
+            .signature-pad__line { height:1px; margin:0 20px; background:#bdb4ab; }
+            body[data-theme="dark"] #c4ControlPanel.c4-door-open { background:linear-gradient(135deg,#183b2c 0%,#1d4b37 100%); border-color:#4ec783; }
+            body[data-theme="dark"] #c4ControlPanel.c4-door-closed { background:linear-gradient(135deg,#402525 0%,#502a2a 100%); border-color:#e57979; }
+            @media (max-width:1120px) { .c4-workspace { grid-template-columns:repeat(2,minmax(0,1fr)); } .c4-workspace > :last-child { grid-column:1 / -1; } }
+            @media (max-width:650px) { .c4-workspace { grid-template-columns:1fr; } .c4-workspace > :last-child { grid-column:auto; } }
             [hidden] { display: none !important; }
             .future {
                 opacity: 0.45;
@@ -2913,8 +2940,8 @@
                             <div id="accessQueue"></div>
                         </section>
                         <section class="panel section">
-                            <h2>Actualizar salida</h2>
-                            <p class="muted">Personas dentro de la bóveda pendientes de registrar salida.</p>
+                            <h2>Marcar salida</h2>
+                            <p class="muted">Personas dentro de la bóveda pendientes de firma de salida.</p>
                             <div id="accessExitQueue"></div>
                         </section>
                     </div>
@@ -2922,36 +2949,40 @@
                         <div class="panel-head">
                             <div>
                                 <p class="eyebrow">C4 · MONITOREO DE PUERTA</p>
-                                <h2>Conceder acceso físico</h2>
-                                <p class="muted">C4 recibe personas previamente autorizadas por Bóveda. Solo acciona la puerta y confirma el paso; no valida documentos ni captura firmas.</p>
+                                <h2>Control de puerta</h2>
+                                <p class="muted">C4 monitorea las cámaras y controla a distancia la puerta de la bóveda. Los clientes no ingresan a C4; Bóveda conserva la validación documental y las firmas.</p>
                             </div>
                             <span class="tag blue">OPERACIÓN C4</span>
                         </div>
-                        <div class="two" style="margin-top:18px">
+                        <div class="c4-workspace">
                             <section class="panel" style="box-shadow:none">
                                 <div class="panel-head">
-                                    <div><b>Registros autorizados (<span id="c4RecordCount">0</span>)</b><p class="muted">Cola enviada por el encargado de bóveda.</p></div>
-                                    <button class="btn outline" type="button" onclick="renderC4Control()">↻ Actualizar vista</button>
+                                    <div><b>Registros autorizados (<span id="c4RecordCount">0</span>)</b><p class="muted">Cola enviada por el encargado de bóveda.</p><small class="muted" id="c4RefreshStatus">Vista inicial</small></div>
+                                    <button class="btn outline" id="c4RefreshButton" type="button" onclick="refreshC4Monitor()">↻ Actualizar vista</button>
                                 </div>
                                 <div id="c4RecordList"></div>
+                            </section>
+                            <section class="panel section c4-photo-panel" style="box-shadow:none">
+                                <p class="eyebrow">VALIDACIÓN VISUAL</p>
+                                <div id="c4VisualValidation" class="notice">Selecciona un registro para mostrar su fotografía de referencia.</div>
                             </section>
                             <section class="panel section" style="box-shadow:none">
                                 <p class="eyebrow">REGISTRO SELECCIONADO</p>
                                 <div id="c4SelectedRecord" class="notice">Selecciona una persona de la cola para operar la puerta.</div>
                                 <div class="small-grid" style="margin-top:14px">
-                                    <div class="notice"><b>Estado de puerta</b><br /><span id="c4DoorState">Cerrada</span></div>
+                                    <div class="notice"><b>Estado de puerta</b><br /><span id="c4DoorState" class="c4-door-state is-closed">CERRADA</span></div>
                                     <div class="notice"><b>Última acción</b><br /><span id="c4DoorUpdated">Sin movimientos en esta sesión</span></div>
                                 </div>
                                 <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:18px">
-                                    <button class="btn primary" id="c4GrantButton" type="button" onclick="grantC4Access()">⌁ Conceder acceso</button>
-                                    <button class="btn gold" id="c4ConfirmButton" type="button" onclick="confirmC4Access()">✓ Confirmar acceso</button>
-                                    <button class="btn outline" id="c4CloseButton" type="button" onclick="closeC4Door()">Cerrar puerta</button>
+                                    <button class="btn primary" id="c4GrantButton" type="button" onclick="grantC4Access()">↗ Abrir puerta</button>
+                                    <button class="btn gold" id="c4ConfirmButton" type="button" onclick="recordC4RemoteAccess()">✓ Registrar acceso remoto</button>
+                                    <button class="btn outline" id="c4CloseButton" type="button" onclick="closeC4Door()">⇥ Cerrar puerta</button>
                                 </div>
                                 <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px">
-                                    <button class="btn outline" id="c4RemoveButton" type="button" onclick="removeC4Record()">Retirar de vista</button>
+                                    <button class="btn outline" id="c4RemoveButton" type="button" onclick="removeC4Record()">Archivar registro</button>
                                     <button class="btn outline" type="button" onclick="clearC4Selection()">Cerrar</button>
                                 </div>
-                                <p class="notice" id="c4ControlFeedback" style="margin-top:16px">La puerta permanece cerrada hasta que C4 conceda el acceso físico a un registro seleccionado.</p>
+                                <p class="notice" id="c4ControlFeedback" style="margin-top:16px">La puerta permanece cerrada hasta que C4 autorice su apertura remota para un registro seleccionado.</p>
                             </section>
                         </div>
                     </section>
@@ -3626,7 +3657,7 @@
                                 <span><b>Encargado de bóveda</b><br /><small class="muted">Solo puede consultar y confirmar entradas/salidas en Accesos a la bóveda.</small></span><span class="tag green">Activo</span>
                             </div>
                             <div class="activity">
-                                <span><b>Operador C4</b><br /><small class="muted">Solo concede acceso físico y cierra la puerta de Bóveda.</small></span><span class="tag green">Activo</span>
+                                <span><b>Operador C4</b><br /><small class="muted">Monitorea cámaras y controla a distancia la puerta de Bóveda.</small></span><span class="tag green">Activo</span>
                             </div>
                         </section>
                         <section class="panel section" style="margin-top:20px">
@@ -3831,9 +3862,12 @@
         </div>
         <script>
             const DEMO_STORAGE_KEY = "saferoom-demo-state";
-            const DEMO_SCHEMA_VERSION = 11;
+            const DEMO_SCHEMA_VERSION = 12;
             const CURRENT_USER = @json(request()->attributes->get('demoUser'));
             const CURRENT_PERMISSIONS = @json(config('demo.permissions.'.(request()->attributes->get('demoUser')['role'] ?? ''), []));
+            const C4_DEMO_PORTRAITS = {
+                "auth-pacho": @json(asset('images/demo-c4-portrait.png')),
+            };
             const seedState = {
                 schemaVersion: DEMO_SCHEMA_VERSION,
                 boxes: [
@@ -3889,7 +3923,7 @@
                     { id: "queue-c4-1", tenantId: "tenant-mariana", authorizationId: "auth-pacho", contractId: "contract-0148", direction: "Entrada", status: "Autorizado para C4", c4EntryId: "access-c4-pacho", createdAt: "2026-10-28T17:18:00" },
                 ],
                 accessEvents: [
-                    { id: "access-c4-pacho", tenantId: "tenant-mariana", contractId: "contract-0148", authorizationId: "auth-pacho", direction: "Entrada", status: "Pendiente C4", reason: "Autorizado por bóveda; pendiente de acceso físico por C4", confirmedBy: "Sergio Paredes", occurredAt: "2026-10-28T17:18:00", image: "Referencia biométrica simulada" },
+                    { id: "access-c4-pacho", tenantId: "tenant-mariana", contractId: "contract-0148", authorizationId: "auth-pacho", direction: "Entrada", status: "Confirmado", reason: "Entrada registrada por Bóveda; C4 mantiene el control remoto de la puerta", confirmedBy: "Sergio Paredes", occurredAt: "2026-10-28T17:18:00", image: "Referencia biométrica simulada" },
                     { id: "access-entry-c4", tenantId: "tenant-mariana", contractId: "contract-0148", authorizationId: null, direction: "Entrada", status: "Confirmado", reason: "Acceso confirmado por encargado de bóveda", confirmedBy: "Sergio Paredes", occurredAt: "2026-10-27T10:04:00", image: "Referencia biométrica simulada" },
                     { id: "access-exit-c4", entryId: "access-entry-c4", tenantId: "tenant-mariana", contractId: "contract-0148", authorizationId: null, direction: "Salida", status: "Confirmado", reason: "Salida firmada en demo", signature: "Mariana López", occurredAt: "2026-10-27T10:18:00" },
                 ],
@@ -3909,6 +3943,11 @@
                 ui: { selectedTenantId: "tenant-mariana", selectedContractId: "contract-0148", selectedRequestId: null, draft: null, activeProfile: "admin" },
             };
             const clone = (value) => structuredClone(value);
+            const createDemoId = (prefix) => {
+                const uuid = globalThis.crypto?.randomUUID?.();
+                const fallback = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+                return `${prefix}-${uuid || fallback}`;
+            };
             const validState = (value) => value && value.schemaVersion === DEMO_SCHEMA_VERSION && ["boxes", "tenants", "requests", "contracts", "movements", "documents", "accessQueue", "accessEvents", "operations", "auditLog", "users"].every((key) => Array.isArray(value[key])) && value.ui;
             function loadState() {
                 try {
@@ -4120,7 +4159,7 @@
                     "Recepción": ["Solicitudes y expediente", "Cajas y arrendatarios", "Contratos y renovaciones", "Documentos"],
                     Finanzas: ["Facturación simulada", "Otros ingresos", "Reportes administrativos", "Sin operación de bóveda"],
                     "Encargado de bóveda": ["Validar persona autorizada", "Enviar solicitud a C4", "Registrar salida", "Capturar firma simulada"],
-                    "Operador C4": ["Ver cola autorizada", "Conceder acceso físico", "Confirmar el paso", "Cerrar puerta de bóveda"],
+                    "Operador C4": ["Ver registros autorizados", "Monitorear cámara y foto de referencia", "Abrir puerta de bóveda a distancia", "Registrar y cerrar la puerta"],
                 }[role] || [];
                 const target = byId("rolePermissions");
                 if (target) target.innerHTML = permissions.map((permission) => `<div class="notice"><b>✓</b><br />${esc(permission)}</div>`).join("");
@@ -4215,7 +4254,8 @@
                 const green = ["Disponible", "Activo", "Por renovar", "Confirmado", "Correcto", "Registrado", "Aprobada"];
                 const amber = ["Nueva", "En revisión", "Reservada", "Pendiente", "Requiere revisión", "Revisión requerida"];
                 const tone = green.includes(status) ? "green" : amber.includes(status) ? "amber" : status === "Denegada" ? "red" : status === "Simulado" ? "blue" : "slate";
-                return `<span class="tag ${tone}">${esc(status)}</span>`;
+                const visibleStatus = { "Autorizado para C4": "Autorizado para bóveda" }[status] || status;
+                return `<span class="tag ${tone}">${esc(visibleStatus)}</span>`;
             }
             function tone(status) {
                 return status === "Disponible" ? "green" : status === "Reservada" ? "amber" : status === "Mantenimiento" ? "blue" : "slate";
@@ -4354,18 +4394,18 @@
                 if (!draft.name || !draft.email || !draft.phone) return flash("Completa nombre, correo y teléfono para guardar la solicitud.");
                 let tenant = tenantById(draft.tenantId) || state.tenants.find((item) => item.email.toLocaleLowerCase() === draft.email.toLocaleLowerCase());
                 if (tenant) Object.assign(tenant, draft, { id: tenant.id });
-                else { tenant = Object.assign({}, draft, { id: `tenant-${crypto.randomUUID()}` }); state.tenants.push(tenant); }
+                else { tenant = Object.assign({}, draft, { id: createDemoId("tenant") }); state.tenants.push(tenant); }
                 let request = requestById(draft.requestId);
                 if (request) Object.assign(request, { tenantId: tenant.id, boxId: draft.boxId || null, services: draft.services, documents: draft.documents, status: request.status === "Aprobada" || request.status === "Denegada" ? request.status : "En revisión" });
                 else {
                     const number = nextSequence(state.requests, "folio", 32);
-                    request = { id: `request-${crypto.randomUUID()}`, folio: `SOL-${String(number).padStart(4, "0")}`, tenantId: tenant.id, boxId: draft.boxId || null, createdAt: new Date().toISOString(), status: "En revisión", contractId: null, services: draft.services, documents: draft.documents };
+                    request = { id: createDemoId("request"), folio: `SOL-${String(number).padStart(4, "0")}`, tenantId: tenant.id, boxId: draft.boxId || null, createdAt: new Date().toISOString(), status: "En revisión", contractId: null, services: draft.services, documents: draft.documents };
                     state.requests.unshift(request);
                 }
                 const authorization = state.authorizations.find((item) => item.tenantId === tenant.id);
                 if (draft.auth) {
                     if (authorization) Object.assign(authorization, { name: draft.auth, phone: draft.authPhone });
-                    else state.authorizations.push({ id: `auth-${crypto.randomUUID()}`, tenantId: tenant.id, name: draft.auth, phone: draft.authPhone, type: "Autorizado" });
+                    else state.authorizations.push({ id: createDemoId("auth"), tenantId: tenant.id, name: draft.auth, phone: draft.authPhone, type: "Autorizado" });
                 }
                 state.ui.selectedTenantId = tenant.id;
                 state.ui.selectedRequestId = request.id;
@@ -4481,15 +4521,15 @@
                 if (!request || !box || request.contractId || box.status !== "Disponible" || request.status !== "Aprobada") return flash("No se puede generar el contrato: la solicitud debe estar aprobada y la caja disponible.");
                 isSavingContract = true;
                 const number = nextSequence(state.contracts, "folio", 149);
-                const contract = { id: `contract-${crypto.randomUUID()}`, folio: `CT-2026-${String(number).padStart(4, "0")}`, tenantId: request.tenantId, boxId: box.id, startDate: byId("cStart").value, endDate: byId("cEnd").value, durationMonths: Number(byId("cDuration").value.split(" ")[0]) || 12, rentCents: Math.round((Number(byId("rent").value) || 0) * 100), depositCents: Math.round((Number(byId("deposit").value) || 0) * 100), paymentDay: Number(byId("cPaymentDay").value.replace(/\D/g, "")) || 1, paymentMethod: byId("cPaymentMethod").value, status: "Activo", createdAt: new Date().toISOString() };
+                const contract = { id: createDemoId("contract"), folio: `CT-2026-${String(number).padStart(4, "0")}`, tenantId: request.tenantId, boxId: box.id, startDate: byId("cStart").value, endDate: byId("cEnd").value, durationMonths: Number(byId("cDuration").value.split(" ")[0]) || 12, rentCents: Math.round((Number(byId("rent").value) || 0) * 100), depositCents: Math.round((Number(byId("deposit").value) || 0) * 100), paymentDay: Number(byId("cPaymentDay").value.replace(/\D/g, "")) || 1, paymentMethod: byId("cPaymentMethod").value, status: "Activo", createdAt: new Date().toISOString() };
                 state.contracts.push(contract);
                 request.contractId = contract.id;
                 request.status = "Contratada";
                 box.status = "Ocupada";
                 const taxCents = Math.round(contract.rentCents * 0.16);
-                state.movements.unshift({ id: `movement-${crypto.randomUUID()}`, folio: `F-2026-${String(nextSequence(state.movements, "folio", 1637)).padStart(4, "0")}`, tenantId: contract.tenantId, contractId: contract.id, concept: "Renta, IVA estimado y garantía", method: contract.paymentMethod, amountCents: contract.rentCents + taxCents + contract.depositCents, type: "Factura", status: "Simulada", occurredAt: contract.startDate });
-                ["Contrato de arrendamiento", "Constancia de entrega de llaves", "Recibo de depósito en garantía"].forEach((type, index) => state.documents.push({ id: `document-${crypto.randomUUID()}`, contractId: contract.id, type, folio: `DOC-${contract.folio.slice(-4)}-${index + 1}`, createdAt: contract.startDate }));
-                state.operations.unshift({ id: `operation-${crypto.randomUUID()}`, contractId: contract.id, type: "Contrato generado", occurredAt: new Date().toISOString(), detail: `Caja ${box.code}` });
+                state.movements.unshift({ id: createDemoId("movement"), folio: `F-2026-${String(nextSequence(state.movements, "folio", 1637)).padStart(4, "0")}`, tenantId: contract.tenantId, contractId: contract.id, concept: "Renta, IVA estimado y garantía", method: contract.paymentMethod, amountCents: contract.rentCents + taxCents + contract.depositCents, type: "Factura", status: "Simulada", occurredAt: contract.startDate });
+                ["Contrato de arrendamiento", "Constancia de entrega de llaves", "Recibo de depósito en garantía"].forEach((type, index) => state.documents.push({ id: createDemoId("document"), contractId: contract.id, type, folio: `DOC-${contract.folio.slice(-4)}-${index + 1}`, createdAt: contract.startDate }));
+                state.operations.unshift({ id: createDemoId("operation"), contractId: contract.id, type: "Contrato generado", occurredAt: new Date().toISOString(), detail: `Caja ${box.code}` });
                 state.ui.selectedContractId = contract.id;
                 state.ui.selectedTenantId = contract.tenantId;
                 state.ui.draft = null;
@@ -4604,7 +4644,7 @@
                 }
             }
             function logAudit(action, entity, result = "Correcto", save = true) {
-                state.auditLog.unshift({ id: `audit-${crypto.randomUUID()}`, occurredAt: new Date().toISOString(), user: CURRENT_USER.name, action, entity, result });
+                state.auditLog.unshift({ id: createDemoId("audit"), occurredAt: new Date().toISOString(), user: CURRENT_USER.name, action, entity, result });
                 if (save) persistState();
                 if (byId("auditRows")) renderAuditLog();
             }
@@ -4622,6 +4662,20 @@
                 const valid = Boolean(tenant && contract && isOpenContract(contract) && box?.status === "Ocupada" && (!authorization || authorization.tenantId === tenant.id));
                 return { tenant, contract, box, authorization, type, name, valid };
             }
+            let signaturePad = null;
+            function accessElapsedLabel(occurredAt, status = "Confirmado") {
+                const elapsedSeconds = Math.max(0, Math.floor((Date.now() - new Date(occurredAt).getTime()) / 1000));
+                const hours = Math.floor(elapsedSeconds / 3600);
+                const minutes = Math.floor((elapsedSeconds % 3600) / 60);
+                const seconds = elapsedSeconds % 60;
+                const duration = hours ? `${hours} h ${String(minutes).padStart(2, "0")} min` : `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+                return `Dentro · ${duration}`;
+            }
+            function updateAccessElapsedTimers() {
+                document.querySelectorAll("[data-access-start]").forEach((element) => {
+                    element.textContent = accessElapsedLabel(element.dataset.accessStart, element.dataset.accessStatus);
+                });
+            }
             function renderAccessQueue() {
                 const target = byId("accessQueue");
                 if (!target) return;
@@ -4629,7 +4683,7 @@
                 const filter = byId("accessFilter")?.value || "Todas";
                 const items = state.accessQueue.filter((item) => {
                     const context = accessContext(item);
-                    return !["Confirmado", "Rechazado", "Autorizado para C4", "Concedido por C4", "Retirado por C4"].includes(item.status) && (filter === "Todas" || context.type === filter) && `${context.name} ${context.box?.code || ""}`.toLocaleLowerCase("es").includes(query);
+                    return !["Confirmado", "Rechazado", "Autorizado para C4", "Concedido por C4", "Acceso remoto registrado", "Retirado por C4"].includes(item.status) && (filter === "Todas" || context.type === filter) && `${context.name} ${context.box?.code || ""}`.toLocaleLowerCase("es").includes(query);
                 });
                 target.innerHTML = items.map((item) => { const context = accessContext(item); return `<div class="activity"><span><b>${esc(context.name)}</b><br><small class="muted">${esc(context.box?.code || "Sin caja")} · ${esc(context.type)} · ${esc(context.contract?.folio || "Sin contrato")}</small></span><span>${badge(item.status)} <button class="btn primary" style="margin-left:8px" onclick="selectAccess('${item.id}')">Validar</button></span></div>`; }).join("") || `<div class="empty">No hay accesos pendientes con esos filtros.</div>`;
                 renderAccessExitQueue();
@@ -4638,7 +4692,11 @@
                 const target = byId("accessExitQueue");
                 if (!target) return;
                 const entries = state.accessEvents.filter((event) => event.direction === "Entrada" && event.status === "Confirmado" && !state.accessEvents.some((exit) => exit.direction === "Salida" && exit.entryId === event.id));
-                target.innerHTML = entries.map((entry) => { const context = accessContext({ tenantId: entry.tenantId, contractId: entry.contractId, authorizationId: entry.authorizationId }); return `<div class="activity"><span><b>${esc(context.name)}</b><br><small class="muted">${esc(context.box?.code || "Sin caja")} · Entrada ${esc(new Date(entry.occurredAt).toLocaleTimeString("es-MX", { hour: "2-digit", minute: "2-digit" }))}</small></span><button class="btn outline" onclick="prepareAccessExit('${entry.id}')">Actualizar salida</button></div>`; }).join("") || `<div class="empty">No hay personas dentro de la bóveda.</div>`;
+                target.innerHTML = entries.map((entry) => {
+                    const context = accessContext({ tenantId: entry.tenantId, contractId: entry.contractId, authorizationId: entry.authorizationId });
+                    return `<div class="activity"><span><b>${esc(context.name)}</b><br><small class="muted">${esc(context.box?.code || "Sin caja")} · Entrada ${esc(new Date(entry.occurredAt).toLocaleTimeString("es-MX", { hour: "2-digit", minute: "2-digit" }))}</small><br /><span class="access-elapsed" data-access-start="${esc(entry.occurredAt)}" data-access-status="${esc(entry.status)}">${esc(accessElapsedLabel(entry.occurredAt, entry.status))}</span></span><button class="btn outline" onclick="prepareAccessExit('${entry.id}')">Marcar salida</button></div>`;
+                }).join("") || `<div class="empty">No hay personas dentro de la bóveda.</div>`;
+                updateAccessElapsedTimers();
             }
             function renderC4Control() {
                 const panel = byId("c4ControlPanel");
@@ -4650,13 +4708,20 @@
                 if (!records.some((item) => item.id === state.ui.c4SelectedQueueId)) state.ui.c4SelectedQueueId = records[0]?.id || null;
                 const selected = records.find((item) => item.id === state.ui.c4SelectedQueueId);
                 const isOpen = state.ui.c4DoorState === "Abierta";
+                panel.classList.toggle("c4-door-open", isOpen);
+                panel.classList.toggle("c4-door-closed", !isOpen);
                 byId("c4RecordCount").textContent = String(records.length);
+                const refreshStatus = byId("c4RefreshStatus");
+                if (refreshStatus) refreshStatus.textContent = state.ui.c4MonitorRefreshedAt
+                    ? `Actualizado ${new Intl.DateTimeFormat("es-MX", { hour: "2-digit", minute: "2-digit", second: "2-digit" }).format(new Date(state.ui.c4MonitorRefreshedAt))}`
+                    : "Vista inicial";
                 byId("c4RecordList").innerHTML = records.map((item) => {
                     const context = accessContext(item);
                     const selectedClass = item.id === selected?.id ? "background:#fff8df" : "background:transparent";
                     return `<button type="button" class="activity" style="width:100%;text-align:left;${selectedClass}" onclick="selectC4Record('${item.id}')"><span><b>${esc(context.name)}</b><br><small class="muted">${esc(context.type)} · Caja ${esc(context.box?.code || "Sin caja")} · ${esc(context.contract?.folio || "Sin contrato")}</small></span><span>${badge(item.status)}</span></button>`;
                 }).join("") || `<div class="empty">No hay registros autorizados para C4.</div>`;
-                byId("c4DoorState").textContent = isOpen ? "Abierta" : "Cerrada";
+                byId("c4DoorState").textContent = isOpen ? "ABIERTA · CONTROL REMOTO ACTIVO" : "CERRADA · ACCESO BLOQUEADO";
+                byId("c4DoorState").className = `c4-door-state ${isOpen ? "is-open" : "is-closed"}`;
                 byId("c4DoorUpdated").textContent = state.ui.c4DoorUpdatedAt
                     ? new Intl.DateTimeFormat("es-MX", { dateStyle: "short", timeStyle: "short" }).format(new Date(state.ui.c4DoorUpdatedAt))
                     : "Sin movimientos en esta sesión";
@@ -4664,15 +4729,42 @@
                 byId("c4SelectedRecord").innerHTML = selected
                     ? `<b>${esc(context.name)}</b><br /><span class="muted">${esc(context.type)} · Caja ${esc(context.box?.code || "Sin caja")}</span><div class="summary-row"><span>Contrato validado por Bóveda</span><b>${esc(context.contract?.folio || "Sin contrato")}</b></div><div class="summary-row"><span>Solicitud autorizada</span><b>${dateLabel(selected.createdAt.slice(0, 10))}</b></div>`
                     : "Selecciona una persona de la cola para operar la puerta.";
-                byId("c4GrantButton").disabled = !selected || isOpen;
-                byId("c4ConfirmButton").disabled = !selected || !isOpen;
+                const portrait = selected?.authorizationId ? C4_DEMO_PORTRAITS[selected.authorizationId] : null;
+                const initials = context?.name ? context.name.split(" ").filter(Boolean).slice(0, 2).map((part) => part[0]).join("") : "—";
+                byId("c4VisualValidation").innerHTML = selected
+                    ? `<div class="c4-photo-frame">${portrait ? `<img src="${esc(portrait)}" alt="Retrato ficticio de referencia de ${esc(context.name)}" />` : `<div class="c4-photo-placeholder" aria-hidden="true">${esc(initials)}</div>`}</div><h3 class="c4-identity-name">${esc(context.name)}</h3><p class="c4-identity-meta">${esc(context.type)} · Registro autorizado por Bóveda</p><span class="c4-photo-status">${portrait ? "FOTO FICTICIA · DEMO" : "SIN FOTO DE REFERENCIA"}</span>`
+                    : "Selecciona un registro para mostrar su fotografía de referencia.";
+                byId("c4GrantButton").disabled = !selected || !portrait || isOpen;
+                byId("c4ConfirmButton").disabled = !selected || !portrait || !isOpen;
                 byId("c4CloseButton").disabled = !isOpen;
                 byId("c4RemoveButton").disabled = !selected;
                 byId("c4ControlFeedback").textContent = isOpen
-                    ? `Puerta abierta para ${context?.name || "el registro seleccionado"}. Confirma el paso y luego cierra la puerta.`
+                    ? selected
+                        ? `Puerta de bóveda abierta de forma remota para ${context.name}. Registra el acceso remoto y después cierra la puerta.`
+                        : `Puerta de bóveda abierta de forma remota. ${state.ui.c4LastAction || "Registra el acceso remoto y después cierra la puerta."}`
+                    : selected && !portrait
+                        ? "No hay una foto de referencia para este registro; solicita revisión manual a Bóveda."
                     : selected
-                        ? `C4 puede conceder el acceso físico a ${context.name}.`
-                        : "La puerta permanece cerrada hasta que C4 conceda el acceso físico a un registro seleccionado.";
+                        ? `Foto validada en demo. C4 puede abrir a distancia la puerta de bóveda para ${context.name}.`
+                        : state.ui.c4LastAction || "La puerta permanece cerrada hasta que C4 autorice una apertura remota.";
+            }
+            function addC4DemoRecord() {
+                const occurredAt = new Date().toISOString();
+                const entryId = createDemoId("access-c4");
+                const record = { id: createDemoId("queue-c4"), tenantId: "tenant-mariana", authorizationId: "auth-pacho", contractId: "contract-0148", direction: "Entrada", status: "Autorizado para C4", c4EntryId: entryId, createdAt: occurredAt, simulated: true };
+                state.accessEvents.unshift({ id: entryId, tenantId: record.tenantId, contractId: record.contractId, authorizationId: record.authorizationId, direction: "Entrada", status: "Confirmado", reason: "Entrada registrada por Bóveda; control remoto de puerta disponible para C4", confirmedBy: "Sergio Paredes", occurredAt, image: "Retrato ficticio de referencia" });
+                state.accessQueue.unshift(record);
+                state.ui.c4SelectedQueueId = record.id;
+                return record;
+            }
+            function refreshC4Monitor() {
+                if (state.ui.activeProfile !== "c4") return flash("Inicia sesión con el perfil C4 para actualizar este monitor.");
+                state.ui.c4MonitorRefreshedAt = new Date().toISOString();
+                const generated = !state.accessQueue.some((item) => item.status === "Autorizado para C4") ? addC4DemoRecord() : null;
+                persistState();
+                renderC4Control();
+                const pending = state.accessQueue.filter((item) => item.status === "Autorizado para C4").length;
+                flash(generated ? "Registro simulado agregado al monitor C4 para demostración." : `Vista C4 actualizada: ${pending} registro${pending === 1 ? "" : "s"} autorizado${pending === 1 ? "" : "s"}.`);
             }
             function selectC4Record(id) {
                 if (!state.accessQueue.some((item) => item.id === id && item.status === "Autorizado para C4")) return;
@@ -4689,36 +4781,45 @@
                 if (state.ui.c4DoorState === "Abierta") return flash("La puerta ya está abierta en esta simulación.");
                 const selected = state.accessQueue.find((item) => item.id === state.ui.c4SelectedQueueId && item.status === "Autorizado para C4");
                 if (!selected) return flash("Selecciona un registro autorizado por Bóveda antes de accionar la puerta.");
+                if (!C4_DEMO_PORTRAITS[selected.authorizationId]) return flash("No hay foto de referencia; solicita revisión manual a Bóveda.");
                 const context = accessContext(selected);
                 state.ui.c4DoorState = "Abierta";
                 state.ui.c4DoorUpdatedAt = new Date().toISOString();
-                logAudit("Concedió acceso físico por C4", `${context.name} · ${context.box?.code || "Sin caja"}`, "Abierta", false);
+                state.ui.c4LastAction = `Puerta abierta para ${context.name}.`;
+                logAudit("Abrió puerta de bóveda por C4", `${context.name} · ${context.box?.code || "Sin caja"}`, "Abierta", false);
                 persistState();
                 renderC4Control();
-                flash(`Acceso físico concedido para ${context.name} (simulación).`);
+                flash(`Puerta de bóveda abierta para ${context.name} (simulación).`);
             }
-            function confirmC4Access() {
+            function recordC4RemoteAccess() {
                 const selected = state.accessQueue.find((item) => item.id === state.ui.c4SelectedQueueId && item.status === "Autorizado para C4");
-                if (!selected || state.ui.c4DoorState !== "Abierta") return flash("Primero concede el acceso físico con la puerta abierta.");
+                if (!selected || state.ui.c4DoorState !== "Abierta") return flash("Primero abre la puerta de bóveda antes de registrar el acceso remoto.");
+                if (!C4_DEMO_PORTRAITS[selected.authorizationId]) return flash("No hay foto de referencia para registrar este acceso remoto.");
                 const context = accessContext(selected);
-                selected.status = "Concedido por C4";
+                selected.status = "Acceso remoto registrado";
                 selected.c4ConfirmedAt = new Date().toISOString();
                 const entry = state.accessEvents.find((event) => event.id === selected.c4EntryId);
                 if (entry) {
                     entry.status = "Confirmado";
-                    entry.reason = "Acceso físico concedido por C4";
+                    entry.reason = "Puerta de bóveda abierta a distancia por C4";
                     entry.c4ConfirmedBy = CURRENT_USER.name;
                 }
                 state.ui.c4SelectedQueueId = null;
-                logAudit("Confirmó acceso físico por C4", `${context.name} · ${context.box?.code || "Sin caja"}`, "Confirmado", false);
+                state.ui.c4LastAction = `Acceso remoto de ${context.name} registrado. Cierra la puerta de bóveda.`;
+                logAudit("Registró acceso remoto por C4", `${context.name} · ${context.box?.code || "Sin caja"}`, "Confirmado", false);
                 persistState();
                 renderC4Control();
-                flash("Paso confirmado por C4. Bóveda conserva el registro de entrada.");
+                renderAccessExitQueue();
+                flash(`Acceso remoto de ${context.name} registrado. Cierra la puerta de bóveda.`);
+            }
+            function confirmC4Access() {
+                recordC4RemoteAccess();
             }
             function closeC4Door() {
                 if (state.ui.c4DoorState !== "Abierta") return flash("La puerta ya está cerrada en esta simulación.");
                 state.ui.c4DoorState = "Cerrada";
                 state.ui.c4DoorUpdatedAt = new Date().toISOString();
+                state.ui.c4LastAction = "Puerta de bóveda cerrada.";
                 logAudit("Cerró puerta de bóveda por C4", "Puerta de bóveda", "Cerrada", false);
                 persistState();
                 renderC4Control();
@@ -4749,31 +4850,81 @@
                 const context = item && accessContext(item);
                 if (!item || !context?.valid) return flash("No se puede confirmar: valida contrato, caja y autorizado.");
                 item.status = "Autorizado para C4";
-                const entry = { id: `access-${crypto.randomUUID()}`, tenantId: context.tenant.id, contractId: context.contract.id, authorizationId: context.authorization?.id || null, direction: "Entrada", status: "Pendiente C4", reason: "Autorizado por encargado; pendiente de acceso físico por C4", confirmedBy: CURRENT_USER.name, occurredAt: new Date().toISOString(), image: "Referencia biométrica simulada" };
+                const entry = { id: createDemoId("access"), tenantId: context.tenant.id, contractId: context.contract.id, authorizationId: context.authorization?.id || null, direction: "Entrada", status: "Confirmado", reason: "Entrada validada por Bóveda; control remoto de puerta disponible para C4", confirmedBy: CURRENT_USER.name, occurredAt: new Date().toISOString(), image: "Referencia biométrica simulada" };
                 state.accessEvents.unshift(entry);
                 item.c4EntryId = entry.id;
                 logAudit("Autorizó acceso para C4", `${context.name} · ${context.box.code}`, "Correcto", false);
                 persistState();
                 renderAccessQueue();
-                byId("accessVerification").innerHTML = `<b>Solicitud autorizada</b><br><span class="muted">C4 puede conceder el acceso físico a ${esc(context.name)}. La entrada se confirmará cuando C4 registre el paso.</span>`;
-                flash("Solicitud enviada a C4 para acceso físico (simulación).");
+                byId("accessVerification").innerHTML = `<b>Entrada registrada</b><br><span class="muted">${esc(context.name)} ya aparece en Marcar salida con su contador. C4 recibe el mismo evento únicamente para el control remoto de la puerta.</span>`;
+                flash("Entrada registrada por Bóveda. C4 puede controlar la puerta de forma independiente.");
             }
             function prepareAccessExit(entryId) {
                 const entry = state.accessEvents.find((event) => event.id === entryId);
                 if (!entry) return flash("No encontramos la entrada pendiente.");
+                if (entry.status !== "Confirmado") return flash("La puerta debe ser abierta y registrada por C4 antes de capturar la salida.");
                 const context = accessContext({ tenantId: entry.tenantId, contractId: entry.contractId, authorizationId: entry.authorizationId });
-                byId("accessVerification").innerHTML = `<b>Actualizar salida · ${esc(context.name)}</b><br /><span class="muted">Caja ${esc(context.box?.code || "Sin caja")} · la persona confirma su salida con firma.</span><div class="field" style="margin-top:14px"><label>NOMBRE PARA FIRMA SIMULADA</label><input id="exitSignature" placeholder="Nombre de la persona" value="${esc(context.name)}" /></div><button class="btn primary" style="margin-top:14px" onclick="registerAccessExit('${entry.id}')">Guardar salida y firma</button>`;
+                byId("accessVerification").innerHTML = `<b>Marcar salida · ${esc(context.name)}</b><br /><span class="muted">Caja ${esc(context.box?.code || "Sin caja")} · ${esc(accessElapsedLabel(entry.occurredAt))} dentro de la bóveda.</span><div class="field" style="margin-top:14px"><label>NOMBRE PARA FIRMA</label><input id="exitSignatureName" placeholder="Nombre de la persona" value="${esc(context.name)}" /></div><div class="signature-pad"><div class="signature-pad__head"><span>FIRMA EN PANTALLA</span><button class="btn outline" type="button" onclick="clearExitSignature()">Limpiar</button></div><canvas id="exitSignaturePad" aria-label="Área para capturar firma simulada"></canvas><div class="signature-pad__line"></div></div><button class="btn primary" style="margin-top:14px" onclick="registerAccessExit('${entry.id}')">Guardar salida y firma</button>`;
+                initialiseExitSignaturePad(entry.id);
+            }
+            function initialiseExitSignaturePad(entryId) {
+                const canvas = byId("exitSignaturePad");
+                if (!canvas) return;
+                const ratio = window.devicePixelRatio || 1;
+                const width = Math.max(canvas.clientWidth || 560, 1);
+                const height = Math.max(canvas.clientHeight || 160, 1);
+                canvas.width = Math.floor(width * ratio);
+                canvas.height = Math.floor(height * ratio);
+                const context = canvas.getContext("2d");
+                context.scale(ratio, ratio);
+                context.strokeStyle = "#38322f";
+                context.lineWidth = 2.2;
+                context.lineCap = "round";
+                context.lineJoin = "round";
+                let drawing = false;
+                let previousPoint = null;
+                const pointFor = (event) => {
+                    const rect = canvas.getBoundingClientRect();
+                    return { x: event.clientX - rect.left, y: event.clientY - rect.top };
+                };
+                canvas.addEventListener("pointerdown", (event) => {
+                    drawing = true;
+                    previousPoint = pointFor(event);
+                    signaturePad.hasStroke = true;
+                    canvas.setPointerCapture?.(event.pointerId);
+                });
+                canvas.addEventListener("pointermove", (event) => {
+                    if (!drawing || !previousPoint) return;
+                    const point = pointFor(event);
+                    context.beginPath();
+                    context.moveTo(previousPoint.x, previousPoint.y);
+                    context.lineTo(point.x, point.y);
+                    context.stroke();
+                    previousPoint = point;
+                });
+                const stopDrawing = () => { drawing = false; previousPoint = null; };
+                canvas.addEventListener("pointerup", stopDrawing);
+                canvas.addEventListener("pointerleave", stopDrawing);
+                canvas.addEventListener("pointercancel", stopDrawing);
+                signaturePad = { entryId, canvas, context, width, height, ratio, hasStroke: false };
+            }
+            function clearExitSignature() {
+                if (!signaturePad) return;
+                signaturePad.context.clearRect(0, 0, signaturePad.width, signaturePad.height);
+                signaturePad.hasStroke = false;
             }
             function registerAccessExit(entryId) {
                 const entry = state.accessEvents.find((event) => event.id === entryId);
                 if (!entry) return flash("No encontramos la entrada pendiente.");
-                const signature = byId("exitSignature")?.value.trim();
-                if (!signature) return flash("La persona debe registrar su firma para actualizar la salida.");
+                const signature = byId("exitSignatureName")?.value.trim();
+                if (!signature || !signaturePad?.hasStroke || signaturePad.entryId !== entryId) return flash("Indica el nombre y captura la firma en pantalla para registrar la salida.");
                 const contract = contractById(entry.contractId);
-                state.accessEvents.unshift({ id: `access-${crypto.randomUUID()}`, entryId: entry.id, tenantId: entry.tenantId, contractId: entry.contractId, authorizationId: entry.authorizationId || null, direction: "Salida", status: "Confirmado", reason: "Salida firmada en demo", signature, occurredAt: new Date().toISOString() });
+                const signatureImage = signaturePad.canvas.toDataURL("image/png");
+                state.accessEvents.unshift({ id: createDemoId("access"), entryId: entry.id, tenantId: entry.tenantId, contractId: entry.contractId, authorizationId: entry.authorizationId || null, direction: "Salida", status: "Confirmado", reason: "Salida firmada en demo", signature, signatureImage, occurredAt: new Date().toISOString() });
                 logAudit("Actualizó salida con firma", contract?.folio || "Acceso a bóveda", "Confirmado", false);
                 persistState();
                 renderAccessQueue();
+                signaturePad = null;
                 byId("accessVerification").innerHTML = `<b>Salida registrada</b><br><span class="muted">Firma simulada de ${esc(signature)} guardada en el historial de bóveda.</span>`;
                 flash("Salida y firma simulada registradas.");
             }
@@ -4782,7 +4933,7 @@
                 if (!item) return;
                 const context = accessContext(item);
                 item.status = "Rechazado";
-                state.accessEvents.unshift({ id: `access-${crypto.randomUUID()}`, tenantId: item.tenantId, contractId: item.contractId, authorizationId: item.authorizationId, direction: item.direction, status: "Rechazado", reason: context.valid ? "Rechazado por operación" : "Contrato, caja o autorización no válidos", occurredAt: new Date().toISOString() });
+                state.accessEvents.unshift({ id: createDemoId("access"), tenantId: item.tenantId, contractId: item.contractId, authorizationId: item.authorizationId, direction: item.direction, status: "Rechazado", reason: context.valid ? "Rechazado por operación" : "Contrato, caja o autorización no válidos", occurredAt: new Date().toISOString() });
                 logAudit("Rechazó acceso", `${context.name} · ${context.box?.code || "Sin caja"}`, "Revisión requerida", false);
                 persistState();
                 renderAccessQueue();
@@ -4805,7 +4956,7 @@
                 const tenantId = byId("incomeTenant").value;
                 if (!tenantById(tenantId) || amountCents <= 0) return flash("Indica un arrendatario y un importe mayor que cero.");
                 const number = nextSequence(state.movements, "folio", 32);
-                state.movements.unshift({ id: `movement-${crypto.randomUUID()}`, folio: `OI-2026-${String(number).padStart(4, "0")}`, tenantId, contractId: contractsForTenant(tenantId).find(isOpenContract)?.id || null, concept: byId("incomeConcept").value, method: byId("incomeMethod").value, amountCents, type: "Otro ingreso", status: "Registrado", occurredAt: new Date().toISOString().slice(0, 10) });
+                state.movements.unshift({ id: createDemoId("movement"), folio: `OI-2026-${String(number).padStart(4, "0")}`, tenantId, contractId: contractsForTenant(tenantId).find(isOpenContract)?.id || null, concept: byId("incomeConcept").value, method: byId("incomeMethod").value, amountCents, type: "Otro ingreso", status: "Registrado", occurredAt: new Date().toISOString().slice(0, 10) });
                 logAudit("Registró otro ingreso", `${byId("incomeConcept").value} · ${fmtCents(amountCents)}`, "Registrado", false);
                 persistState();
                 renderFinance();
@@ -4972,7 +5123,7 @@
                 contract.status = "Activo";
                 if (changesBox) { oldBox.status = "Disponible"; nextBox.status = "Ocupada"; contract.boxId = nextBox.id; }
                 const operationType = { renew: "Renovación", move: "Renovación con cambio de caja", "renew-size": "Renovación con cambio de medida", location: "Cambio de ubicación", size: "Cambio de medida" }[mode];
-                state.operations.unshift({ id: `operation-${crypto.randomUUID()}`, contractId: contract.id, type: operationType, occurredAt: new Date().toISOString(), detail: `Anterior: ${boxById(previous.boxId).code} · ${dateLabel(previous.startDate)} a ${dateLabel(previous.endDate)} · ${fmtCents(previous.rentCents)}` });
+                state.operations.unshift({ id: createDemoId("operation"), contractId: contract.id, type: operationType, occurredAt: new Date().toISOString(), detail: `Anterior: ${boxById(previous.boxId).code} · ${dateLabel(previous.startDate)} a ${dateLabel(previous.endDate)} · ${fmtCents(previous.rentCents)}` });
                 state.ui.selectedTenantId = contract.tenantId;
                 state.ui.selectedContractId = contract.id;
                 closeLifecycleConfirmation();
@@ -5015,8 +5166,8 @@
                 contract.cancellationNotes = byId("xNotes").value.trim();
                 contract.keysReturned = Number((byId("xKeys").value.match(/^\d+/) || [0])[0]);
                 if (box) box.status = "Disponible";
-                state.movements.unshift({ id: `movement-${crypto.randomUUID()}`, folio: `DG-2026-${String(nextSequence(state.movements, "folio", 1)).padStart(4, "0")}`, tenantId: contract.tenantId, contractId: contract.id, concept: "Devolución propuesta de garantía", method: "Transferencia", amountCents: -contract.depositCents, type: "Devolución de garantía", status: "Simulada", occurredAt: cancellationDate });
-                state.operations.unshift({ id: `operation-${crypto.randomUUID()}`, contractId: contract.id, type: "Cancelación", occurredAt: `${cancellationDate}T12:00:00`, detail: `${contract.cancellationReason} · ${contract.keysReturned} llaves devueltas` });
+                state.movements.unshift({ id: createDemoId("movement"), folio: `DG-2026-${String(nextSequence(state.movements, "folio", 1)).padStart(4, "0")}`, tenantId: contract.tenantId, contractId: contract.id, concept: "Devolución propuesta de garantía", method: "Transferencia", amountCents: -contract.depositCents, type: "Devolución de garantía", status: "Simulada", occurredAt: cancellationDate });
+                state.operations.unshift({ id: createDemoId("operation"), contractId: contract.id, type: "Cancelación", occurredAt: `${cancellationDate}T12:00:00`, detail: `${contract.cancellationReason} · ${contract.keysReturned} llaves devueltas` });
                 closeLifecycleConfirmation();
                 logAudit("Canceló contrato", contract.folio, "Simulado", false);
                 persistState();
@@ -5114,7 +5265,7 @@
                 if (byId("invoiceProfile").value === "tenant" && (!tenant.rfc || !tenant.taxRegime || !tenant.billingEmail)) return flash("Completa RFC, régimen fiscal y correo de facturación, o selecciona Público general.");
                 const number = nextSequence(state.movements, "folio", 48);
                 const folio = `FAC-2026-${String(number).padStart(4, "0")}`;
-                state.movements.unshift({ id: `movement-${crypto.randomUUID()}`, folio, tenantId, contractId: contract.id, concept: byId("invoiceConcept").value.trim().slice(0, 80) || "Renta mensual", method: byId("invoiceMethod").value, amountCents, type: "Factura", profile: byId("invoiceProfile").value, status: "Simulada", occurredAt: new Date().toISOString().slice(0, 10) });
+                state.movements.unshift({ id: createDemoId("movement"), folio, tenantId, contractId: contract.id, concept: byId("invoiceConcept").value.trim().slice(0, 80) || "Renta mensual", method: byId("invoiceMethod").value, amountCents, type: "Factura", profile: byId("invoiceProfile").value, status: "Simulada", occurredAt: new Date().toISOString().slice(0, 10) });
                 logAudit("Registró factura", `${folio} · ${contract.folio}`, "Simulado", false);
                 persistState();
                 closeInvoiceModal();
@@ -5143,7 +5294,7 @@
                 if (byId("vaultAudit")) byId("vaultAudit").style.display = isC4Profile ? "none" : "";
                 if (byId("accessEyebrow")) byId("accessEyebrow").textContent = isC4Profile ? "BÓVEDA · CONTROL DE PUERTA" : "BÓVEDA · CONTROL OPERATIVO";
                 if (byId("accessHeading")) byId("accessHeading").textContent = isC4Profile ? "Puerta de bóveda · C4" : "Accesos a la bóveda";
-                if (byId("accessDescription")) byId("accessDescription").textContent = isC4Profile ? "C4 concede el acceso físico y cierra la puerta. La validación y las firmas las registra el encargado de bóveda." : "El encargado valida la entrada de una persona; la salida se actualiza con su firma simulada.";
+                if (byId("accessDescription")) byId("accessDescription").textContent = isC4Profile ? "C4 monitorea por cámaras y controla a distancia la puerta de la bóveda; los clientes no ingresan a C4. La validación y las firmas las registra el encargado de bóveda." : "El encargado valida la entrada de una persona; la salida se actualiza con su firma simulada.";
                 ["profileName", "profilePanelName"].forEach((id) => byId(id).textContent = profile.name);
                 ["profileRole", "profilePanelRole"].forEach((id) => byId(id).textContent = profile.role);
                 ["profileInitials", "profilePanelInitials"].forEach((id) => byId(id).textContent = profile.initials);
@@ -5180,7 +5331,7 @@
                 const role = byId("userRole").value;
                 if (name.length < 3 || !email.includes("@")) return flash("Indica nombre completo y un correo válido.");
                 if (state.users.some((user) => user.email.toLowerCase() === email)) return flash("Ese correo ya está registrado en la demo.");
-                state.users.push({ id: `user-${crypto.randomUUID()}`, name, email, role, status: "Activo" });
+                state.users.push({ id: createDemoId("user"), name, email, role, status: "Activo" });
                 logAudit("Agregó usuario", `${name} · ${role}`, "Correcto", false);
                 persistState();
                 closeUserModal();
@@ -5209,6 +5360,7 @@
             initialiseHeaderControls();
             applyDemoProfile();
             showView(initialView, { sync: false, scroll: false, tab: currentTenantTab });
+            setInterval(updateAccessElapsedTimers, 1000);
         </script>
     </body>
 </html>
