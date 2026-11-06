@@ -1335,6 +1335,16 @@
                 border-top: 1px solid var(--line);
                 margin: 15px 0;
             }
+            .document-list-head { padding:22px 22px 0; }
+            .document-list-head h2 { margin:0; }
+            .document-list-head p { margin:5px 0 0; font-size:12px; }
+            .document-filters { display:flex; gap:14px; align-items:end; padding:18px 22px; }
+            .document-filters .document-search { flex:1; }
+            .document-filters .field:not(.document-search) { width:250px; }
+            .document-folio { display:block; margin-top:5px; color:var(--muted); font-size:11px; }
+            .document-table-type { display:inline-block; padding:6px 9px; border-radius:8px; background:#f4f1e9; color:#685822; font-size:11px; font-weight:700; }
+            body[data-theme="dark"] .document-table-type { background:#493e24; color:#f4d779; }
+            @media(max-width:700px) { .document-filters { flex-direction:column; align-items:stretch; } .document-filters .field:not(.document-search) { width:auto; } }
             .document-paper {
                 max-width: 760px;
                 margin: 0 auto;
@@ -1405,7 +1415,7 @@
             }
             @media print {
                 body { background: #fff; }
-                .side, .top, .heading, .content > .view:not(#documents), #documents .document-selection, #documents .panel-head, .small-grid, .document-preview-actions, .toast { display: none !important; }
+                .side, .top, .heading, .content > .view:not(#documents), #documents .document-selection, #documents .panel-head, .small-grid, .document-preview-actions, .toast, .modal { display: none !important; }
                 .main, .content, #documents, #documents.on, .panel, .panel.section { display: block !important; margin: 0 !important; padding: 0 !important; border: 0 !important; box-shadow: none !important; background: #fff !important; }
                 #documentPreview { display: block !important; padding: 0 !important; background: transparent !important; }
                 .document-paper { max-width: none; padding: 0; border: 0; box-shadow: none; }
@@ -3046,110 +3056,20 @@
                 </section>
                 <section class="view" id="documents">
                     <div class="heading">
-                        <div>
-                            <p class="eyebrow">GESTIÓN · SIMULACIÓN</p>
-                            <h1>Documentos y llaves</h1>
-                            <p class="muted">
-                                Formatos observados: contrato, constancia de
-                                entrega de llaves y recibo de depósito.
-                            </p>
-                        </div>
+                        <div><p class="eyebrow">EXPEDIENTES · DEMO</p><h1>Documentos</h1><p class="muted">Consulta los documentos asociados a cada contrato y revisa su contenido de ejemplo.</p></div>
+                        <span class="tag blue">DOCUMENTOS SIMULADOS</span>
                     </div>
-                    <section class="panel document-selection">
-                        <div class="panel-body">
-                            <div class="small-grid">
-                                <div class="card">
-                                    <b>Contrato de arrendamiento</b>
-                                    <p class="muted" style="margin: 8px 0">
-                                        Plantilla con datos de cliente, caja y
-                                        vigencia.
-                                    </p>
-                                    <button
-                                        class="btn outline"
-                                        onclick="
-                                            previewDocument(
-                                                'Contrato de arrendamiento',
-                                            )
-                                        "
-                                    >
-                                        Vista previa
-                                    </button>
-                                </div>
-                                <div class="card">
-                                    <b>Entrega de llaves</b>
-                                    <p class="muted" style="margin: 8px 0">
-                                        Constancia para dos llaves de la caja.
-                                    </p>
-                                    <button
-                                        class="btn outline"
-                                        onclick="
-                                            previewDocument(
-                                                'Constancia de entrega de llaves',
-                                            )
-                                        "
-                                    >
-                                        Generar formato
-                                    </button>
-                                </div>
-                                <div class="card">
-                                    <b>Depósito en garantía</b>
-                                    <p class="muted" style="margin: 8px 0">
-                                        Recibo de depósito de ejemplo.
-                                    </p>
-                                    <button
-                                        class="btn outline"
-                                        onclick="
-                                            previewDocument(
-                                                'Recibo de depósito en garantía',
-                                            )
-                                        "
-                                    >
-                                        Generar recibo
-                                    </button>
-                                </div>
-                                <div class="card">
-                                    <b>Expediente</b>
-                                    <p class="muted" style="margin: 8px 0">
-                                        Archivos y documentos asociados al
-                                        arrendatario.
-                                    </p>
-                                    <button
-                                        class="btn outline"
-                                        onclick="
-                                            previewDocument(
-                                                'Expediente de arrendatario',
-                                            )
-                                        "
-                                    >
-                                        Consultar
-                                    </button>
-                                </div>
-                            </div>
+                    <section class="panel document-selection" aria-label="Listado de documentos">
+                        <div class="document-list-head"><div><h2>Documentos registrados</h2><p class="muted" id="documentCount" aria-live="polite"></p></div></div>
+                        <div class="document-filters">
+                            <div class="field document-search"><label for="documentSearch">BUSCAR DOCUMENTO</label><input id="documentSearch" type="search" placeholder="Nombre, folio, arrendatario, contrato o caja" oninput="renderDocuments()" /></div>
+                            <div class="field"><label for="documentTypeFilter">TIPO DE DOCUMENTO</label><select id="documentTypeFilter" onchange="renderDocuments()"><option value="">Todos los tipos</option></select></div>
                         </div>
+                        <div class="table-wrap"><table><thead><tr><th>Documento</th><th>Tipo</th><th>Arrendatario</th><th>Contrato / caja</th><th>Fecha</th><th></th></tr></thead><tbody id="documentRows"></tbody></table></div>
                     </section>
-                    <section class="panel section" style="margin-top: 20px">
-                        <div
-                            class="panel-head"
-                            style="margin: -20px -20px 18px"
-                        >
-                            <div>
-                                <b id="documentPreviewTitle"
-                                    >Vista previa documental</b
-                                >
-                                <p class="muted">
-                                    Selecciona un formato para revisar los datos
-                                    que incluiría.
-                                </p>
-                            </div>
-                            <div class="document-preview-actions" style="display:flex; gap:10px; align-items:center">
-                                <span class="tag amber">SIMULACIÓN</span>
-                                <button id="printDocumentButton" class="btn outline" type="button" onclick="printDocument()" disabled>Imprimir</button>
-                            </div>
-                        </div>
-                        <div id="documentPreview" class="notice">
-                            No se ha seleccionado un documento. Los formatos no
-                            crean archivos ni solicitan firmas en esta demo.
-                        </div>
+                    <section class="panel section document-preview-panel" style="margin-top:20px">
+                        <div class="panel-head" style="margin:-20px -20px 18px"><div><b id="documentPreviewTitle">Vista previa documental</b><p class="muted">Selecciona un documento del listado para revisar su información.</p></div><div class="document-preview-actions" style="display:flex;gap:10px;align-items:center"><span class="tag amber">SIMULACIÓN</span><button id="printDocumentButton" class="btn outline" type="button" onclick="printDocument()" disabled>Imprimir</button></div></div>
+                        <div id="documentPreview" class="notice">Selecciona «Vista previa» en un documento para consultar el formato simulado.</div>
                     </section>
                 </section>
                 <section class="view" id="reports">
@@ -3903,14 +3823,15 @@
         </div>
         <div id="toast" class="toast"></div>
         <div id="documentViewerModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="documentViewerTitle">
-            <section class="invoice" style="max-width:900px;max-height:88vh;overflow:auto">
+            <section class="invoice" style="width:min(900px,100%);max-height:88vh;overflow:auto">
                 <div class="panel-head">
                     <div><p class="eyebrow">DOCUMENTO · VISTA PREVIA</p><h2 id="documentViewerTitle">Documento</h2></div>
                     <button class="btn outline" type="button" onclick="closeDocumentViewer()">× Cerrar</button>
                 </div>
                 <div id="documentViewerContent" style="margin-top:18px"></div>
                 <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:20px">
-                    <button class="btn outline" type="button" onclick="downloadPreviewDocument()">⇩ Descargar ejemplo</button>
+                    <button class="btn outline" type="button" onclick="printDocument()">Imprimir</button>
+                    <button class="btn outline" type="button" onclick="downloadPreviewDocument()">⇩ Descargar texto</button>
                     <button class="btn primary" type="button" onclick="closeDocumentViewer()">Listo</button>
                 </div>
             </section>
@@ -4297,6 +4218,7 @@
                 if (id === "cancellations") renderCancellation();
                 if (id === "finance") renderFinance();
                 if (id === "access") { renderAccessQueue(); renderAuditLog(); renderC4Control(); }
+                if (id === "documents") renderDocuments();
                 if (id === "reports") renderReport();
                 if (id === "users") { renderRolePermissions(); renderDemoUsers(); }
                 if (id === "settings") renderSettings();
@@ -5214,21 +5136,53 @@
                 renderFinance();
                 flash("Otro ingreso registrado en la demostración.");
             }
-            function previewDocument(type) {
-                const contract = selectedContract();
+            function documentTypeLabel(type) {
+                const labels = { "Contrato de arrendamiento": "Contrato", "Constancia de entrega de llaves": "Llaves", "Recibo de depósito en garantía": "Garantía", "Expediente de arrendatario": "Expediente", "Aviso de cancelación": "Cancelación" };
+                return labels[type] || "Documento";
+            }
+            function documentSearchText(value) {
+                return String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("es").trim();
+            }
+            function renderDocuments() {
+                const search = documentSearchText(byId("documentSearch").value);
+                const filter = byId("documentTypeFilter");
+                const selectedType = filter.value;
+                const types = [...new Set(state.documents.map((record) => record.type).filter(Boolean))].sort((a, b) => a.localeCompare(b, "es"));
+                filter.innerHTML = `<option value="">Todos los tipos</option>${types.map((type) => `<option value="${esc(type)}">${esc(type)}</option>`).join("")}`;
+                filter.value = types.includes(selectedType) ? selectedType : "";
+                const rows = state.documents.map((record) => {
+                    const contract = contractById(record.contractId);
+                    const tenant = contract && tenantById(contract.tenantId);
+                    const box = contract && boxById(contract.boxId);
+                    return { record, contract, tenant, box };
+                }).filter(({ record, contract, tenant, box }) => (!filter.value || record.type === filter.value) && documentSearchText([record.type, documentTypeLabel(record.type), record.folio, tenant?.name, contract?.folio, box?.code].join(" ")).includes(search))
+                    .sort((a, b) => String(b.record.createdAt || "").localeCompare(String(a.record.createdAt || "")));
+                byId("documentCount").textContent = `${rows.length} documento${rows.length === 1 ? "" : "s"} ${search || filter.value ? "encontrado" : "registrado"}${rows.length === 1 ? "" : "s"}`;
+                byId("documentRows").innerHTML = rows.map(({ record, contract, tenant, box }) => `<tr><td><b>${esc(record.type || "Documento")}</b><small class="document-folio">${esc(record.folio || "Sin folio")}</small></td><td><span class="document-table-type">${esc(documentTypeLabel(record.type))}</span></td><td>${esc(tenant?.name || "Sin arrendatario")}</td><td>${esc(contract?.folio || "Sin contrato")}<small class="document-folio">${esc(box?.code || "Sin caja")}</small></td><td>${esc(record.createdAt ? dateLabel(record.createdAt.slice(0, 10)) : "Sin fecha")}</td><td><button class="btn outline" type="button" data-document-id="${esc(record.id)}" ${!contract || !tenant ? "disabled" : ""}>Vista previa</button></td></tr>`).join("") || `<tr><td colspan="6" class="muted">${search || filter.value ? "No hay documentos que coincidan con la búsqueda." : "Aún no hay documentos registrados."}</td></tr>`;
+            }
+            function previewRecordedDocument(id) {
+                const record = state.documents.find((item) => item.id === id);
+                if (!record) return flash("No encontramos ese documento.");
+                previewDocument(record.type, record.id);
+            }
+            function previewDocument(type, documentId = null) {
+                const selectedRecord = documentId ? state.documents.find((item) => item.id === documentId) : null;
+                if (documentId && !selectedRecord) return flash("No encontramos ese documento.");
+                const contract = documentId ? contractById(selectedRecord.contractId) : selectedContract();
                 const tenant = contract && tenantById(contract.tenantId);
                 const box = contract && boxById(contract.boxId);
-                const documentRecord = state.documents.find((item) => item.contractId === contract?.id && item.type === type);
+                const documentRecord = selectedRecord || state.documents.find((item) => item.contractId === contract?.id && item.type === type);
                 if (!contract || !tenant) return flash("Selecciona primero un contrato relacionado.");
                 const folio = documentRecord?.folio || `VISTA-${contract.folio}`;
-                const createdAt = documentRecord?.createdAt || new Date().toISOString().slice(0, 10);
+                const createdAt = (documentRecord?.createdAt || new Date().toISOString()).slice(0, 10);
                 const documentBodies = {
                     "Contrato de arrendamiento": `<p>Se presenta el resumen operativo del contrato para la caja <b>${esc(box?.code)}</b>, tamaño ${esc(box?.size)}.</p><div class="document-paper__summary"><div><span>Vigencia</span><b>${esc(dateLabel(contract.startDate))} a ${esc(dateLabel(contract.endDate))}</b></div><div><span>Renta mensual</span><b>${fmtCents(contract.rentCents)}</b></div><div><span>Garantía</span><b>${fmtCents(contract.depositCents)}</b></div></div><p>Este formato es una representación visual; las cláusulas, firmas y efectos legales quedan fuera del alcance de la demo.</p>`,
                     "Constancia de entrega de llaves": `<p>Se deja constancia simulada de la entrega de acceso físico a la caja <b>${esc(box?.code)}</b>.</p><div class="document-paper__summary"><div><span>Caja</span><b>${esc(box?.code)} · ${esc(box?.area)}</b></div><div><span>Llaves entregadas</span><b>${Number(box?.keys) || 2} de ${Number(box?.keys) || 2}</b></div><div><span>Estatus</span><b>Entrega simulada</b></div></div><p>La demo no sustituye un acta ni registra entrega física de llaves.</p>`,
                     "Recibo de depósito en garantía": `<p>Comprobante demostrativo del depósito asociado al contrato <b>${esc(contract.folio)}</b>.</p><div class="document-paper__summary"><div><span>Importe recibido</span><b>${fmtCents(contract.depositCents)}</b></div><div><span>Forma de pago</span><b>Simulación de registro</b></div><div><span>Referencia</span><b>${esc(folio)}</b></div></div><p>Sin timbrado, CFDI, cobro ni efecto fiscal.</p>`,
+                    "Aviso de cancelación": `<p>Resumen simulado de la cancelación del contrato <b>${esc(contract.folio)}</b>.</p><div class="document-paper__summary"><div><span>Caja</span><b>${esc(box?.code || "Sin asignar")}</b></div><div><span>Estado del contrato</span><b>${esc(contract.status || "Sin estado")}</b></div><div><span>Fecha de cancelación</span><b>${esc(contract.cancelledAt ? dateLabel(contract.cancelledAt.slice(0, 10)) : "No registrada")}</b></div><div><span>Motivo</span><b>${esc(contract.cancellationReason || "No registrado")}</b></div></div><p>Este aviso es una representación de demostración.</p>`,
                     "Expediente de arrendatario": `<p>Índice visual del expediente de <b>${esc(tenant.name)}</b> para consulta durante la presentación.</p><div class="document-paper__summary"><div><span>Identificación</span><b>Disponible en demo</b></div><div><span>Contrato</span><b>${esc(contract.folio)}</b></div><div><span>Documentos relacionados</span><b>${state.documents.filter((item) => item.contractId === contract.id).length} registros</b></div></div><p>Los archivos, la validación documental y el resguardo legal son simulados.</p>`,
                 };
-                const content = `<article class="document-paper"><header class="document-paper__head"><img class="document-paper__logo" src="{{ asset('images/saferoom-logo.png') }}" alt="SafeRoom"><div class="document-paper__meta"><b>${esc(folio)}</b><span>Emitido: ${esc(dateLabel(createdAt))}</span><span>ESTADO: SIMULACIÓN</span></div></header><div class="document-paper__title"><p>SAFE ROOM · FORMATO OPERATIVO</p><h2>${esc(type)}</h2></div><div class="document-paper__body"><p><b>Arrendatario:</b> ${esc(tenant.name)}</p><p><b>Contrato:</b> ${esc(contract.folio)} · <b>Caja:</b> ${esc(box?.code || "Sin asignar")}</p>${documentBodies[type] || documentBodies["Expediente de arrendatario"]}</div><footer class="document-paper__signatures"><div>Nombre y firma del arrendatario</div><div>Nombre y firma de SafeRoom</div></footer></article>`;
+                const content = `<article class="document-paper"><header class="document-paper__head"><img class="document-paper__logo" src="{{ asset('images/saferoom-logo.png') }}" alt="SafeRoom"><div class="document-paper__meta"><b>${esc(folio)}</b><span>Emitido: ${esc(dateLabel(createdAt))}</span><span>ESTADO: SIMULACIÓN</span></div></header><div class="document-paper__title"><p>SAFE ROOM · FORMATO OPERATIVO</p><h2>${esc(type)}</h2></div><div class="document-paper__body"><p><b>Arrendatario:</b> ${esc(tenant.name)}</p><p><b>Contrato:</b> ${esc(contract.folio)} · <b>Caja:</b> ${esc(box?.code || "Sin asignar")}</p>${documentBodies[type] || "<p>Vista de ejemplo del documento asociado a este contrato.</p>"}</div><footer class="document-paper__signatures"><div>Nombre y firma del arrendatario</div><div>Nombre y firma de SafeRoom</div></footer></article>`;
                 byId("documentPreviewTitle").textContent = `${type} · ${folio}`;
                 byId("documentPreview").innerHTML = content;
                 byId("documentViewerTitle").textContent = `${type} · ${folio}`;
@@ -5759,6 +5713,10 @@
             syncSelectionFromUrl();
             initialiseSafeDates();
             initialiseHeaderControls();
+            byId("documentRows").addEventListener("click", (event) => {
+                const button = event.target.closest("[data-document-id]");
+                if (button && !button.disabled) previewRecordedDocument(button.dataset.documentId);
+            });
             applyDemoProfile();
             const requestForm = byId("form");
             requestForm.addEventListener("input", (event) => {
