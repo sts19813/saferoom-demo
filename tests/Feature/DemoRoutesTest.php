@@ -62,6 +62,9 @@ class DemoRoutesTest extends TestCase
 
         $this->get('/accesos')
             ->assertRedirect(route('login'));
+
+        $this->get('/apertura-boveda')
+            ->assertRedirect(route('login'));
     }
 
     public function test_demo_role_permissions_are_enforced_on_direct_urls(): void
@@ -115,7 +118,16 @@ class DemoRoutesTest extends TestCase
             'email' => 'c4@saferoom.demo',
             'password' => 'C4Seguro2026!',
         ])
-            ->assertRedirect(route('dashboard'))
+            ->assertRedirect(route('vault.opening'))
             ->assertSessionHas('demo_user', 'c4');
+    }
+
+    public function test_authenticated_demo_user_sees_the_vault_opening_transition(): void
+    {
+        $this->withSession(['demo_user' => 'c4'])->get('/apertura-boveda')
+            ->assertOk()
+            ->assertSee('Abriendo bóveda')
+            ->assertSee(route('dashboard'), false)
+            ->assertSee('vault-opening');
     }
 }

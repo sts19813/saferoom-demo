@@ -12,6 +12,9 @@ Route::post('/login', [DemoLoginController::class, 'store'])->name('login.store'
 Route::post('/salir', [DemoLoginController::class, 'destroy'])->name('logout');
 
 Route::middleware('demo.access')->group(function (): void {
+    Route::view('/apertura-boveda', 'auth.vault-opening')
+        ->defaults('requiresPermission', false)
+        ->name('vault.opening');
     Route::view('/', 'demo', ['view' => 'home'])->name('dashboard');
     Route::view('/solicitudes', 'demo', ['view' => 'requests'])->name('requests.index');
     Route::view('/solicitudes/nueva', 'demo', ['view' => 'form'])->name('requests.create');

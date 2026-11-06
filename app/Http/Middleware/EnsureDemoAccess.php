@@ -24,9 +24,10 @@ class EnsureDemoAccess
         }
 
         $view = (string) ($request->route()->defaults['data']['view'] ?? '');
+        $requiresPermission = $request->route()->defaults['requiresPermission'] ?? true;
         $permissions = config("demo.permissions.{$user['role']}", []);
 
-        if (! in_array('*', $permissions, true) && ! in_array($view, $permissions, true)) {
+        if ($requiresPermission && ! in_array('*', $permissions, true) && ! in_array($view, $permissions, true)) {
             return redirect()->route($this->fallbackRoute($permissions))
                 ->with('access_error', 'Tu perfil no tiene permiso para consultar ese módulo.');
         }

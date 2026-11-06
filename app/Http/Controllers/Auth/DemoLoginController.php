@@ -40,7 +40,7 @@ class DemoLoginController extends Controller
         $request->session()->regenerate();
         $request->session()->put('demo_user', $user['id']);
 
-        return redirect()->intended(route('dashboard'));
+        return redirect()->route('vault.opening');
     }
 
     public function destroy(Request $request): RedirectResponse
