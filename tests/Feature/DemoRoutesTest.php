@@ -16,6 +16,7 @@ class DemoRoutesTest extends TestCase
             '/arrendatarios',
             '/arrendatarios/ficha?tenant=tenant-carlos&contract=contract-0149',
             '/contratos',
+            '/contratos/nuevo',
             '/renovaciones?contract=contract-0148',
             '/cancelaciones?contract=contract-0141',
             '/accesos',
@@ -93,6 +94,19 @@ class DemoRoutesTest extends TestCase
             ->assertOk()
             ->assertSee('Elena Vargas')
             ->assertSee('CURRENT_PERMISSIONS');
+    }
+
+    public function test_reports_render_the_decision_center_with_the_requested_context(): void
+    {
+        $response = $this->withSession(['demo_user' => 'admin'])->get('/reportes?tenant=tenant-mariana&contract=contract-0148');
+
+        $response->assertOk()
+            ->assertSee('Vista previa de datos')
+            ->assertSee('Prioridades de operación')
+            ->assertSee('Entradas sin salida registrada')
+            ->assertSee('reportInitialTenantId')
+            ->assertSee('copyReportBriefing')
+            ->assertSee('selectReportShortcut');
     }
 
     public function test_a_demo_account_can_start_a_session_with_its_credentials(): void

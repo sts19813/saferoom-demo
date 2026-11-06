@@ -8,9 +8,10 @@
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
-            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
+            href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
             rel="stylesheet"
         />
+        @vite('resources/js/app.js')
         <style>
             :root {
                 --navy: #363434;
@@ -35,7 +36,7 @@
                 margin: 0;
                 background: var(--bg);
                 font:
-                    14px Montserrat,
+                    14px "DM Sans",
                     ui-sans-serif,
                     system-ui,
                     sans-serif;
@@ -1414,6 +1415,99 @@
                 grid-template-columns: 1fr 1fr;
                 gap: 13px;
             }
+            /* Reportes es un tablero de decisión: prioriza seguridad, capacidad y operación. */
+            .report-hero {
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) auto;
+                gap: 24px;
+                align-items: end;
+                margin-bottom: 20px;
+                padding: 23px 24px;
+                overflow: hidden;
+                border: 1px solid #494440;
+                border-radius: 18px;
+                background:
+                    radial-gradient(circle at 88% 8%, rgb(255 202 1 / .32), transparent 28%),
+                    linear-gradient(125deg, #292727, #494440);
+                color: #fff;
+                box-shadow: 0 13px 28px rgb(40 32 28 / .16);
+            }
+            .report-hero__eyebrow { margin: 0 0 8px; color: #ffda4f; font-size: 10px; font-weight: 800; letter-spacing: .14em; }
+            .report-hero h1 { margin: 0; font-size: 27px; letter-spacing: -.03em; }
+            .report-hero p { max-width: 680px; margin: 8px 0 0; color: #f0e7df; font-size: 12px; line-height: 1.55; }
+            .report-hero__meta { min-width: 170px; padding: 12px 14px; border: 1px solid rgb(255 255 255 / .2); border-radius: 12px; background: rgb(255 255 255 / .1); }
+            .report-hero__meta span { display: block; color: #fff1bc; font-size: 9px; font-weight: 800; letter-spacing: .1em; }
+            .report-hero__meta b { display: block; margin-top: 5px; font-size: 12px; line-height: 1.35; }
+            .report-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 9px; }
+            .report-filter { margin-bottom: 20px; padding: 17px 20px 19px; }
+            .report-filter__top, .report-filter__fields { display: flex; align-items: center; gap: 12px; }
+            .report-filter__top { justify-content: space-between; margin-bottom: 15px; }
+            .report-filter__top h2 { margin: 0; font-size: 14px; }
+            .report-filter__top p { margin: 3px 0 0; color: var(--muted); font-size: 11px; }
+            .report-filter__fields { flex-wrap: wrap; }
+            .report-filter .field { min-width: 150px; flex: 1 1 150px; }
+            .report-filter .field--wide { min-width: 230px; flex-grow: 1.45; }
+            .report-filter .field label { margin-bottom: 5px; }
+            .report-presets { display: flex; flex-wrap: wrap; gap: 7px; }
+            .report-preset { padding: 7px 10px; border: 1px solid #e5ddd5; border-radius: 999px; background: #fff; color: #625b55; font-size: 10px; font-weight: 800; }
+            .report-preset:hover, .report-preset.is-active { border-color: #e2b810; background: #fff4c8; color: #5d4700; }
+            .report-kpi { position: relative; overflow: hidden; min-height: 145px; }
+            .report-kpi::after { position: absolute; top: -25px; right: -25px; width: 90px; height: 90px; border-radius: 50%; background: var(--report-tint, #fff5dc); content: ""; }
+            .report-kpi__label, .report-kpi__detail, .report-kpi__trend { position: relative; z-index: 1; display: block; }
+            .report-kpi__label { color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: .08em; }
+            .report-kpi .metric { margin: 10px 0 7px; font-size: 25px; }
+            .report-kpi__detail { color: var(--muted); font-size: 11px; line-height: 1.4; }
+            .report-kpi__trend { margin-top: 10px; color: var(--report-accent, #895400); font-size: 10px; font-weight: 800; }
+            .report-kpi--income { --report-tint: #e9f8f1; --report-accent: #147653; }
+            .report-kpi--occupancy { --report-tint: #eef3f6; --report-accent: #506d88; }
+            .report-kpi--flow { --report-tint: #fff5dc; --report-accent: #a35d00; }
+            .report-kpi--risk { --report-tint: #feecec; --report-accent: #b42318; }
+            .report-insights { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(290px, .7fr); gap: 20px; margin-bottom: 20px; }
+            .report-panel__head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 18px 20px 14px; border-bottom: 1px solid var(--line); }
+            .report-panel__head h2 { margin: 0; font-size: 15px; }
+            .report-panel__head p { margin: 4px 0 0; color: var(--muted); font-size: 11px; line-height: 1.45; }
+            .report-alerts { padding: 8px 12px 12px; }
+            .report-alert { display: flex; gap: 11px; padding: 12px 8px; border-bottom: 1px solid var(--line); }
+            .report-alert:last-child { border-bottom: 0; }
+            .report-alert__icon { display: grid; width: 26px; height: 26px; flex: none; place-items: center; border-radius: 9px; font-size: 13px; font-weight: 900; }
+            .report-alert--danger .report-alert__icon { background: #feecec; color: #b42318; }
+            .report-alert--warning .report-alert__icon { background: #fff5dc; color: #a35d00; }
+            .report-alert--success .report-alert__icon { background: #e9f8f1; color: #147653; }
+            .report-alert b { display: block; color: var(--ink); font-size: 11px; }
+            .report-alert p { margin: 3px 0 0; color: var(--muted); font-size: 10px; line-height: 1.45; }
+            .report-capacity { padding: 18px 20px 20px; }
+            .report-capacity__total { margin: 0 0 17px; color: var(--ink); font-size: 24px; font-weight: 800; }
+            .report-capacity__total span { color: var(--muted); font-size: 11px; font-weight: 600; }
+            .report-capacity__row { margin-top: 12px; }
+            .report-capacity__label { display: flex; justify-content: space-between; gap: 12px; color: var(--muted); font-size: 11px; }
+            .report-capacity__label b { color: var(--ink); }
+            .report-capacity__track { height: 8px; margin-top: 6px; overflow: hidden; border-radius: 999px; background: #edf1f4; }
+            .report-capacity__track i { display: block; height: 100%; border-radius: inherit; background: var(--capacity-color, var(--green)); }
+            .report-briefing { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 16px 20px; border-top: 1px solid var(--line); background: #fbfaf8; }
+            .report-briefing span { display: block; color: var(--muted); font-size: 10px; font-weight: 700; }
+            .report-briefing b { display: block; margin-top: 4px; color: var(--ink); font-size: 13px; }
+            .report-preview { margin-top: 20px; }
+            .report-preview .toolbar { align-items: center; flex-wrap: wrap; margin: 0; }
+            .report-preview__context { margin-left: auto; color: var(--muted); font-size: 10px; font-weight: 700; }
+            .report-library { margin-top: 20px; }
+            .report-library__intro { margin: 4px 0 0; color: var(--muted); font-size: 11px; }
+            .report-shortcut { display: flex; width: 100%; min-height: 116px; flex-direction: column; align-items: flex-start; padding: 15px; border: 1px solid transparent; border-radius: 10px; background: linear-gradient(135deg, #fff8e6, #fff3d4); color: #895400; text-align: left; transition: border-color .16s ease, box-shadow .16s ease, transform .16s ease; }
+            .report-shortcut:hover { border-color: #dfb30c; box-shadow: 0 7px 16px rgb(175 125 0 / .12); transform: translateY(-2px); }
+            .report-shortcut.is-selected { border-color: #b78900; background: linear-gradient(135deg, #fff0b8, #ffe491); box-shadow: 0 0 0 3px rgb(255 202 1 / .25); }
+            .report-shortcut b { color: var(--ink); font-size: 12px; }
+            .report-shortcut span { margin-top: 4px; color: #895400; font-size: 11px; line-height: 1.45; }
+            .report-shortcut small { margin-top: auto; padding-top: 10px; color: #745100; font-size: 10px; font-weight: 800; letter-spacing: .04em; }
+            body[data-theme="dark"] .report-filter, body[data-theme="dark"] .report-panel__head, body[data-theme="dark"] .report-alert, body[data-theme="dark"] .report-briefing { border-color: #4d4844; }
+            body[data-theme="dark"] .report-preset { border-color: #5a534d; background: #363230; color: #e8ddd4; }
+            body[data-theme="dark"] .report-preset:hover, body[data-theme="dark"] .report-preset.is-active { background: #554617; border-color: #d7ad20; color: #fff1bc; }
+            body[data-theme="dark"] .report-briefing { background: #252322; }
+            body[data-theme="dark"] .report-capacity__track { background: #4a4541; }
+            body[data-theme="dark"] .report-shortcut { background: linear-gradient(135deg, #463713, #3d3010); color: #ffe48a; }
+            body[data-theme="dark"] .report-shortcut:hover, body[data-theme="dark"] .report-shortcut.is-selected { border-color: #e3bc28; background: linear-gradient(135deg, #5a4617, #4a3911); }
+            body[data-theme="dark"] .report-shortcut b { color: #fffaf4; }
+            body[data-theme="dark"] .report-shortcut span, body[data-theme="dark"] .report-shortcut small { color: #ffe48a; }
+            @media (max-width: 900px) { .report-insights { grid-template-columns: 1fr; } .report-hero { grid-template-columns: 1fr; } .report-hero__meta { width: fit-content; } }
+            @media (max-width: 640px) { .report-filter__top { align-items: flex-start; flex-direction: column; } .report-filter__fields { align-items: stretch; flex-direction: column; } .report-filter .field { width: 100%; } .report-actions { justify-content: flex-start; } .report-briefing { grid-template-columns: 1fr; } .report-preview__context { width: 100%; margin-left: 0; } }
             /* Complete dark treatment for operational data, controls and vault states. */
             body[data-theme="dark"] .card,
             body[data-theme="dark"] .panel {
@@ -1670,6 +1764,86 @@
                     width: auto;
                 }
             }
+
+            .swal2-popup.saferoom-dialog { border: 1px solid var(--line); border-radius: 20px; background: var(--surface); color: var(--ink); font-family: "DM Sans", sans-serif; box-shadow: 0 24px 70px rgb(22 27 24 / .25); }
+            .saferoom-dialog .swal2-title { font-family: Manrope, sans-serif; font-size: 23px; letter-spacing: -.03em; }
+            .saferoom-dialog .swal2-html-container { color: var(--muted); font-size: 14px; line-height: 1.5; }
+            .saferoom-dialog .swal2-input-label { justify-content: flex-start; margin: 22px 2em 0; font-size: 12px; font-weight: 700; }
+            .saferoom-dialog .swal2-textarea { width: calc(100% - 4em); min-height: 105px; margin: 9px 2em 0; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--ink); font: inherit; resize: vertical; }
+            .saferoom-dialog .swal2-textarea:focus { border-color: #d7a900; box-shadow: 0 0 0 3px rgb(255 202 1 / .22); }
+            .saferoom-dialog .swal2-actions { gap: 10px; }
+            .saferoom-dialog .swal2-confirm, .saferoom-dialog .swal2-cancel { margin: 0; padding: 12px 20px; border-radius: 10px; font: 700 13px Manrope, sans-serif; }
+            .saferoom-dialog .swal2-confirm { background: #ffca01; color: #292722; }
+            .saferoom-dialog .swal2-cancel { border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+            .saferoom-dialog .swal2-validation-message { border-radius: 8px; font-size: 12px; }
+            .invoice.contract-invoice { width:min(900px,100%); max-height:calc(100vh - 36px); overflow-y:auto; }
+            .contract-invoice-summary { display:flex; align-items:center; justify-content:space-between; gap:16px; margin:18px 0; padding:16px; border-radius:12px; background:#fff5d2; color:#302b20; }
+            .contract-invoice-summary strong { font-size:21px; white-space:nowrap; }
+            .contract-invoice-fields { align-items:end; }
+            .contract-invoice-fields .btn { min-height:42px; }
+            .contract-invoice-table { margin-top:16px; }
+            .contract-invoice-totals, .contract-invoice-actions { display:flex; flex-wrap:wrap; justify-content:flex-end; gap:18px; align-items:center; margin-top:16px; }
+            .contract-invoice-totals span { color:var(--muted); font-size:12px; }
+            .contract-invoice-totals b { margin-left:6px; color:var(--ink); font-size:15px; }
+            .contract-invoice-error { padding:10px 12px; border-radius:8px; background:#fff0ee; color:#a12c20; font-size:12px; }
+            @media(max-width:600px) { .contract-invoice-summary { align-items:flex-start; flex-direction:column; } .contract-invoice-actions .btn { flex:1; } }
+            .contract-selector { display:grid; grid-template-columns:1fr 1.2fr; gap:24px; align-items:center; }
+            .contract-empty { margin-top:18px; text-align:center; color:var(--muted); padding:42px; }
+            .contract-tabs { display:flex; gap:5px; overflow-x:auto; margin:20px 0 14px; border-bottom:1px solid var(--line); }
+            .contract-tabs button { flex:none; padding:13px 16px; background:transparent; color:var(--muted); border-bottom:3px solid transparent; font-weight:700; }
+            .contract-tabs button.on { color:var(--ink); border-color:var(--gold); }
+            .contract-panel[hidden], [data-contract-panel][hidden] { display:none; }
+            .contract-info { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0 24px; margin-top:20px; }
+            .contract-info div { padding:12px 0; border-bottom:1px solid var(--line); overflow-wrap:anywhere; }
+            .contract-info span { display:block; margin-bottom:5px; color:var(--muted); font-size:11px; }
+            .contract-divider { border:0; border-top:1px solid var(--line); margin:25px 0; }
+            .contract-selector .select2-container .select2-selection--single { height:46px; border:1px solid var(--line); border-radius:10px; background:var(--surface); }
+            .contract-selector .select2-container .select2-selection__rendered { line-height:44px; padding-left:14px; color:var(--ink); }
+            .contract-selector .select2-container .select2-selection__arrow { height:44px; }
+            .select2-dropdown { border-color:var(--line); border-radius:10px; background:var(--surface); color:var(--ink); }
+            .select2-container--default .select2-results__option--highlighted.select2-results__option--selectable { background:#ffca01; color:#242121; }
+            body[data-theme="dark"] .select2-search__field { background:var(--surface); color:var(--ink); }
+            @media(max-width:700px) { .contract-selector, .contract-info { grid-template-columns:1fr; } }
+            /* A calm, tactile console inspired by the vault itself. */
+            h1, h2, h3, .nav, .btn, .metric { font-family: Manrope, sans-serif; }
+            .side { border-right: 1px solid #e7e2dc; overflow-y: auto; }
+            .side nav { padding-top: 20px; }
+            .nav { transition: background .2s ease, color .2s ease, transform .2s ease; }
+            .nav:hover { transform: translateX(3px); }
+            .hero { background: radial-gradient(circle at 85% 20%, #5c5b4e 0, transparent 35%), linear-gradient(120deg,#222b2a,#343d38); }
+            .hero h1 { letter-spacing: -.045em; }
+            .workflow { display:grid; grid-template-columns: 1.15fr repeat(3, 1fr); gap: 1px; margin: 18px 0; overflow:hidden; border:1px solid var(--line); border-radius:16px; background:var(--line); }
+            .workflow-intro, .workflow button { min-width:0; padding:17px; background:var(--surface); text-align:left; }
+            .workflow-intro span { display:block; color:#907319; font-size:10px; font-weight:800; letter-spacing:.12em; margin-bottom:7px; }
+            .workflow-intro b { font-size:13px; }
+            .workflow button { display:flex; align-items:center; gap:10px; color:var(--ink); transition:background .2s; }
+            .workflow button:hover { background:#fff8dc; }
+            .workflow i { display:grid; place-items:center; flex:none; width:32px; height:32px; border-radius:50%; background:#f4f1e9; color:#8f761c; font-style:normal; font-size:10px; font-weight:800; }
+            .workflow button span { min-width:0; flex:1; }
+            .workflow button b, .workflow button small { display:block; }
+            .workflow button small { margin-top:4px; color:var(--muted); font-size:10px; line-height:1.4; }
+            .workflow em { color:#a99d76; font-style:normal; }
+            #reports .report-hero, #reports > .grid4, #reports .report-insights, #reports .report-library { display:none; }
+            .report-preview { margin-top:18px; overflow:hidden; }
+            .report-preview .toolbar { padding:20px 22px; }
+            .sheet-bar { display:flex; align-items:center; gap:9px; padding:10px 16px; border-block:1px solid #dfe5e0; background:#f2f6f3; color:#315c49; font-weight:700; font-size:12px; }
+            .sheet-bar small { margin-left:auto; color:#718078; font-weight:400; }
+            .sheet-grid { margin:0; overflow:auto; }
+            .sheet-grid table { min-width:700px; border-collapse:collapse; }
+            .sheet-grid th, .sheet-grid td { border:1px solid #e1e8e2; padding:11px 14px; white-space:nowrap; }
+            .sheet-grid thead tr:not(.sheet-letters) th { background:#e7f1eb; color:#254f3a; }
+            .sheet-grid thead .sheet-letters th, .sheet-grid tbody th { padding:6px 12px; background:#f4f6f4; color:#85918a; text-align:center; font-size:10px; font-weight:600; }
+            .sheet-grid tbody tr:hover td { background:#f8fbf8; }
+            .sheet-footer { display:flex; justify-content:space-between; align-items:center; padding:10px 18px; background:#f4f6f4; color:#65746a; font-size:11px; }
+            .sheet-footer span { border-bottom:2px solid #347b55; color:#28563d; font-weight:700; padding:5px 12px; }
+            body[data-theme="dark"] .workflow-intro, body[data-theme="dark"] .workflow button { background:var(--surface); }
+            body[data-theme="dark"] .sheet-bar, body[data-theme="dark"] .sheet-footer, body[data-theme="dark"] .sheet-grid thead .sheet-letters th, body[data-theme="dark"] .sheet-grid tbody th { background:#28332e; color:#c2d4c7; }
+            body[data-theme="dark"] .sheet-grid thead tr:not(.sheet-letters) th { background:#304b3c; color:#e3f4e8; }
+            body[data-theme="dark"] .sheet-grid td, body[data-theme="dark"] .sheet-grid th { border-color:#455148; }
+            body[data-theme="dark"] .sheet-grid tbody tr:hover td { background:#29362e; }
+            @media (max-width: 950px) { .workflow { grid-template-columns:repeat(2,1fr); } }
+            @media (max-width: 600px) { .workflow { grid-template-columns:1fr; } .workflow-intro, .workflow button { padding:12px 15px; } .sheet-bar small { display:none; } }
+            @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior:auto !important; animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; } }
         </style>
     </head>
     <body>
@@ -1682,41 +1856,23 @@
                     alt="SafeRoom"
                 />
             </div>
-            <nav>
-                <p class="nav-label" data-nav-section="operation">OPERACIÓN</p>
-                <button class="nav on" data-section="operation" data-view="home">
-                    <span class="ico">◫</span><span>Inicio</span></button
-                ><button class="nav" data-section="operation" data-view="requests">
-                    <span class="ico">☷</span><span>Solicitudes</span></button
-                ><button class="nav" data-section="operation" data-view="boxes">
-                    <span class="ico">▣</span><span>Cajas</span></button
-                ><button class="nav" data-section="operation" data-view="tenants">
-                    <span class="ico">♙</span><span>Arrendatarios</span></button
-                ><button class="nav" data-section="operation" data-view="contracts">
-                    <span class="ico">▤</span><span>Contratos</span>
-                </button>
-                <p class="nav-label" data-nav-section="management" style="margin-top: 25px">GESTIÓN</p>
-                <button class="nav" data-section="management" data-view="renewals">
-                    <span class="ico">↻</span><span>Renovaciones</span></button
-                ><button class="nav" data-section="management" data-view="cancellations">
-                    <span class="ico">⊘</span><span>Cancelaciones</span></button
-                ><button class="nav" data-section="management" data-view="access">
-                    <span class="ico">⌁</span><span>Accesos</span></button
-                ><button class="nav" data-section="management" data-view="documents">
-                    <span class="ico">◱</span><span>Documentos</span></button
-                ><button class="nav" data-section="management" data-view="reports">
-                    <span class="ico">▥</span><span>Reportes</span>
-                </button>
-                <button class="nav" data-section="management" data-view="finance">
-                    <span class="ico">$</span><span>Finanzas</span>
-                </button>
-                <p class="nav-label" data-nav-section="settings" style="margin-top: 25px">CONFIGURACIÓN</p>
-                <button class="nav" data-section="settings" data-view="settings">
-                    <span class="ico">⚙</span><span>Catálogos y alertas</span>
-                </button>
-                <button class="nav" data-section="settings" data-view="users">
-                    <span class="ico">♧</span><span>Usuarios y permisos</span>
-                </button>
+            <nav aria-label="Navegación principal">
+                <p class="nav-label" data-nav-section="operation">CLIENTES Y ARRENDAMIENTO</p>
+                <button class="nav on" data-section="operation" data-view="home"><span class="ico">◫</span><span>Inicio</span></button>
+                <button class="nav" data-section="operation" data-view="requests"><span class="ico">☷</span><span>Solicitudes</span></button>
+                <button class="nav" data-section="operation" data-view="tenants"><span class="ico">♙</span><span>Arrendatarios</span></button>
+                <button class="nav" data-section="operation" data-view="contracts"><span class="ico">▤</span><span>Contratos</span></button>
+                <button class="nav" data-section="operation" data-view="renewals"><span class="ico">↻</span><span>Renovaciones</span></button>
+                <button class="nav" data-section="operation" data-view="cancellations"><span class="ico">⊘</span><span>Cancelaciones</span></button>
+                <p class="nav-label" data-nav-section="management" style="margin-top: 22px">BÓVEDA Y ADMINISTRACIÓN</p>
+                <button class="nav" data-section="management" data-view="access"><span class="ico">⌁</span><span>Accesos a bóveda</span></button>
+                <button class="nav" data-section="management" data-view="boxes"><span class="ico">▣</span><span>Catálogo de cajas</span></button>
+                <button class="nav" data-section="management" data-view="documents"><span class="ico">◱</span><span>Documentos</span></button>
+                <button class="nav" data-section="management" data-view="finance"><span class="ico">$</span><span>Finanzas</span></button>
+                <button class="nav" data-section="management" data-view="reports"><span class="ico">▥</span><span>Reportes</span></button>
+                <p class="nav-label" data-nav-section="settings" style="margin-top: 22px">CONFIGURACIÓN</p>
+                <button class="nav" data-section="settings" data-view="settings"><span class="ico">⚙</span><span>Catálogos y alertas</span></button>
+                <button class="nav" data-section="settings" data-view="users"><span class="ico">♧</span><span>Usuarios y permisos</span></button>
             </nav>
             <div class="restore">
                 <button onclick="resetDemo()">
@@ -1865,11 +2021,9 @@
                             <span class="eyebrow"
                                 >DEMO OPERATIVA · DATOS FICTICIOS</span
                             >
-                            <h1>Operación de cajas, contratos y clientes.</h1>
+                            <h1>Tu bóveda, en orden.</h1>
                             <p>
-                                Una vista central para administrar el ciclo
-                                completo de arrendamiento y presentar las
-                                capacidades del sistema modernizado.
+                                De la solicitud al acceso: administra cada paso desde un solo lugar.
                             </p>
                         </div>
                         <div>
@@ -1884,6 +2038,12 @@
                             </button>
                         </div>
                     </div>
+                    <section class="workflow" aria-label="Flujo de operación">
+                        <div class="workflow-intro"><span>FLUJO DE OPERACIÓN</span><b>Todo comienza con una solicitud</b></div>
+                        <button type="button" onclick="showView('requests')"><i>01</i><span><b>Solicitud</b><small>Registrar y autorizar</small></span><em>→</em></button>
+                        <button type="button" onclick="showView('tenants')"><i>02</i><span><b>Arrendatario</b><small>Contrato y autorizados</small></span><em>→</em></button>
+                        <button type="button" onclick="showView('access')"><i>03</i><span><b>Acceso a bóveda</b><small>Entrada, C4 y firma de salida</small></span><em>→</em></button>
+                    </section>
                     <div class="grid4">
                         <article class="card">
                             <span class="muted">OCUPACIÓN ACTUAL</span>
@@ -1905,7 +2065,7 @@
                         <article class="card">
                             <span class="muted">ACCESOS HOY</span>
                             <div class="metric" id="accessesToday">0</div>
-                            <span class="tag blue">SIMULACIÓN BIOMÉTRICA</span>
+                            <span class="muted">Entradas registradas hoy</span>
                         </article>
                     </div>
                     <div class="two">
@@ -1959,10 +2119,7 @@
                                     id="availabilityAlertBanner"
                                     style="margin-top: 14px"
                                 ></div>
-                                <p class="notice" style="margin-top: 18px">
-                                    <b>Dato confirmado:</b> cada caja física
-                                    tiene cerradura y dos llaves.
-                                </p>
+
                             </div>
                         </section>
                     </div>
@@ -2466,177 +2623,45 @@
                     </p>
                 </section>
                 <section class="view" id="contract">
-                    <button class="btn outline" onclick="showView('form')">
-                        ← Editar solicitud
-                    </button>
-                    <p class="eyebrow" style="margin-top: 20px">PASO 3 DE 3</p>
-                    <h1>Generar contrato</h1>
-                    <p class="muted">
-                        Confirma condiciones, autorizados, caja y resumen
-                        financiero.
-                    </p>
-                    <div class="split" style="margin-top: 22px">
-                        <div class="panel section">
-                            <h2>Contrato de arrendamiento</h2>
-                            <p class="muted">
-                                Datos de ejemplo; no constituye un documento
-                                legal o fiscal.
-                            </p>
-                            <div class="fields">
-                                <div class="field">
-                                    <label>ARRENDATARIO</label
-                                    ><input id="cTenant" readonly />
-                                </div>
-                                <div class="field">
-                                    <label>CAJA ASIGNADA</label
-                                    ><input id="cBox" readonly />
-                                </div>
-                                <div class="field">
-                                    <label>VIGENCIA</label
-                                    ><select
-                                        id="cDuration"
-                                        onchange="updateContractDates()"
-                                    >
-                                        <option>12 meses</option>
-                                        <option>6 meses</option>
-                                        <option>18 meses</option>
-                                    </select>
-                                </div>
-                                <div class="field">
-                                    <label>INICIO</label
-                                    ><input
-                                        id="cStart"
-                                        type="date"
-                                        value="2026-11-01"
-                                    />
-                                </div>
-                                <div class="field">
-                                    <label>TIPO DE CONTRATO</label
-                                    ><select id="cType">
-                                        <option>Nuevo</option>
-                                        <option>Renovación</option>
-                                    </select>
-                                </div>
-                                <div class="field">
-                                    <label>FECHA DE VENCIMIENTO</label
-                                    ><input id="cEnd" readonly />
-                                </div>
-                                <div class="field">
-                                    <label>DÍA DE PAGO</label
-                                    ><select id="cPaymentDay">
-                                        <option>Día 1</option>
-                                        <option>Día 5</option>
-                                        <option>Día 10</option>
-                                        <option>Día 15</option>
-                                    </select>
-                                </div>
-                                <div class="field">
-                                    <label>FORMA DE PAGO</label
-                                    ><select id="cPaymentMethod">
-                                        <option>Transferencia</option>
-                                        <option>Efectivo</option>
-                                        <option>Tarjeta</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <hr
-                                style="
-                                    border: 0;
-                                    border-top: 1px solid var(--line);
-                                    margin: 25px 0;
-                                "
-                            />
-                            <h2>Autorizados y llaves</h2>
-                            <div class="selected">
-                                <b id="cAuth"
-                                    >Sin persona autorizada registrada</b
-                                >
-                                <p class="muted" id="cAuthPhone">
-                                    Puedes completar este dato en la solicitud.
-                                </p>
-                            </div>
-                            <div class="notice" style="margin-top: 13px">
-                                🔐 Se registrará la entrega de
-                                <b>2 llaves</b> para la caja seleccionada. La
-                                generación de formato es una simulación.
-                            </div>
+                    <button class="btn outline" onclick="showView('contracts')">← Contratos</button>
+                    <div class="heading" style="margin-top:20px"><div><p class="eyebrow">ARRENDAMIENTO</p><h1>Nuevo contrato</h1><p class="muted">Selecciona un arrendatario y revisa las condiciones antes de guardar.</p></div><span class="tag blue">DATOS DE DEMOSTRACIÓN</span></div>
+                    <section class="panel section contract-selector">
+                        <div><h2>¿Para quién es el contrato?</h2><p class="muted">Busca en el catálogo de arrendatarios.</p></div>
+                        <div class="field"><label for="cTenant">ARRENDATARIO</label><select id="cTenant" onchange="selectContractTenant(this.value)"><option value="">Selecciona un arrendatario</option></select></div>
+                    </section>
+                    <div id="contractEmpty" class="panel section contract-empty">Selecciona un arrendatario para consultar su expediente y preparar el contrato.</div>
+                    <div id="contractWorkspace" style="display:none">
+                        <div class="contract-tabs" role="tablist" aria-label="Información del contrato">
+                            <button type="button" class="on" role="tab" aria-selected="true" data-contract-tab="conditions" onclick="contractTab('conditions')">Contrato</button>
+                            <button type="button" role="tab" aria-selected="false" data-contract-tab="profile" onclick="contractTab('profile')">Expediente</button>
+                            <button type="button" role="tab" aria-selected="false" data-contract-tab="people" onclick="contractTab('people')">Autorizados y apoyo</button>
+                            <button type="button" role="tab" aria-selected="false" data-contract-tab="documents" onclick="contractTab('documents')">Llaves y documentos</button>
+                            <button type="button" role="tab" aria-selected="false" data-contract-tab="history" onclick="contractTab('history')">Historial</button>
                         </div>
-                        <aside class="panel section">
-                            <h2>Resumen financiero</h2>
-                            <p class="muted">
-                                Vista previa de factura · simulación fiscal
-                            </p>
-                            <div class="field" style="margin-top: 16px">
-                                <label>RENTA MENSUAL</label
-                                ><input
-                                    id="rent"
-                                    type="number"
-                                    oninput="calc()"
-                                />
-                            </div>
-                            <div class="field" style="margin-top: 13px">
-                                <label>DEPÓSITO EN GARANTÍA</label
-                                ><input
-                                    id="deposit"
-                                    type="number"
-                                    oninput="calc()"
-                                />
-                            </div>
-                            <div style="margin-top: 16px">
-                                <div class="summary-row">
-                                    <span>Renta</span><span id="sumRent"></span>
+                        <div data-contract-panel="conditions" class="split contract-layout">
+                            <section class="panel section"><h2>Condiciones del contrato</h2><p class="muted" id="contractRequestLabel"></p>
+                                <div class="fields">
+                                    <div class="field"><label for="cBox">CAJA DISPONIBLE</label><select id="cBox" onchange="updateContractBox()"></select></div>
+                                    <div class="field"><label for="cDuration">DURACIÓN</label><select id="cDuration" onchange="updateContractDates()"><option>12 meses</option><option>6 meses</option><option>18 meses</option></select></div>
+                                    <div class="field"><label for="cStart">INICIO DE VIGENCIA</label><input id="cStart" type="date" onchange="updateContractDates()" /></div>
+                                    <div class="field"><label for="cEnd">FECHA DE VENCIMIENTO</label><input id="cEnd" type="date" /></div>
+                                    <div class="field"><label for="cPaymentDate">FECHA DE PAGO</label><input id="cPaymentDate" type="date" /></div>
+                                    <div class="field"><label for="cPrintDate">FECHA DE IMPRESIÓN</label><input id="cPrintDate" type="date" /></div>
+                                    <div class="field"><label for="cPaymentMethod">FORMA DE PAGO</label><select id="cPaymentMethod"><option>Transferencia</option><option>Efectivo</option><option>Tarjeta</option></select></div>
                                 </div>
-                                <div class="summary-row">
-                                    <span>Depósito</span
-                                    ><span id="sumDeposit"></span>
-                                </div>
-                                <div class="summary-row">
-                                    <span>IVA estimado (16%)</span
-                                    ><span id="sumIva"></span>
-                                </div>
-                                <div class="summary-total">
-                                    <span>Total inicial</span
-                                    ><span
-                                        id="sumTotal"
-                                        style="float: right"
-                                    ></span>
-                                </div>
-                            </div>
-                            <div class="notice" style="margin-top: 16px">
-                                <label
-                                    style="display: block; margin-bottom: 8px"
-                                    ><input
-                                        id="cKeysConfirmed"
-                                        type="checkbox"
-                                    />
-                                    Se registrará la entrega de dos
-                                    llaves.</label
-                                >
-                                <label style="display: block"
-                                    ><input
-                                        id="cReviewConfirmed"
-                                        type="checkbox"
-                                    />
-                                    Confirmé los datos de contrato y
-                                    caja.</label
-                                >
-                            </div>
-                            <button
-                                class="btn primary"
-                                style="width: 100%; margin-top: 20px"
-                                onclick="requestContractConfirmation()"
-                            >
-                                ✓ Guardar, timbrar y salir</button
-                            ><small
-                                class="muted"
-                                style="
-                                    display: block;
-                                    text-align: center;
-                                    margin-top: 10px;
-                                "
-                                >El timbrado CFDI es una simulación.</small
-                            >
-                        </aside>
+                            </section>
+                            <aside class="panel section"><p class="eyebrow">SIMULACIÓN</p><h2>Resumen financiero</h2><p class="muted">Ajusta los importes para esta operación.</p>
+                                <div class="field" style="margin-top:16px"><label for="rent">IMPORTE DE RENTA</label><input id="rent" type="number" min="0" step="0.01" oninput="calc()" /></div>
+                                <div class="field" style="margin-top:13px"><label for="deposit">IMPORTE DE GARANTÍA</label><input id="deposit" type="number" min="0" step="0.01" oninput="calc()" /></div>
+                                <div style="margin-top:16px"><div class="summary-row"><span>Renta</span><span id="sumRent"></span></div><div class="summary-row"><span>Garantía</span><span id="sumDeposit"></span></div><div class="summary-row"><span>IVA estimado (16%)</span><span id="sumIva"></span></div><div class="summary-total"><span>Total inicial</span><span id="sumTotal" style="float:right"></span></div></div>
+                                <div class="notice" style="margin-top:16px"><label style="display:block;margin-bottom:8px"><input id="cKeysConfirmed" type="checkbox" /> Registrar entrega simulada de llaves</label><label><input id="cReviewConfirmed" type="checkbox" /> Confirmo los datos del contrato</label></div>
+                                <button class="btn primary" style="width:100%;margin-top:20px" onclick="requestContractConfirmation()">Revisar y guardar contrato →</button><p class="muted" style="font-size:11px">La factura y los documentos son simulados.</p>
+                            </aside>
+                        </div>
+                        <section class="panel section contract-panel" data-contract-panel="profile" hidden><h2>Expediente del arrendatario</h2><p class="muted">Datos registrados en su solicitud y catálogo.</p><div id="contractProfile" class="contract-info"></div></section>
+                        <section class="panel section contract-panel" data-contract-panel="people" hidden><h2>Personas autorizadas</h2><p class="muted">Personas registradas en el expediente del arrendatario.</p><div id="contractAuthorizations"></div><hr class="contract-divider" /><h2>Personal de apoyo</h2><p class="muted">Personas autorizadas para acompañar al arrendatario cuando necesite asistencia.</p><div id="contractSupport"></div><div class="fields" style="margin-top:16px"><div class="field"><label for="supportName">NOMBRE DE LA PERSONA</label><input id="supportName" maxlength="90" /></div><div class="field"><label for="supportPhone">TELÉFONO</label><input id="supportPhone" maxlength="30" /></div></div><button class="btn outline" style="margin-top:14px" type="button" onclick="addContractSupport()">＋ Autorizar personal de apoyo</button></section>
+                        <section class="panel section contract-panel" data-contract-panel="documents" hidden><h2>Llaves y documentos</h2><p class="muted">Estado del expediente relacionado con la solicitud.</p><div id="contractDocuments"></div><p class="notice" style="margin-top:16px">La entrega de llaves se confirma al guardar el contrato. Los documentos de la demo son simulados.</p></section>
+                        <section class="panel section contract-panel" data-contract-panel="history" hidden><h2>Historial del arrendatario</h2><p class="muted">Contratos y movimientos registrados en esta demo.</p><div id="contractHistory"></div></section>
                     </div>
                 </section>
                 <section class="view" id="tenant">
@@ -2720,7 +2745,7 @@
                                 documentos asociados.
                             </p>
                         </div>
-                        <button class="btn primary" onclick="startRequest()">
+                        <button class="btn primary" onclick="startNewContract()">
                             ＋ Nuevo contrato
                         </button>
                     </div>
@@ -3130,118 +3155,167 @@
                 <section class="view" id="reports">
                     <div class="heading">
                         <div>
-                            <p class="eyebrow">ADMINISTRACIÓN · CENTRO DE CONTROL</p>
-                            <h1>Reportes administrativos</h1>
-                            <p class="muted">
-                                Consulta resultados en pantalla antes de
-                                descargar. Los datos se recalculan con la
-                                operación simulada de la demo.
-                            </p>
+                            <p class="eyebrow">ADMINISTRACIÓN · INTELIGENCIA OPERATIVA</p>
+                            <h1>Reportes</h1>
+                            <p class="muted">Elige un reporte, revisa los datos y descarga tu archivo.</p>
                         </div>
-                        <button class="btn primary" onclick="exportReport()">
-                            ⇩ Descargar CSV
-                        </button>
-                    </div>
-                    <div class="grid4">
-                        <article class="card">
-                            <span class="muted">INGRESOS DEL PERIODO</span>
-                            <div class="metric" id="reportIncome">—</div>
-                            <span class="tag green">VISTA PREVIA</span>
-                        </article>
-                        <article class="card">
-                            <span class="muted">CAJAS OCUPADAS</span>
-                            <div class="metric" id="reportOccupied">7</div>
-                            <span class="muted">Disponibilidad actual</span>
-                        </article>
-                        <article class="card">
-                            <span class="muted">SOLICITUDES</span>
-                            <div class="metric" id="reportRequests">3</div>
-                            <span class="muted">Periodo actual</span>
-                        </article>
-                        <article class="card">
-                            <span class="muted">CONTRATOS VIGENTES</span>
-                            <div class="metric" id="reportContracts">—</div>
-                            <span class="muted">Al corte seleccionado</span>
-                        </article>
-                    </div>
-                    <section class="panel section">
-                        <div class="toolbar" style="margin: -20px -20px 20px">
-                            <select id="reportType" onchange="renderReport()">
-                                <option value="general">
-                                    General para consejo
-                                </option>
-                                <option value="availability">
-                                    Disponibilidad de cajas
-                                </option>
-                                <option value="access">
-                                    Accesos por arrendatario
-                                </option>
-                                <option value="finance">
-                                    Ingresos y garantías
-                                </option>
-                                <option value="new-contracts">
-                                    Contratos nuevos
-                                </option>
-                                <option value="annual">
-                                    Resumen anual de operaciones
-                                </option></select
-                            ><input
-                                id="reportFrom"
-                                type="date"
-                                value="2026-10-01"
-                                onchange="renderReport()"
-                            /><input
-                                id="reportTo"
-                                type="date"
-                                value="2026-10-31"
-                                onchange="renderReport()"
-                            /><button
-                                class="btn outline"
-                                onclick="renderReport()"
-                            >
-                                Actualizar vista
-                            </button>
+                        <div class="report-actions">
+
+                            <button class="btn primary" type="button" onclick="exportReport()">⇩ Descargar CSV</button>
                         </div>
-                        <div id="reportHighlights" class="small-grid" style="margin-bottom:18px"></div>
-                        <div id="reportVisual" class="notice" style="margin-bottom:18px"></div>
-                        <h2 id="reportPreviewTitle">
-                            Vista previa: reporte general para consejo
-                        </h2>
-                        <div class="table-wrap" style="margin-top: 16px">
+                    </div>
+                    <section class="report-hero" aria-labelledby="reportDecisionTitle">
+                        <div>
+                            <p class="report-hero__eyebrow">CORTE OPERATIVO</p>
+                            <h1 id="reportDecisionTitle">Lo que necesita atención hoy</h1>
+                            <p id="reportDecisionDescription">Usa el periodo y el contexto para priorizar seguridad de visitas, renovaciones y disponibilidad comercial.</p>
+                        </div>
+                        <div class="report-hero__meta">
+                            <span>CONTEXTO ACTIVO</span>
+                            <b id="reportContextLabel">Toda la operación</b>
+                        </div>
+                    </section>
+                    <section id="reportFilter" class="panel report-filter" aria-label="Filtros del centro de decisiones">
+                        <div class="report-filter__top">
+                            <div>
+                                <h2>Filtros del reporte</h2>
+                                <p>Selecciona el periodo y, si lo necesitas, un arrendatario o contrato.</p>
+                            </div>
+                            <div class="report-presets" aria-label="Periodos rápidos">
+                                <button class="report-preset" type="button" data-report-preset="month" onclick="setReportPreset('month')">Este mes</button>
+                                <button class="report-preset" type="button" data-report-preset="30days" onclick="setReportPreset('30days')">Últimos 30 días</button>
+                                <button class="report-preset" type="button" data-report-preset="year" onclick="setReportPreset('year')">Este año</button>
+                            </div>
+                        </div>
+                        <div class="report-filter__fields">
+                            <div class="field field--wide">
+                                <label for="reportType">REPORTE</label>
+                                <select id="reportType" onchange="renderReport()">
+                                    <option value="general">Resumen ejecutivo</option>
+                                    <option value="availability">Disponibilidad de cajas</option>
+                                    <option value="access">Bitácora de accesos</option>
+                                    <option value="finance">Ingresos y garantías</option>
+                                    <option value="new-contracts">Contratos nuevos</option>
+                                    <option value="annual">Resumen anual de operaciones</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label for="reportFrom">DESDE</label>
+                                <input id="reportFrom" type="date" value="2026-10-01" onchange="renderReport()" />
+                            </div>
+                            <div class="field">
+                                <label for="reportTo">HASTA</label>
+                                <input id="reportTo" type="date" value="2026-10-31" onchange="renderReport()" />
+                            </div>
+                            <div class="field">
+                                <label for="reportTenant">ARRENDATARIO</label>
+                                <select id="reportTenant" onchange="refreshReportContracts(); renderReport()"></select>
+                            </div>
+                            <div class="field">
+                                <label for="reportContract">CONTRATO</label>
+                                <select id="reportContract" onchange="syncReportContextFromContract(); renderReport()"></select>
+                            </div>
+                            <button class="btn outline" type="button" onclick="clearReportContext()">Limpiar contexto</button>
+                        </div>
+                    </section>
+                    <section class="panel report-preview">
+                        <div class="toolbar">
+                            <div>
+                                <h2 id="reportPreviewTitle">Vista previa: resumen ejecutivo</h2>
+                                <span class="muted">Revisa antes de descargar o compartir.</span>
+                            </div>
+                            <span class="report-preview__context" id="reportPreviewContext">Toda la operación</span>
+                        </div>
+                        <div class="sheet-bar"><span>▦</span> Vista previa de datos <small>Los filtros también se aplican al archivo CSV</small></div>
+                        <div class="table-wrap sheet-grid">
                             <table>
                                 <thead id="reportPreviewHead"></thead>
                                 <tbody id="reportPreviewRows"></tbody>
                             </table>
                         </div>
+                        <div class="sheet-footer"><span>Hoja 1</span><small id="reportRowCount"></small></div>
                     </section>
-                    <section class="panel section" style="margin-top: 20px">
-                        <h2>Reportes disponibles en este centro</h2>
+                    <div class="grid4" aria-live="polite">
+                        <article class="card report-kpi report-kpi--income">
+                            <span class="report-kpi__label">INGRESO REGISTRADO</span>
+                            <div class="metric" id="reportIncome">—</div>
+                            <span class="report-kpi__detail" id="reportIncomeDetail">En el periodo seleccionado</span>
+                            <span class="report-kpi__trend" id="reportIncomeTrend">Movimiento operativo</span>
+                        </article>
+                        <article class="card report-kpi report-kpi--occupancy">
+                            <span class="report-kpi__label">OCUPACIÓN ACTUAL</span>
+                            <div class="metric" id="reportOccupied">—</div>
+                            <span class="report-kpi__detail" id="reportOccupiedDetail">Inventario completo</span>
+                            <span class="report-kpi__trend" id="reportOccupiedTrend">Capacidad disponible</span>
+                        </article>
+                        <article class="card report-kpi report-kpi--flow">
+                            <span class="report-kpi__label">FLUJO COMERCIAL</span>
+                            <div class="metric" id="reportRequests">—</div>
+                            <span class="report-kpi__detail" id="reportRequestsDetail">Solicitudes del periodo</span>
+                            <span class="report-kpi__trend" id="reportRequestsTrend">Por resolver</span>
+                        </article>
+                        <article class="card report-kpi report-kpi--risk">
+                            <span class="report-kpi__label">RIESGO DE SEGURIDAD</span>
+                            <div class="metric" id="reportOpenVisits">—</div>
+                            <span class="report-kpi__detail" id="reportOpenVisitsDetail">Entradas sin salida registrada</span>
+                            <span class="report-kpi__trend" id="reportOpenVisitsTrend">Requiere seguimiento</span>
+                        </article>
+                    </div>
+                    <div class="report-insights">
+                        <section class="panel">
+                            <div class="report-panel__head">
+                                <div>
+                                    <h2>Prioridades de operación</h2>
+                                    <p>Excepciones que conviene resolver antes de cerrar el corte.</p>
+                                </div>
+                                <span class="tag amber" id="reportAlertCount">REVISANDO</span>
+                            </div>
+                            <div class="report-alerts" id="reportAlerts"></div>
+                        </section>
+                        <section class="panel">
+                            <div class="report-panel__head">
+                                <div>
+                                    <h2>Capacidad comercial</h2>
+                                    <p>Inventario físico al momento de la consulta.</p>
+                                </div>
+                            </div>
+                            <div class="report-capacity" id="reportCapacity"></div>
+                        </section>
+                    </div>
+                    <section class="panel section report-library" style="margin-top: 20px" aria-labelledby="reportLibraryTitle">
+                        <h2 id="reportLibraryTitle">Reportes listos</h2>
+                        <p class="report-library__intro">Elige uno para abrir su simulación con el periodo y contexto activos.</p>
                         <div class="small-grid" style="margin-top: 18px">
-                            <div class="notice">
-                                <b>General para consejo</b><br />Solicitudes,
-                                ingresos, ocupación, garantías y contratos
-                                activos.
-                            </div>
-                            <div class="notice">
-                                <b>Disponibilidad de cajas</b><br />Vista por
-                                colores, medida, área y estado.
-                            </div>
-                            <div class="notice">
-                                <b>Contratos nuevos</b><br />Fecha de pago,
-                                cliente, caja, renta, garantía y estatus.
-                            </div>
-                            <div class="notice">
-                                <b>Resumen anual</b><br />Altas,
-                                cancelaciones, renovaciones y modificaciones.
-                            </div>
-                            <div class="notice">
-                                <b>Accesos por arrendatario</b><br />Filtros por
-                                persona, caja y rango de fechas.
-                            </div>
-                            <div class="notice">
-                                <b>Fiscal</b><br />Representación prevista; no
-                                hay integración CFDI real.
-                            </div>
+                            <button class="report-shortcut" type="button" data-report-shortcut="general" aria-pressed="true" onclick="selectReportShortcut('general')">
+                                <b>Resumen ejecutivo</b>
+                                <span>Capacidad, flujo, seguridad y contratos que requieren seguimiento.</span>
+                                <small>Abrir simulación ↗</small>
+                            </button>
+                            <button class="report-shortcut" type="button" data-report-shortcut="availability" aria-pressed="false" onclick="selectReportShortcut('availability')">
+                                <b>Disponibilidad de cajas</b>
+                                <span>Estado de inventario para detectar capacidad comercial y mantenimiento.</span>
+                                <small>Abrir simulación ↗</small>
+                            </button>
+                            <button class="report-shortcut" type="button" data-report-shortcut="new-contracts" aria-pressed="false" onclick="selectReportShortcut('new-contracts')">
+                                <b>Contratos nuevos</b>
+                                <span>Fecha, cliente, caja, renta, garantía y estatus de cada alta.</span>
+                                <small>Abrir simulación ↗</small>
+                            </button>
+                            <button class="report-shortcut" type="button" data-report-shortcut="annual" aria-pressed="false" onclick="selectReportShortcut('annual')">
+                                <b>Resumen anual</b>
+                                <span>Altas, cancelaciones, renovaciones y modificaciones por año.</span>
+                                <small>Abrir simulación ↗</small>
+                            </button>
+                            <button class="report-shortcut" type="button" data-report-shortcut="access" aria-pressed="false" onclick="selectReportShortcut('access')">
+                                <b>Bitácora de accesos</b>
+                                <span>Entradas, salidas y firmas por persona, contrato y rango de fechas.</span>
+                                <small>Abrir simulación ↗</small>
+                            </button>
+                            <button class="report-shortcut" type="button" data-report-shortcut="finance" aria-pressed="false" onclick="selectReportShortcut('finance')">
+                                <b>Ingresos y garantías</b>
+                                <span>Movimientos registrados; no sustituye conciliación ni CFDI real.</span>
+                                <small>Abrir simulación ↗</small>
+                            </button>
                         </div>
                     </section>
                 </section>
@@ -3727,41 +3801,22 @@
             aria-modal="true"
             aria-labelledby="contractConfirmTitle"
         >
-            <section class="invoice">
-                <p class="eyebrow">REVISIÓN FINAL · DEMO</p>
-                <h2 id="contractConfirmTitle">
-                    Confirmar generación de contrato
-                </h2>
-                <p class="muted" style="margin-top: 8px">
-                    Esta acción simula ocupar la caja, crear el contrato,
-                    registrar dos llaves y emitir una factura de ejemplo.
-                </p>
-                <div
-                    class="selected"
-                    id="contractConfirmSummary"
-                    style="margin-top: 18px"
-                ></div>
-                <p class="notice" style="margin-top: 14px">
-                    No se genera un documento legal ni un CFDI real. Los
-                    cálculos y reglas comerciales son de demostración.
-                </p>
-                <div
-                    style="
-                        display: flex;
-                        gap: 10px;
-                        justify-content: flex-end;
-                        margin-top: 20px;
-                    "
-                >
-                    <button
-                        class="btn outline"
-                        onclick="closeContractConfirmation()"
-                    >
-                        Volver a editar</button
-                    ><button class="btn primary" onclick="saveContract()">
-                        Confirmar contrato
-                    </button>
+            <section class="invoice contract-invoice">
+                <p class="eyebrow">ÚLTIMO PASO · FACTURACIÓN SIMULADA</p>
+                <h2 id="contractConfirmTitle">Facturas del contrato</h2>
+                <p class="muted">Distribuye el total entre una o varias facturas antes de guardar.</p>
+                <div class="contract-invoice-summary" id="contractConfirmSummary"></div>
+                <div class="fields contract-invoice-fields">
+                    <div class="field"><label for="contractInvoiceProfile">PERFIL DE FACTURACIÓN</label><select id="contractInvoiceProfile"><option value="general">Público general</option><option value="tenant">Datos fiscales del arrendatario</option></select></div>
+                    <div class="field"><label for="contractInvoiceMethod">FORMA DE PAGO</label><select id="contractInvoiceMethod"><option>Transferencia</option><option>Efectivo</option><option>Tarjeta</option></select></div>
+                    <div class="field"><label for="contractInvoiceAmount">TOTAL DE ESTA FACTURA</label><input id="contractInvoiceAmount" type="number" min="0.01" step="0.01" /></div>
+                    <button class="btn outline" type="button" onclick="addContractInvoice()">＋ Agregar factura</button>
                 </div>
+                <p class="contract-invoice-error" id="contractInvoiceError" role="alert" hidden></p>
+                <div class="table-wrap contract-invoice-table"><table><thead><tr><th>Perfil</th><th>Pago</th><th>Subtotal*</th><th>IVA*</th><th>Total</th><th></th></tr></thead><tbody id="contractInvoiceRows"></tbody></table></div>
+                <div class="contract-invoice-totals"><span>Agregado <b id="contractInvoiceAllocated">$0.00</b></span><span>Pendiente <b id="contractInvoiceRemaining">$0.00</b></span></div>
+                <p class="muted" style="font-size:11px">* IVA estimado sobre la renta y distribuido proporcionalmente entre las facturas. La garantía se incluye en el total de la simulación. No se emite CFDI.</p>
+                <div class="contract-invoice-actions"><button class="btn outline" type="button" onclick="closeContractConfirmation()">Volver a editar</button><button class="btn primary" type="button" onclick="saveContract()">Guardar contrato y facturas</button></div>
             </section>
         </div>
         <div
@@ -3961,8 +4016,10 @@
             function persistState() {
                 try {
                     localStorage.setItem(DEMO_STORAGE_KEY, JSON.stringify(state));
+                    return true;
                 } catch (_) {
                     flash("No fue posible guardar los cambios de la demo en este navegador.");
+                    return false;
                 }
             }
             const title = {
@@ -4261,7 +4318,7 @@
                 return status === "Disponible" ? "green" : status === "Reservada" ? "amber" : status === "Mantenimiento" ? "blue" : "slate";
             }
             function formDraftFromTenant(tenant, request = null) {
-                const authorization = state.authorizations.find((item) => item.tenantId === tenant.id);
+                const authorization = state.authorizations.find((item) => item.tenantId === tenant.id && item.type !== "Personal de apoyo");
                 return Object.assign({}, tenant, {
                     requestId: request?.id || null,
                     tenantId: tenant.id,
@@ -4297,7 +4354,7 @@
                 const gaps = [];
                 if (!draft.name || !draft.email || !draft.phone) gaps.push("datos de contacto");
                 if (!draft.reference || !draft.referencePhone) gaps.push("referencia personal");
-                if (!Object.keys(draft.services || {}).length) gaps.push("al menos un servicio/caja");
+                if (!draft.boxId && !Object.keys(draft.services || {}).length) gaps.push("al menos un servicio o caja");
                 if (!draft.documents?.identification) gaps.push("INE del titular");
                 if (draft.personType === "Moral" && !draft.documents?.constitutive) gaps.push("acta constitutiva");
                 if (draft.billingMode === "Factura a nombre del cliente" && !draft.documents?.fiscal) gaps.push("constancia de situación fiscal");
@@ -4402,7 +4459,7 @@
                     request = { id: createDemoId("request"), folio: `SOL-${String(number).padStart(4, "0")}`, tenantId: tenant.id, boxId: draft.boxId || null, createdAt: new Date().toISOString(), status: "En revisión", contractId: null, services: draft.services, documents: draft.documents };
                     state.requests.unshift(request);
                 }
-                const authorization = state.authorizations.find((item) => item.tenantId === tenant.id);
+                const authorization = state.authorizations.find((item) => item.tenantId === tenant.id && item.type !== "Personal de apoyo");
                 if (draft.auth) {
                     if (authorization) Object.assign(authorization, { name: draft.auth, phone: draft.authPhone });
                     else state.authorizations.push({ id: createDemoId("auth"), tenantId: tenant.id, name: draft.auth, phone: draft.authPhone, type: "Autorizado" });
@@ -4425,34 +4482,96 @@
                     return;
                 }
                 const gaps = requestGaps(readRequestForm());
-                const decision = request.status === "Aprobada" ? `<p class="notice"><b>Solicitud aprobada.</b> Arrendatario #${esc(tenantById(request.tenantId)?.catalogNumber || "—")} creado en el catálogo.<br /><small>Autorizó ${esc(request.approvedBy || "—")} · ${esc(dateLabel(request.approvedAt?.slice(0, 10)))}</small></p>` : request.status === "Denegada" ? `<p class="notice"><b>Solicitud denegada.</b> ${esc(request.denialReason || "Sin motivo registrado.")}<br /><small>${esc(dateLabel(request.deniedAt?.slice(0, 10)))}</small></p>` : `<p class="muted" style="font-size:12px">${gaps.length ? "El expediente aún tiene pendientes." : "El expediente está listo para decisión."}</p><div style="display:grid;gap:10px"><button class="btn primary" onclick="approveRequest()" ${gaps.length ? "disabled" : ""}>✓ Aprobar solicitud</button><button class="btn outline" onclick="denyRequest()">Denegar solicitud</button></div>`;
+                const decision = request.status === "Aprobada" ? `<p class="notice"><b>Solicitud aprobada.</b> Arrendatario #${esc(tenantById(request.tenantId)?.catalogNumber || "—")} creado en el catálogo.${request.demoCompletedFields?.length ? `<br /><small>Datos simulados: ${esc(request.demoCompletedFields.join(", "))}.</small>` : ""}<br /><small>Autorizó ${esc(request.approvedBy || "—")} · ${esc(dateLabel(request.approvedAt?.slice(0, 10)))}</small></p>` : request.status === "Denegada" ? `<p class="notice"><b>Solicitud denegada.</b> ${esc(request.denialReason || "Sin motivo registrado.")}<br /><small>${esc(dateLabel(request.deniedAt?.slice(0, 10)))}</small></p>` : `<p class="muted" style="font-size:12px">${gaps.length ? "Al aprobar, los requisitos pendientes se completarán con datos de demostración." : "El expediente está listo para decisión."}</p><div style="display:grid;gap:10px"><button class="btn primary" onclick="approveRequest()">✓ Aprobar solicitud</button><button class="btn outline" onclick="denyRequest()">Denegar solicitud</button></div>`;
                 panel.innerHTML = `<hr style="border:0;border-top:1px solid var(--line);margin:18px 0" /><p class="eyebrow">AUTORIZACIÓN</p><p style="margin:7px 0">${badge(request.status)}</p>${decision}`;
             }
-            function approveRequest() {
-                const request = requestById(state.ui.selectedRequestId);
+            function completeDemoRequirements(draft) {
+                const completed = [];
+                const defaults = {
+                    name: ["Cliente de demostración", "nombre"],
+                    email: ["cliente@ejemplo.test", "correo"],
+                    phone: ["999 000 0000", "teléfono"],
+                    reference: ["Referencia de demostración", "referencia personal"],
+                    referencePhone: ["999 000 0000", "teléfono de referencia"],
+                };
+                Object.entries(defaults).forEach(([key, [value, label]]) => {
+                    if (!draft[key]) { draft[key] = value; completed.push(label); }
+                });
+                if (!draft.boxId && !Object.keys(draft.services || {}).length) {
+                    draft.services = { "3 × 5": 1 };
+                    completed.push("servicio de ejemplo");
+                }
+                draft.documents = { ...draft.documents };
+                if (!draft.documents.identification) { draft.documents.identification = true; completed.push("identificación simulada"); }
+                if (draft.personType === "Moral" && !draft.documents.constitutive) { draft.documents.constitutive = true; completed.push("acta constitutiva simulada"); }
+                if (draft.billingMode === "Factura a nombre del cliente" && !draft.documents.fiscal) { draft.documents.fiscal = true; completed.push("constancia fiscal simulada"); }
+                return completed;
+            }
+            async function approveRequest() {
+                const request = requestById(state.ui.selectedRequestId || state.ui.draft?.requestId);
                 const tenant = request && tenantById(request.tenantId);
                 if (!request || !tenant) return flash("Guarda la solicitud antes de autorizarla.");
+                if (["Aprobada", "Denegada"].includes(request.status)) return flash("Esta solicitud ya tiene una decisión registrada.");
                 const draft = readRequestForm();
-                const gaps = requestGaps(draft);
-                if (gaps.length) return flash(`No se puede aprobar: falta ${gaps.join(", ")}.`);
-                Object.assign(tenant, draft);
+                const completed = completeDemoRequirements(draft);
+                const previousState = clone(state);
+                Object.assign(tenant, draft, { id: tenant.id });
+                request.boxId = draft.boxId || null;
                 request.services = draft.services;
                 request.documents = draft.documents;
+                request.demoCompletedFields = completed;
                 request.status = "Aprobada";
                 request.approvedAt = new Date().toISOString();
-                request.approvedBy = "Andrea Castillo";
-                tenant.catalogNumber = Math.max(0, ...state.tenants.map((item) => Number(item.catalogNumber) || 0)) + 1;
+                request.approvedBy = CURRENT_USER.name;
+                if (!tenant.catalogNumber) tenant.catalogNumber = state.tenants.reduce((maximum, item) => Math.max(maximum, Number(item.catalogNumber) || 0), 0) + 1;
+                const authorization = state.authorizations.find((item) => item.tenantId === tenant.id && item.type !== "Personal de apoyo");
+                if (draft.auth) {
+                    if (authorization) Object.assign(authorization, { name: draft.auth, phone: draft.authPhone });
+                    else state.authorizations.push({ id: createDemoId("auth"), tenantId: tenant.id, name: draft.auth, phone: draft.authPhone, type: "Autorizado" });
+                }
                 state.ui.selectedTenantId = tenant.id;
+                state.ui.draft = Object.assign({}, draft, { tenantId: tenant.id, requestId: request.id });
                 logAudit("Aprobó solicitud y creó arrendatario", `${request.folio} · #${tenant.catalogNumber}`, "Correcto", false);
-                persistState();
-                flash(`Solicitud aprobada. Arrendatario #${tenant.catalogNumber} creado en el catálogo.`);
+                if (!persistState()) {
+                    state = previousState;
+                    return;
+                }
+                byId("tenantSearch").value = "";
                 showView("tenants");
+                const confirmation = `${tenant.name} se guardó en el catálogo de arrendatarios con el número #${tenant.catalogNumber}.${completed.length ? ` Se completaron datos simulados: ${completed.join(", ")}.` : ""}`;
+                if (!window.Swal) return flash(confirmation);
+                await window.Swal.fire({
+                    title: "Solicitud aprobada",
+                    text: confirmation,
+                    icon: "success",
+                    iconColor: "#168b62",
+                    confirmButtonText: "Entendido",
+                    buttonsStyling: false,
+                    customClass: { popup: "saferoom-dialog" },
+                });
             }
-            function denyRequest() {
+            async function denyRequest() {
                 const request = requestById(state.ui.selectedRequestId);
                 if (!request) return flash("Guarda la solicitud antes de denegarla.");
-                const reason = window.prompt("Motivo de no autorización:", request.denialReason || "Referencias pendientes de verificación");
-                if (!reason?.trim()) return;
+                const { isConfirmed, value: reason } = await window.Swal.fire({
+                    title: "Denegar solicitud",
+                    text: "El motivo quedará registrado en el expediente.",
+                    icon: "warning",
+                    iconColor: "#d5a500",
+                    input: "textarea",
+                    inputLabel: "Motivo de la denegación",
+                    inputPlaceholder: "Describe el motivo de la decisión",
+                    inputValue: request.denialReason || "",
+                    inputAttributes: { maxlength: "180" },
+                    inputValidator: (value) => !value.trim() ? "Escribe el motivo para continuar." : undefined,
+                    showCancelButton: true,
+                    confirmButtonText: "Denegar solicitud",
+                    cancelButtonText: "Cancelar",
+                    reverseButtons: true,
+                    buttonsStyling: false,
+                    customClass: { popup: "saferoom-dialog" },
+                });
+                if (!isConfirmed) return;
                 request.status = "Denegada";
                 request.denialReason = reason.trim().slice(0, 180);
                 request.deniedAt = new Date().toISOString();
@@ -4466,26 +4585,91 @@
                 persistState();
                 showView("boxes");
             }
+            function startNewContract() {
+                state.ui.selectedTenantId = null;
+                state.ui.selectedRequestId = null;
+                state.ui.selectedContractId = null;
+                showView("contract");
+            }
+            function contractTab(tab) {
+                document.querySelectorAll("[data-contract-tab]").forEach((button) => {
+                    const selected = button.dataset.contractTab === tab;
+                    button.classList.toggle("on", selected);
+                    button.setAttribute("aria-selected", String(selected));
+                });
+                document.querySelectorAll("[data-contract-panel]").forEach((panel) => { panel.hidden = panel.dataset.contractPanel !== tab; });
+            }
             function populateContract() {
-                const request = requestById(state.ui.selectedRequestId) || requestById(state.ui.draft?.requestId);
-                if (!request) return;
-                if (request.status !== "Aprobada") {
-                    flash("Primero verifica y aprueba la solicitud antes de generar un contrato.");
-                    showView("form");
-                    return;
-                }
-                const tenant = tenantById(request.tenantId);
-                const box = boxById(request.boxId);
-                if (!tenant || !box) return;
-                byId("cTenant").value = tenant.name;
-                byId("cBox").value = `${box.code} · ${box.area} · ${box.size}`;
-                byId("cAuth").textContent = state.authorizations.find((item) => item.tenantId === tenant.id)?.name || "Sin persona autorizada registrada";
-                byId("cAuthPhone").textContent = state.authorizations.find((item) => item.tenantId === tenant.id)?.phone || "Puedes completar este dato en la solicitud.";
-                if (!byId("cStart").value) byId("cStart").value = "2026-11-01";
-                byId("rent").value = (box.rentCents / 100).toFixed(2);
-                byId("deposit").value = (box.rentCents / 100).toFixed(2);
+                const request = requestById(state.ui.selectedRequestId);
+                const selectedId = state.ui.selectedTenantId || (request?.status === "Aprobada" ? request.tenantId : "");
+                const tenantSelect = byId("cTenant");
+                tenantSelect.innerHTML = `<option value="">Selecciona un arrendatario</option>${state.tenants.filter((tenant) => tenant.catalogNumber).map((tenant) => `<option value="${esc(tenant.id)}">#${esc(tenant.catalogNumber)} · ${esc(tenant.name)} · ${esc(tenant.email || "")}</option>`).join("")}`;
+                tenantSelect.value = selectedId || "";
+                if (window.initialiseContractTenantSelect) window.initialiseContractTenantSelect();
+                selectContractTenant(tenantSelect.value);
+            }
+            function selectContractTenant(tenantId) {
+                const tenant = tenantById(tenantId);
+                byId("contractEmpty").style.display = tenant ? "none" : "";
+                byId("contractWorkspace").style.display = tenant ? "" : "none";
+                state.ui.selectedTenantId = tenant?.id || null;
+                if (!tenant) { state.ui.selectedRequestId = null; return; }
+                const approvedRequests = state.requests.filter((item) => item.tenantId === tenant.id && item.status === "Aprobada" && !item.contractId);
+                const request = approvedRequests.find((item) => item.id === state.ui.selectedRequestId) || approvedRequests[0];
+                state.ui.selectedRequestId = request?.id || null;
+                byId("contractRequestLabel").textContent = request ? `Solicitud ${request.folio} · aprobada` : "Arrendatario del catálogo · sin solicitud pendiente de contrato";
+                const availableBoxes = state.boxes.filter((box) => box.status === "Disponible");
+                byId("cBox").innerHTML = `<option value="">Selecciona una caja</option>${availableBoxes.map((box) => `<option value="${esc(box.id)}">${esc(box.code)} · ${esc(box.area)} · ${esc(box.size)}</option>`).join("")}`;
+                byId("cBox").value = availableBoxes.some((box) => box.id === request?.boxId) ? request.boxId : "";
+                const today = reportDateValue(new Date());
+                ["cStart", "cPaymentDate", "cPrintDate"].forEach((id) => { byId(id).value = today; refreshSafeDate(byId(id)); });
+                byId("cKeysConfirmed").checked = false;
+                byId("cReviewConfirmed").checked = false;
                 updateContractDates();
+                updateContractBox();
+                renderContractTenantDetails(tenant, request);
+                contractTab("conditions");
+            }
+            window.selectContractTenant = selectContractTenant;
+            function updateContractBox() {
+                const box = boxById(byId("cBox").value);
+                byId("rent").value = box ? (box.rentCents / 100).toFixed(2) : "";
+                byId("deposit").value = box ? (box.rentCents / 100).toFixed(2) : "";
                 calc();
+            }
+            function renderContractTenantDetails(tenant, request) {
+                const fields = [["Nombre", tenant.name], ["Correo", tenant.email], ["Teléfono", tenant.phone], ["Tipo de persona", tenant.personType], ["RFC", tenant.rfc], ["CURP", tenant.curp], ["Nacimiento", tenant.birthDate], ["Lugar de nacimiento", tenant.birthPlace], ["Género", tenant.gender], ["Nacionalidad", tenant.nationality], ["Estado civil", tenant.civilStatus], ["Cónyuge", tenant.spouseName], ["Régimen matrimonial", tenant.maritalRegime], ["Origen", tenant.source], ["Calle", tenant.street], ["Colonia", tenant.neighborhood], ["Código postal", tenant.postalCode], ["Municipio", tenant.municipality], ["Estado", tenant.state], ["Tiempo de residencia", tenant.residenceTime], ["Teléfono de casa", tenant.homePhone], ["Otro teléfono", tenant.otherPhone], ["Referencia", tenant.reference], ["Teléfono de referencia", tenant.referencePhone], ["Segunda referencia", tenant.referenceTwo], ["Teléfono de segunda referencia", tenant.referenceTwoPhone], ["Empresa", tenant.company], ["Puesto", tenant.jobTitle], ["Ocupación", tenant.workType], ["RFC laboral", tenant.workRfc], ["Teléfono laboral", tenant.workPhone], ["Inicio laboral", tenant.workStartDate], ["Domicilio laboral", tenant.workAddress], ["Facturación", tenant.billingMode], ["Régimen fiscal", tenant.taxRegime], ["Uso CFDI", tenant.cfdiUse], ["Correo de facturación", tenant.billingEmail], ["Notario", tenant.notaryPublic], ["Número de notario", tenant.notaryNumber], ["Acta constitutiva", tenant.constitutiveAct], ["Volumen", tenant.constitutiveVolume], ["Libro", tenant.constitutiveBook], ["Fecha del acta", tenant.constitutiveDate]];
+                const latestRequest = request || state.requests.find((item) => item.tenantId === tenant.id);
+                if (latestRequest) fields.push(["Solicitud", latestRequest.folio], ["Estado de solicitud", latestRequest.status], ["Servicios solicitados", Object.entries(latestRequest.services || {}).map(([size, count]) => `${count} × ${size}`).join(", ")]);
+                byId("contractProfile").innerHTML = fields.filter(([, value]) => value).map(([label, value]) => `<div><span>${esc(label)}</span><b>${esc(value)}</b></div>`).join("") || '<p class="muted">Sin datos adicionales.</p>';
+                const people = state.authorizations.filter((item) => item.tenantId === tenant.id);
+                const personRows = (items) => items.map((person) => `<div class="activity"><span><b>${esc(person.name)}</b><br><small class="muted">${esc(person.phone || "Sin teléfono")}</small></span><span class="tag green">Autorizado</span></div>`).join("") || '<p class="muted">No hay personas registradas.</p>';
+                byId("contractAuthorizations").innerHTML = personRows(people.filter((person) => person.type !== "Personal de apoyo"));
+                byId("contractSupport").innerHTML = personRows(people.filter((person) => person.type === "Personal de apoyo"));
+                byId("supportName").value = ""; byId("supportPhone").value = "";
+                const docs = latestRequest?.documents || {};
+                byId("contractDocuments").innerHTML = [["Identificación", docs.identification], ["Acta constitutiva", docs.constitutive], ["Constancia fiscal", docs.fiscal]].map(([label, received]) => `<div class="summary-row"><span>${label}</span><b>${received ? "Registrado en demo" : "No registrado"}</b></div>`).join("");
+                const contracts = contractsForTenant(tenant.id);
+                const entries = contracts.flatMap((contract) => [{ date: contract.createdAt || contract.startDate, title: contract.folio, detail: `${boxById(contract.boxId)?.code || "Sin caja"} · ${contract.status} · ${dateLabel(contract.startDate)} a ${dateLabel(contract.endDate)}` }, ...state.operations.filter((operation) => operation.contractId === contract.id).map((operation) => ({ date: operation.occurredAt, title: operation.type, detail: operation.detail || contract.folio }))]);
+                const requests = state.requests.filter((item) => item.tenantId === tenant.id);
+                requests.forEach((item) => entries.push({ date: item.createdAt, title: item.folio, detail: `Solicitud · ${item.status}` }));
+                const relatedFolios = [...requests.map((item) => item.folio), ...contracts.map((item) => item.folio)];
+                state.auditLog.filter((item) => item.entity && (item.entity.includes(tenant.name) || relatedFolios.some((folio) => item.entity.includes(folio)))).forEach((item) => entries.push({ date: item.occurredAt, title: item.action, detail: `${item.entity} · ${item.user}` }));
+                entries.sort((a, b) => String(b.date).localeCompare(String(a.date)));
+                byId("contractHistory").innerHTML = entries.map((entry) => `<div class="activity"><span><b>${esc(entry.title)}</b><br><small class="muted">${esc(entry.detail)}</small></span><small class="muted">${esc(dateLabel(String(entry.date).slice(0, 10)))}</small></div>`).join("") || '<p class="muted">Este arrendatario aún no tiene contratos registrados.</p>';
+            }
+            function addContractSupport() {
+                const tenant = tenantById(byId("cTenant").value);
+                const name = byId("supportName").value.trim().slice(0, 90);
+                const phone = byId("supportPhone").value.trim().slice(0, 30);
+                if (!tenant || !name) return flash("Indica el nombre de la persona de apoyo.");
+                if (state.authorizations.some((person) => person.tenantId === tenant.id && person.name.toLocaleLowerCase() === name.toLocaleLowerCase())) return flash("Esta persona ya está registrada para el arrendatario.");
+                const previousState = clone(state);
+                state.authorizations.push({ id: createDemoId("auth"), tenantId: tenant.id, name, phone, type: "Personal de apoyo" });
+                logAudit("Autorizó personal de apoyo", `${tenant.name} · ${name}`, "Correcto", false);
+                if (!persistState()) { state = previousState; return; }
+                renderContractTenantDetails(tenant, requestById(state.ui.selectedRequestId));
+                flash("Personal de apoyo autorizado en la demo.");
             }
             function updateContractDates() {
                 const duration = Number(byId("cDuration").value.split(" ")[0]) || 12;
@@ -4501,44 +4685,112 @@
                 byId("sumIva").textContent = fmtCents(taxCents);
                 byId("sumTotal").textContent = fmtCents(rentCents + depositCents + taxCents);
             }
+            function contractInputError() {
+                const tenant = tenantById(byId("cTenant").value);
+                const box = boxById(byId("cBox").value);
+                if (!tenant?.catalogNumber) return "Selecciona un arrendatario del catálogo.";
+                if (!box || box.status !== "Disponible") return "Selecciona una caja disponible.";
+                if (!["cStart", "cEnd", "cPaymentDate", "cPrintDate"].every((id) => byId(id).value)) return "Completa las fechas del contrato.";
+                if (byId("cEnd").value < byId("cStart").value) return "El vencimiento no puede ser anterior al inicio.";
+                if (!byId("rent").value || Number(byId("rent").value) <= 0 || byId("deposit").value === "" || Number(byId("deposit").value) < 0) return "Indica una renta mayor a cero y una garantía válida.";
+                if (!byId("cKeysConfirmed").checked || !byId("cReviewConfirmed").checked) return "Confirma la revisión del contrato y la entrega simulada de llaves.";
+                return "";
+            }
+            let contractInvoices = [];
+            function contractInvoiceTotals() {
+                const rent = Math.round((Number(byId("rent").value) || 0) * 100);
+                const guarantee = Math.round((Number(byId("deposit").value) || 0) * 100);
+                const tax = Math.round(rent * 0.16);
+                return { tax, total: rent + guarantee + tax };
+            }
+            function contractInvoiceAllocations() {
+                const { total, tax } = contractInvoiceTotals();
+                let cumulative = 0;
+                let previousTax = 0;
+                return contractInvoices.map((invoice) => {
+                    cumulative += invoice.amountCents;
+                    const cumulativeTax = total ? Math.round(tax * cumulative / total) : 0;
+                    const taxCents = cumulativeTax - previousTax;
+                    previousTax = cumulativeTax;
+                    return { ...invoice, taxCents, subtotalCents: invoice.amountCents - taxCents };
+                });
+            }
+            function renderContractInvoices() {
+                const { total } = contractInvoiceTotals();
+                const allocated = contractInvoices.reduce((sum, invoice) => sum + invoice.amountCents, 0);
+                byId("contractInvoiceRows").innerHTML = contractInvoiceAllocations().map((invoice, index) => `<tr><td>${invoice.profile === "tenant" ? "Arrendatario" : "Público general"}</td><td>${esc(invoice.method)}</td><td>${fmtCents(invoice.subtotalCents)}</td><td>${fmtCents(invoice.taxCents)}</td><td><b>${fmtCents(invoice.amountCents)}</b></td><td><button class="btn outline" type="button" onclick="removeContractInvoice(${index})" aria-label="Quitar factura ${index + 1}">Quitar</button></td></tr>`).join("") || '<tr><td colspan="6" class="muted">Agrega al menos una factura.</td></tr>';
+                byId("contractInvoiceAllocated").textContent = fmtCents(allocated);
+                byId("contractInvoiceRemaining").textContent = fmtCents(total - allocated);
+                byId("contractInvoiceAmount").value = ((total - allocated) / 100).toFixed(2);
+            }
+            function contractInvoiceError(message = "") {
+                const target = byId("contractInvoiceError");
+                target.hidden = !message;
+                target.textContent = message;
+            }
+            function addContractInvoice() {
+                const tenant = tenantById(byId("cTenant").value);
+                const profile = byId("contractInvoiceProfile").value;
+                const amountCents = Math.round(Number(byId("contractInvoiceAmount").value) * 100);
+                const remaining = contractInvoiceTotals().total - contractInvoices.reduce((sum, invoice) => sum + invoice.amountCents, 0);
+                if (profile === "tenant" && (!tenant?.rfc || !tenant.taxRegime || !tenant.billingEmail)) return contractInvoiceError("El perfil del arrendatario requiere RFC, régimen fiscal y correo de facturación. Puedes usar Público general.");
+                if (!Number.isSafeInteger(amountCents) || amountCents <= 0) return contractInvoiceError("Indica un importe mayor a cero.");
+                if (amountCents > remaining) return contractInvoiceError("El importe supera el saldo pendiente por facturar.");
+                contractInvoices.push({ profile, method: byId("contractInvoiceMethod").value, amountCents });
+                contractInvoiceError();
+                renderContractInvoices();
+            }
+            function removeContractInvoice(index) {
+                contractInvoices.splice(index, 1);
+                contractInvoiceError();
+                renderContractInvoices();
+            }
             function requestContractConfirmation() {
-                const request = requestById(state.ui.selectedRequestId);
-                const box = request && boxById(request.boxId);
-                if (!request || !box) return flash("Regresa a la solicitud y selecciona una caja.");
-                if (request.status !== "Aprobada") return flash("Solo una solicitud aprobada puede continuar a contrato.");
-                if (request.contractId) return flash("Esta solicitud ya tiene un contrato asociado.");
-                if (box.status !== "Disponible") return flash("La caja dejó de estar disponible. Selecciona otra para continuar.");
-                if (!byId("cKeysConfirmed").checked || !byId("cReviewConfirmed").checked) return flash("Confirma la revisión de datos y la entrega de dos llaves para continuar.");
-                const tenant = tenantById(request.tenantId);
-                byId("contractConfirmSummary").innerHTML = `<b>${esc(tenant.name)}</b><br><span class="muted">Caja ${esc(box.code)} · ${esc(byId("cDuration").value)} · ${esc(byId("cStart").value)} a ${esc(byId("cEnd").value)}</span><p style="margin:10px 0 0"><b>Total inicial: ${esc(byId("sumTotal").textContent)}</b></p>`;
+                const error = contractInputError();
+                if (error) return flash(error);
+                const tenant = tenantById(byId("cTenant").value);
+                const box = boxById(byId("cBox").value);
+                const { total } = contractInvoiceTotals();
+                contractInvoices = [];
+                byId("contractInvoiceProfile").value = "general";
+                byId("contractInvoiceMethod").value = byId("cPaymentMethod").value;
+                byId("contractConfirmSummary").innerHTML = `<span><b>${esc(tenant.name)}</b><br><small>Caja ${esc(box.code)} · ${esc(byId("cStart").value)} a ${esc(byId("cEnd").value)}</small></span><span>Total por facturar<br><strong>${fmtCents(total)}</strong></span>`;
+                contractInvoiceError();
+                renderContractInvoices();
                 byId("contractConfirm").classList.add("on");
             }
             let isSavingContract = false;
             function saveContract() {
                 if (isSavingContract) return;
+                const error = contractInputError();
+                if (error) { closeContractConfirmation(); return flash(error); }
+                const tenant = tenantById(byId("cTenant").value);
+                const box = boxById(byId("cBox").value);
+                const allocations = contractInvoiceAllocations();
+                if (!allocations.length || allocations.reduce((sum, invoice) => sum + invoice.amountCents, 0) !== contractInvoiceTotals().total) return contractInvoiceError("Agrega facturas hasta cubrir exactamente el total por facturar.");
+                if (allocations.some((invoice) => invoice.profile === "tenant") && (!tenant.rfc || !tenant.taxRegime || !tenant.billingEmail)) return contractInvoiceError("El perfil del arrendatario requiere RFC, régimen fiscal y correo de facturación.");
                 const request = requestById(state.ui.selectedRequestId);
-                const box = request && boxById(request.boxId);
-                if (!request || !box || request.contractId || box.status !== "Disponible" || request.status !== "Aprobada") return flash("No se puede generar el contrato: la solicitud debe estar aprobada y la caja disponible.");
+                if (request && (request.tenantId !== tenant.id || request.status !== "Aprobada" || request.contractId)) return flash("La solicitud ya no está disponible para este contrato.");
                 isSavingContract = true;
+                const previousState = clone(state);
                 const number = nextSequence(state.contracts, "folio", 149);
-                const contract = { id: createDemoId("contract"), folio: `CT-2026-${String(number).padStart(4, "0")}`, tenantId: request.tenantId, boxId: box.id, startDate: byId("cStart").value, endDate: byId("cEnd").value, durationMonths: Number(byId("cDuration").value.split(" ")[0]) || 12, rentCents: Math.round((Number(byId("rent").value) || 0) * 100), depositCents: Math.round((Number(byId("deposit").value) || 0) * 100), paymentDay: Number(byId("cPaymentDay").value.replace(/\D/g, "")) || 1, paymentMethod: byId("cPaymentMethod").value, status: "Activo", createdAt: new Date().toISOString() };
+                const paymentDate = byId("cPaymentDate").value;
+                const contract = { id: createDemoId("contract"), folio: `CT-${new Date().getFullYear()}-${String(number).padStart(4, "0")}`, tenantId: tenant.id, boxId: box.id, startDate: byId("cStart").value, endDate: byId("cEnd").value, paymentDate, printDate: byId("cPrintDate").value, durationMonths: Number(byId("cDuration").value.split(" ")[0]) || 12, rentCents: Math.round(Number(byId("rent").value) * 100), depositCents: Math.round(Number(byId("deposit").value) * 100), paymentDay: Number(paymentDate.slice(-2)), paymentMethod: new Set(allocations.map((invoice) => invoice.method)).size === 1 ? allocations[0].method : "Varias", status: "Activo", createdAt: new Date().toISOString() };
                 state.contracts.push(contract);
-                request.contractId = contract.id;
-                request.status = "Contratada";
+                if (request) { request.contractId = contract.id; request.boxId = box.id; request.status = "Contratada"; }
                 box.status = "Ocupada";
-                const taxCents = Math.round(contract.rentCents * 0.16);
-                state.movements.unshift({ id: createDemoId("movement"), folio: `F-2026-${String(nextSequence(state.movements, "folio", 1637)).padStart(4, "0")}`, tenantId: contract.tenantId, contractId: contract.id, concept: "Renta, IVA estimado y garantía", method: contract.paymentMethod, amountCents: contract.rentCents + taxCents + contract.depositCents, type: "Factura", status: "Simulada", occurredAt: contract.startDate });
-                ["Contrato de arrendamiento", "Constancia de entrega de llaves", "Recibo de depósito en garantía"].forEach((type, index) => state.documents.push({ id: createDemoId("document"), contractId: contract.id, type, folio: `DOC-${contract.folio.slice(-4)}-${index + 1}`, createdAt: contract.startDate }));
+                allocations.forEach((invoice) => {
+                    const folio = `F-${new Date().getFullYear()}-${String(nextSequence(state.movements, "folio", 1637)).padStart(4, "0")}`;
+                    state.movements.unshift({ id: createDemoId("movement"), folio, tenantId: contract.tenantId, contractId: contract.id, concept: "Renta, IVA estimado y garantía", method: invoice.method, profile: invoice.profile, subtotalCents: invoice.subtotalCents, taxCents: invoice.taxCents, amountCents: invoice.amountCents, type: "Factura", status: "Simulada", occurredAt: contract.paymentDate });
+                });
+                ["Contrato de arrendamiento", "Constancia de entrega de llaves", "Recibo de depósito en garantía"].forEach((type, index) => state.documents.push({ id: createDemoId("document"), contractId: contract.id, type, folio: `DOC-${contract.folio.slice(-4)}-${index + 1}`, createdAt: contract.printDate }));
                 state.operations.unshift({ id: createDemoId("operation"), contractId: contract.id, type: "Contrato generado", occurredAt: new Date().toISOString(), detail: `Caja ${box.code}` });
-                state.ui.selectedContractId = contract.id;
-                state.ui.selectedTenantId = contract.tenantId;
-                state.ui.draft = null;
-                closeContractConfirmation();
+                state.ui.selectedContractId = contract.id; state.ui.selectedTenantId = contract.tenantId; state.ui.draft = null;
                 logAudit("Generó contrato", contract.folio, "Correcto", false);
-                persistState();
-                isSavingContract = false;
-                flash(`Contrato ${contract.folio} guardado; caja ${box.code} ocupada y timbrado simulado registrado.`);
+                if (!persistState()) { state = previousState; isSavingContract = false; closeContractConfirmation(); return; }
+                closeContractConfirmation(); isSavingContract = false;
                 showView("tenant");
+                flash(`Contrato ${contract.folio} guardado con ${allocations.length} factura${allocations.length === 1 ? "" : "s"} simulada${allocations.length === 1 ? "" : "s"}.`);
             }
             function openTenant(tenantId, tab = "Resumen") {
                 const tenant = tenantById(tenantId);
@@ -4602,7 +4854,7 @@
                 const field = (label, value) => `<div class="field"><label>${esc(label)}</label><input value="${esc(value || "Sin registro")}" readonly /></div>`;
                 const table = (headers, rows) => `<div class="table-wrap wide"><table><thead><tr>${headers.map((header) => `<th>${esc(header)}</th>`).join("")}</tr></thead><tbody>${rows.length ? rows.map((row) => `<tr>${row.map((cell) => `<td>${cell}</td>`).join("")}</tr>`).join("") : `<tr><td colspan="${headers.length}" class="muted">Sin registros relacionados.</td></tr>`}</tbody></table></div>`;
                 const authorizations = state.authorizations.filter((item) => item.tenantId === tenant.id);
-                const invoices = state.movements.filter((item) => item.tenantId === tenant.id);
+                const invoices = state.movements.filter((item) => item.tenantId === tenant.id && item.type === "Factura");
                 const documents = state.documents.filter((item) => contracts.some((contractItem) => contractItem.id === item.contractId));
                 const events = state.accessEvents.filter((item) => item.tenantId === tenant.id);
                 const content = {
@@ -4613,7 +4865,7 @@
                     Autorizados: table(["Persona", "Teléfono", "Tipo"], authorizations.map((item) => [esc(item.name), esc(item.phone), badge(item.type)])),
                     Cajas: table(["Caja", "Tamaño", "Estado", "Contrato"], contracts.map((item) => { const assignedBox = boxById(item.boxId); return [esc(assignedBox?.code), esc(assignedBox?.size), badge(assignedBox?.status || "Sin caja"), esc(item.folio)]; })),
                     Contratos: table(["Folio", "Vigencia", "Renta", "Estado"], contracts.map((item) => [esc(item.folio), esc(`${dateLabel(item.startDate)} a ${dateLabel(item.endDate)}`), esc(fmtCents(item.rentCents)), badge(item.status)])),
-                    Facturas: table(["Folio", "Concepto", "Importe", "Estado"], invoices.map((item) => [esc(item.folio), esc(item.concept), esc(fmtCents(item.amountCents)), badge(item.status)])),
+                    Facturas: table(["Folio", "Contrato", "Perfil", "Pago", "Subtotal", "IVA", "Total", "Estado"], invoices.map((item) => [esc(item.folio), esc(contractById(item.contractId)?.folio || "—"), esc(item.profile === "tenant" ? "Arrendatario" : item.profile === "general" ? "Público general" : "No especificado"), esc(item.method), item.subtotalCents == null ? "—" : esc(fmtCents(item.subtotalCents)), item.taxCents == null ? "—" : esc(fmtCents(item.taxCents)), esc(fmtCents(item.amountCents)), badge(item.status)])),
                     Documentos: table(["Folio", "Documento", "Fecha", ""], documents.map((item) => [esc(item.folio), esc(item.type), esc(dateLabel(item.createdAt)), `<button class="btn outline" onclick="state.ui.selectedContractId='${item.contractId}';previewDocument('${esc(item.type)}')">Vista previa</button>`])),
                     Accesos: table(["Fecha", "Movimiento", "Resultado", "Motivo"], events.map((item) => [esc(dateLabel(item.occurredAt.slice(0, 10))), esc(item.direction), badge(item.status), esc(item.reason || "—")])),
                 };
@@ -5002,55 +5254,204 @@
                 if (byId("printDocumentButton")?.disabled) return flash("Selecciona un documento antes de imprimir.");
                 window.print();
             }
-            function reportData() {
-                const type = byId("reportType").value;
-                const from = byId("reportFrom").value || "0000-01-01";
-                const to = byId("reportTo").value || "9999-12-31";
+            const reportInitialTenantId = @json(request('tenant'));
+            const reportInitialContractId = @json(request('contract'));
+            let reportContextInitialised = false;
+
+            function reportDateValue(date) {
+                const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+                return localDate.toISOString().slice(0, 10);
+            }
+            function refreshReportContracts() {
+                const tenantSelect = byId("reportTenant");
+                const contractSelect = byId("reportContract");
+                if (!tenantSelect || !contractSelect) return;
+                const previousContractId = contractSelect.value;
+                const contracts = state.contracts.filter((contract) => !tenantSelect.value || contract.tenantId === tenantSelect.value);
+                contractSelect.innerHTML = `<option value="">Todos los contratos</option>${contracts.map((contract) => {
+                    const tenant = tenantById(contract.tenantId);
+                    const box = boxById(contract.boxId);
+                    return `<option value="${esc(contract.id)}">${esc(`${contract.folio} · ${tenant?.name || "Sin titular"} · ${box?.code || "Sin caja"}`)}</option>`;
+                }).join("")}`;
+                const initialContractId = reportContextInitialised ? previousContractId : reportInitialContractId;
+                if (contracts.some((contract) => contract.id === initialContractId)) contractSelect.value = initialContractId;
+            }
+            function initialiseReportContext() {
+                if (reportContextInitialised) return;
+                const tenantSelect = byId("reportTenant");
+                if (!tenantSelect) return;
+                const initialContract = contractById(reportInitialContractId);
+                const initialTenantId = tenantById(reportInitialTenantId)
+                    ? reportInitialTenantId
+                    : initialContract?.tenantId || "";
+                tenantSelect.innerHTML = `<option value="">Toda la operación</option>${state.tenants.map((tenant) => `<option value="${esc(tenant.id)}">${esc(tenant.name)}</option>`).join("")}`;
+                tenantSelect.value = initialTenantId;
+                refreshReportContracts();
+                reportContextInitialised = true;
+            }
+            function syncReportContextFromContract() {
+                const contract = contractById(byId("reportContract")?.value);
+                if (contract && byId("reportTenant")) {
+                    byId("reportTenant").value = contract.tenantId;
+                    refreshReportContracts();
+                    byId("reportContract").value = contract.id;
+                }
+            }
+            function clearReportContext() {
+                initialiseReportContext();
+                byId("reportTenant").value = "";
+                refreshReportContracts();
+                renderReport();
+            }
+            function setReportPreset(preset) {
+                const today = new Date();
+                let from = new Date(today);
+                if (preset === "month") from.setDate(1);
+                if (preset === "30days") from.setDate(today.getDate() - 29);
+                if (preset === "year") from = new Date(today.getFullYear(), 0, 1);
+                byId("reportFrom").value = reportDateValue(from);
+                byId("reportTo").value = reportDateValue(today);
+                renderReport();
+            }
+            function selectReportShortcut(type) {
+                const reportSelect = byId("reportType");
+                if (!reportSelect || !reportSelect.querySelector(`option[value="${type}"]`)) return;
+                reportSelect.value = type;
+                renderReport();
+                byId("reportFilter")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                reportSelect.focus({ preventScroll: true });
+                flash(`Simulación de ${reportSelect.options[reportSelect.selectedIndex].text} lista. Ajusta los filtros y descarga el CSV cuando quieras.`);
+            }
+            function reportFilters() {
+                initialiseReportContext();
+                const from = byId("reportFrom")?.value || "0000-01-01";
+                const to = byId("reportTo")?.value || "9999-12-31";
+                const tenantId = byId("reportTenant")?.value || "";
+                const contractId = byId("reportContract")?.value || "";
                 const between = (value) => value && value.slice(0, 10) >= from && value.slice(0, 10) <= to;
-                if (type === "availability") return { title: "Vista previa: disponibilidad de cajas", headers: ["Estado", "Cantidad"], rows: ["Disponible", "Ocupada", "Reservada", "Mantenimiento"].map((status) => [status, state.boxes.filter((box) => box.status === status).length]) };
-                if (type === "access") return { title: "Vista previa: accesos a bóveda", headers: ["Fecha", "Nombre", "Tipo", "Caja", "Hora entrada", "Imagen", "Hora salida", "Firma"], rows: state.accessEvents.filter((event) => event.direction === "Entrada" && between(event.occurredAt)).map((entry) => { const contract = contractById(entry.contractId); const authorization = entry.authorizationId && state.authorizations.find((item) => item.id === entry.authorizationId); const exit = state.accessEvents.find((event) => event.direction === "Salida" && event.entryId === entry.id); return [dateLabel(entry.occurredAt.slice(0, 10)), authorization?.name || tenantById(entry.tenantId)?.name || "Sin persona", authorization ? "Autorizado" : "Titular", boxById(contract?.boxId)?.code || "Sin caja", new Date(entry.occurredAt).toLocaleTimeString("es-MX", { hour: "2-digit", minute: "2-digit" }), entry.image || "Referencia simulada", exit ? new Date(exit.occurredAt).toLocaleTimeString("es-MX", { hour: "2-digit", minute: "2-digit" }) : "Pendiente", exit?.signature || "Pendiente"]; }) };
-                if (type === "finance") return { title: "Vista previa: ingresos y garantías", headers: ["Fecha", "Folio", "Concepto", "Importe", "Estado"], rows: state.movements.filter((movement) => between(movement.occurredAt)).map((movement) => [dateLabel(movement.occurredAt), movement.folio, movement.concept, fmtCents(movement.amountCents), movement.status]) };
-                if (type === "new-contracts") return { title: "Vista previa: contratos nuevos", headers: ["Fecha", "Cliente", "Caja", "Medida", "Renta", "Garantía", "Estatus"], rows: state.contracts.filter((contract) => between(contract.createdAt || contract.startDate)).map((contract) => { const box = boxById(contract.boxId); return [dateLabel((contract.createdAt || contract.startDate).slice(0, 10)), tenantById(contract.tenantId)?.name || "Sin cliente", box?.code || "Sin caja", box?.size || "—", fmtCents(contract.rentCents), fmtCents(contract.depositCents), contract.status]; }) };
+                const matches = (item) => (!tenantId || item.tenantId === tenantId) && (!contractId || item.contractId === contractId);
+                return { from, to, tenantId, contractId, between, matches };
+            }
+            function reportContextLabel(filters = reportFilters()) {
+                const contract = contractById(filters.contractId);
+                if (contract) return `${contract.folio} · ${tenantById(contract.tenantId)?.name || "Sin titular"}`;
+                const tenant = tenantById(filters.tenantId);
+                return tenant ? tenant.name : "Toda la operación";
+            }
+            function reportData(filters = reportFilters()) {
+                const type = byId("reportType").value;
+                const scopedRequests = state.requests.filter((request) => filters.between(request.createdAt) && filters.matches(request));
+                const scopedContracts = state.contracts.filter((contract) => filters.matches(contract));
+                const scopedMovements = state.movements.filter((movement) => filters.between(movement.occurredAt) && filters.matches(movement));
+                const scopedEntries = state.accessEvents.filter((event) => event.direction === "Entrada" && filters.between(event.occurredAt) && filters.matches(event));
+                if (type === "availability") return { title: "Vista previa: disponibilidad de cajas", headers: ["Estado", "Cantidad", "Participación"], rows: ["Disponible", "Ocupada", "Reservada", "Mantenimiento"].map((status) => { const quantity = state.boxes.filter((box) => box.status === status).length; return [status, quantity, `${Math.round((quantity / Math.max(state.boxes.length, 1)) * 100)}%`]; }) };
+                if (type === "access") return { title: "Vista previa: bitácora de accesos", headers: ["Fecha", "Nombre", "Tipo", "Caja", "Hora entrada", "Referencia", "Hora salida", "Firma"], rows: scopedEntries.map((entry) => { const contract = contractById(entry.contractId); const authorization = entry.authorizationId && state.authorizations.find((item) => item.id === entry.authorizationId); const exit = state.accessEvents.find((event) => event.direction === "Salida" && event.entryId === entry.id); return [dateLabel(entry.occurredAt.slice(0, 10)), authorization?.name || tenantById(entry.tenantId)?.name || "Sin persona", authorization ? "Autorizado" : "Titular", boxById(contract?.boxId)?.code || "Sin caja", new Date(entry.occurredAt).toLocaleTimeString("es-MX", { hour: "2-digit", minute: "2-digit" }), entry.image || "Referencia simulada", exit ? new Date(exit.occurredAt).toLocaleTimeString("es-MX", { hour: "2-digit", minute: "2-digit" }) : "Pendiente", exit?.signature || "Pendiente"]; }) };
+                if (type === "finance") return { title: "Vista previa: ingresos y garantías", headers: ["Fecha", "Folio", "Concepto", "Importe", "Estado"], rows: scopedMovements.map((movement) => [dateLabel(movement.occurredAt), movement.folio, movement.concept, fmtCents(movement.amountCents), movement.status]) };
+                if (type === "new-contracts") return { title: "Vista previa: contratos nuevos", headers: ["Fecha", "Cliente", "Caja", "Medida", "Renta", "Garantía", "Estatus"], rows: scopedContracts.filter((contract) => filters.between(contract.createdAt || contract.startDate)).map((contract) => { const box = boxById(contract.boxId); return [dateLabel((contract.createdAt || contract.startDate).slice(0, 10)), tenantById(contract.tenantId)?.name || "Sin cliente", box?.code || "Sin caja", box?.size || "—", fmtCents(contract.rentCents), fmtCents(contract.depositCents), contract.status]; }) };
                 if (type === "annual") {
                     const years = [2024, 2025, 2026];
-                    const totals = (year, label) => state.operations.filter((operation) => operation.type === label && operation.occurredAt.startsWith(String(year))).length;
-                    return { title: "Vista previa: resumen anual de operaciones", headers: ["Año", "Nuevos", "Renovaciones", "Cambios", "Cancelaciones"], rows: years.map((year) => [year, state.contracts.filter((contract) => (contract.createdAt || "").startsWith(String(year))).length, totals(year, "Renovación") + totals(year, "Renovación con cambio de caja") + totals(year, "Renovación con cambio de medida"), totals(year, "Cambio de ubicación") + totals(year, "Cambio de medida"), totals(year, "Cancelación")]) };
+                    const totals = (year, label) => state.operations.filter((operation) => filters.matches(operation) && operation.type === label && operation.occurredAt.startsWith(String(year))).length;
+                    return { title: "Vista previa: resumen anual de operaciones", headers: ["Año", "Nuevos", "Renovaciones", "Cambios", "Cancelaciones"], rows: years.map((year) => [year, scopedContracts.filter((contract) => (contract.createdAt || "").startsWith(String(year))).length, totals(year, "Renovación") + totals(year, "Renovación con cambio de caja") + totals(year, "Renovación con cambio de medida"), totals(year, "Cambio de ubicación") + totals(year, "Cambio de medida"), totals(year, "Cancelación")]) };
                 }
-                return { title: "Vista previa: reporte general para consejo", headers: ["Indicador", "Resultado"], rows: [["Solicitudes recibidas", state.requests.filter((request) => between(request.createdAt)).length], ["Cajas ocupadas", state.boxes.filter((box) => box.status === "Ocupada").length], ["Contratos activos", activeContracts().length], ["Ingresos registrados", fmtCents(state.movements.filter((movement) => between(movement.occurredAt)).reduce((total, movement) => total + movement.amountCents, 0))]] };
+                const openEntries = scopedEntries.filter((entry) => !state.accessEvents.some((event) => event.direction === "Salida" && event.entryId === entry.id));
+                return { title: "Vista previa: resumen ejecutivo", headers: ["Indicador", "Resultado"], rows: [["Solicitudes recibidas", scopedRequests.length], ["Solicitudes pendientes", scopedRequests.filter((request) => !["Aprobada", "Rechazada"].includes(request.status)).length], ["Contratos abiertos", scopedContracts.filter(isOpenContract).length], ["Renta mensual contratada", fmtCents(scopedContracts.filter(isOpenContract).reduce((total, contract) => total + contract.rentCents, 0))], ["Entradas sin salida registrada", openEntries.length], ["Ingresos registrados", fmtCents(scopedMovements.reduce((total, movement) => total + movement.amountCents, 0))]] };
             }
             function renderReport() {
-                const report = reportData();
-                const from = byId("reportFrom").value || "Inicio";
-                const to = byId("reportTo").value || "Hoy";
-                const periodMovements = state.movements.filter((movement) => movement.occurredAt >= from && movement.occurredAt <= to);
-                const income = periodMovements.reduce((total, movement) => total + Math.max(0, movement.amountCents), 0);
+                const filters = reportFilters();
+                const report = reportData(filters);
+                const scopedRequests = state.requests.filter((request) => filters.between(request.createdAt) && filters.matches(request));
+                const scopedMovements = state.movements.filter((movement) => filters.between(movement.occurredAt) && filters.matches(movement));
+                const scopedContracts = state.contracts.filter((contract) => filters.matches(contract));
+                const scopedEntries = state.accessEvents.filter((event) => event.direction === "Entrada" && filters.between(event.occurredAt) && filters.matches(event));
+                const openEntries = scopedEntries.filter((entry) => !state.accessEvents.some((event) => event.direction === "Salida" && event.entryId === entry.id));
+                const income = scopedMovements.reduce((total, movement) => total + Math.max(0, movement.amountCents), 0);
                 const occupied = state.boxes.filter((box) => box.status === "Ocupada").length;
                 const available = state.boxes.filter((box) => box.status === "Disponible").length;
+                const totalBoxes = Math.max(state.boxes.length, 1);
+                const occupancy = Math.round((occupied / totalBoxes) * 100);
+                const pendingRequests = scopedRequests.filter((request) => !["Aprobada", "Rechazada"].includes(request.status));
+                const cutoff = new Date(`${filters.to}T12:00:00`);
+                const renewalDeadline = new Date(cutoff);
+                renewalDeadline.setDate(renewalDeadline.getDate() + 30);
+                const renewalsDue = scopedContracts.filter((contract) => isOpenContract(contract) && contract.endDate >= filters.to && contract.endDate <= reportDateValue(renewalDeadline));
+                const pendingAccesses = state.accessQueue.filter((access) => filters.matches(access) && ["Pendiente", "Requiere revisión"].includes(access.status));
+                const context = reportContextLabel(filters);
+                const setReportText = (id, value) => { if (byId(id)) byId(id).textContent = value; };
+
+                setReportText("reportIncome", fmtCents(income));
+                setReportText("reportIncomeDetail", `${scopedMovements.length} movimiento${scopedMovements.length === 1 ? "" : "s"} en el corte`);
+                setReportText("reportIncomeTrend", `Renta mensual contratada: ${fmtCents(scopedContracts.filter(isOpenContract).reduce((total, contract) => total + contract.rentCents, 0))}`);
+                setReportText("reportOccupied", `${occupancy}%`);
+                setReportText("reportOccupiedDetail", `${occupied} ocupada${occupied === 1 ? "" : "s"} de ${state.boxes.length} cajas`);
+                setReportText("reportOccupiedTrend", `${available} disponible${available === 1 ? "" : "s"} · ${fmtCents(state.boxes.filter((box) => box.status === "Disponible").reduce((total, box) => total + box.rentCents, 0))}/mes potencial`);
+                setReportText("reportRequests", scopedRequests.length);
+                setReportText("reportRequestsDetail", `${pendingRequests.length} pendiente${pendingRequests.length === 1 ? "" : "s"} por resolver`);
+                setReportText("reportRequestsTrend", `${scopedRequests.filter((request) => request.status === "Aprobada").length} aprobada${scopedRequests.filter((request) => request.status === "Aprobada").length === 1 ? "" : "s"} en el corte`);
+                setReportText("reportOpenVisits", openEntries.length);
+                setReportText("reportOpenVisitsDetail", openEntries.length ? "Entrada(s) sin salida registrada" : "Todas las entradas tienen salida registrada");
+                setReportText("reportOpenVisitsTrend", openEntries.length ? "Requiere seguimiento de bóveda" : "Bitácora completa en el corte");
+                setReportText("reportContextLabel", context);
+                setReportText("reportPreviewContext", `${context} · ${dateLabel(filters.from)} — ${dateLabel(filters.to)}`);
+                setReportText("reportDecisionDescription", `Corte del ${dateLabel(filters.from)} al ${dateLabel(filters.to)} · ${context}. Prioriza primero las excepciones de seguridad y continuidad contractual.`);
+
                 byId("reportPreviewTitle").textContent = report.title;
-                byId("reportPreviewHead").innerHTML = `<tr>${report.headers.map((header) => `<th>${esc(header)}</th>`).join("")}</tr>`;
-                byId("reportPreviewRows").innerHTML = report.rows.map((row) => `<tr>${row.map((cell) => `<td>${esc(cell)}</td>`).join("")}</tr>`).join("") || `<tr><td colspan="${report.headers.length}" class="muted">No hay resultados para el periodo.</td></tr>`;
-                if (byId("reportOccupied")) byId("reportOccupied").textContent = state.boxes.filter((box) => box.status === "Ocupada").length;
-                if (byId("reportRequests")) byId("reportRequests").textContent = state.requests.length;
-                if (byId("reportIncome")) byId("reportIncome").textContent = fmtCents(income);
-                if (byId("reportContracts")) byId("reportContracts").textContent = activeContracts().length;
-                if (byId("reportHighlights")) byId("reportHighlights").innerHTML = `<div class="notice"><b>${occupied}</b><br /><small>Cajas ocupadas</small></div><div class="notice"><b>${available}</b><br /><small>Cajas disponibles</small></div><div class="notice"><b>${state.requests.filter((request) => request.status === "Aprobada").length}</b><br /><small>Solicitudes aprobadas</small></div><div class="notice"><b>${periodMovements.length}</b><br /><small>Movimientos en el periodo</small></div>`;
-                if (byId("reportVisual")) {
-                    const total = Math.max(state.boxes.length, 1);
-                    const occupiedPercent = Math.round((occupied / total) * 100);
-                    const availablePercent = Math.round((available / total) * 100);
-                    byId("reportVisual").innerHTML = `<b>Lectura rápida · ${esc(dateLabel(from))} a ${esc(dateLabel(to))}</b><div class="summary-row"><span>Ocupación</span><b>${occupiedPercent}%</b></div><div class="bar"><i style="width:${occupiedPercent}%"></i></div><div class="summary-row" style="margin-top:12px"><span>Disponibilidad</span><b>${availablePercent}%</b></div><div class="bar"><i style="width:${availablePercent}%;background:var(--blue)"></i></div>`;
-                }
+                byId("reportPreviewHead").innerHTML = `<tr class="sheet-letters"><th></th>${report.headers.map((_, index) => `<th>${String.fromCharCode(65 + index)}</th>`).join("")}</tr><tr><th>1</th>${report.headers.map ( (header) => `<th>${esc(header)}</th>`).join("")}</tr>`;
+                byId("reportPreviewRows").innerHTML = report.rows.map((row, index) => `<tr><th scope="row">${index + 2}</th>${row.map((cell) => `<td>${esc(cell)}</td>`).join("")}</tr>`).join("") || `<tr><th>2</th><td colspan="${report.headers.length}" class="muted">No hay resultados para los filtros seleccionados.</td></tr>`;
+                byId("reportRowCount").textContent = `${report.rows.length} registro${report.rows.length === 1 ? "" : "s"}`;
+
+                const alerts = [];
+                if (openEntries.length) alerts.push({ tone: "danger", icon: "!", title: `${openEntries.length} entrada${openEntries.length === 1 ? "" : "s"} sin salida registrada`, detail: "Confirma físicamente la salida y completa la bitácora antes de cerrar el turno." });
+                if (pendingAccesses.length) alerts.push({ tone: "warning", icon: "⌁", title: `${pendingAccesses.length} solicitud${pendingAccesses.length === 1 ? "" : "es"} de acceso pendiente`, detail: "Hay validaciones de identidad o autorización que siguen en cola." });
+                if (renewalsDue.length) alerts.push({ tone: "warning", icon: "↻", title: `${renewalsDue.length} contrato${renewalsDue.length === 1 ? "" : "s"} vence en los próximos 30 días`, detail: "Anticipa la renovación para proteger ocupación e ingreso recurrente." });
+                if (pendingRequests.length) alerts.push({ tone: "warning", icon: "•", title: `${pendingRequests.length} solicitud${pendingRequests.length === 1 ? "" : "es"} comercial${pendingRequests.length === 1 ? "" : "es"} sin resolver`, detail: "Revisa expediente, disponibilidad y aprobación para no perder la oportunidad." });
+                if (!alerts.length) alerts.push({ tone: "success", icon: "✓", title: "Sin excepciones críticas en este corte", detail: "La bitácora, la cola de accesos y los vencimientos no muestran pendientes para este contexto." });
+                byId("reportAlerts").innerHTML = alerts.map((alert) => `<article class="report-alert report-alert--${alert.tone}"><span class="report-alert__icon">${alert.icon}</span><div><b>${esc(alert.title)}</b><p>${esc(alert.detail)}</p></div></article>`).join("");
+                const criticalAlerts = alerts.filter((alert) => alert.tone !== "success").length;
+                const alertBadge = byId("reportAlertCount");
+                alertBadge.textContent = criticalAlerts ? `${criticalAlerts} PENDIENTE${criticalAlerts === 1 ? "" : "S"}` : "AL DÍA";
+                alertBadge.className = `tag ${criticalAlerts ? "amber" : "green"}`;
+
+                const capacityRows = [
+                    ["Ocupadas", "Ocupada", "#168b62"],
+                    ["Disponibles", "Disponible", "#506d88"],
+                    ["Reservadas", "Reservada", "#c98b00"],
+                    ["Mantenimiento", "Mantenimiento", "#b42318"],
+                ];
+                byId("reportCapacity").innerHTML = `<p class="report-capacity__total">${occupancy}% <span>ocupación actual</span></p>${capacityRows.map(([label, status, color]) => { const amount = state.boxes.filter((box) => box.status === status).length; const percentage = Math.round((amount / totalBoxes) * 100); return `<div class="report-capacity__row"><div class="report-capacity__label"><span>${label}</span><b>${amount} · ${percentage}%</b></div><div class="report-capacity__track"><i style="width:${percentage}%;--capacity-color:${color}"></i></div></div>`; }).join("")}<div class="report-briefing"><div><span>RENTA ACTIVA / MES</span><b>${fmtCents(scopedContracts.filter(isOpenContract).reduce((total, contract) => total + contract.rentCents, 0))}</b></div><div><span>POTENCIAL DISPONIBLE / MES</span><b>${fmtCents(state.boxes.filter((box) => box.status === "Disponible").reduce((total, box) => total + box.rentCents, 0))}</b></div><div><span>CONTRATOS ABIERTOS</span><b>${scopedContracts.filter(isOpenContract).length}</b></div></div>`;
+
+                document.querySelectorAll("[data-report-preset]").forEach((button) => {
+                    const today = reportDateValue(new Date());
+                    const monthStart = reportDateValue(new Date(new Date().getFullYear(), new Date().getMonth(), 1));
+                    const daysStart = reportDateValue(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - 29));
+                    const yearStart = reportDateValue(new Date(new Date().getFullYear(), 0, 1));
+                    const active = (button.dataset.reportPreset === "month" && filters.from === monthStart && filters.to === today) || (button.dataset.reportPreset === "30days" && filters.from === daysStart && filters.to === today) || (button.dataset.reportPreset === "year" && filters.from === yearStart && filters.to === today);
+                    button.classList.toggle("is-active", active);
+                });
+                document.querySelectorAll("[data-report-shortcut]").forEach((button) => {
+                    const selected = button.dataset.reportShortcut === byId("reportType").value;
+                    button.classList.toggle("is-selected", selected);
+                    button.setAttribute("aria-pressed", String(selected));
+                });
+            }
+            function copyReportBriefing() {
+                const filters = reportFilters();
+                const report = reportData(filters);
+                const briefing = [`SafeRoom · ${report.title.replace("Vista previa: ", "")}`, `Periodo: ${dateLabel(filters.from)} al ${dateLabel(filters.to)}`, `Contexto: ${reportContextLabel(filters)}`, ""].concat(report.rows.map((row) => `${row[0]}: ${row[1]}`)).join("\n");
+                if (!navigator.clipboard?.writeText) return flash("Tu navegador no permite copiar automáticamente. Usa la descarga CSV.");
+                navigator.clipboard.writeText(briefing).then(() => flash("Briefing copiado para compartir internamente.")).catch(() => flash("No fue posible copiar el briefing. Usa la descarga CSV."));
             }
             function exportReport() {
-                const report = reportData();
+                const filters = reportFilters();
+                const report = reportData(filters);
                 const escapeCsv = (value) => `"${String(value ?? "").replaceAll("\"", "\"\"")}"`;
-                const csv = [report.headers].concat(report.rows).map((row) => row.map(escapeCsv).join(",")).join("\n");
+                const csvRows = [["Reporte", report.title.replace("Vista previa: ", "")], ["Periodo", `${filters.from} a ${filters.to}`], ["Contexto", reportContextLabel(filters)], [], report.headers].concat(report.rows);
+                const csv = csvRows.map((row) => row.map(escapeCsv).join(",")).join("\n");
                 const link = document.createElement("a");
                 link.href = URL.createObjectURL(new Blob([`\uFEFF${csv}`], { type: "text/csv;charset=utf-8" }));
-                link.download = `saferoom-${byId("reportType").value}-${byId("reportFrom").value || "demo"}.csv`;
+                link.download = `saferoom-${byId("reportType").value}-${filters.from || "demo"}.csv`;
                 link.click();
                 URL.revokeObjectURL(link.href);
-                flash("Reporte CSV descargado.");
+                flash("Reporte CSV descargado con el corte y contexto aplicados.");
             }
             function fillContractOptions(selectId, selectedId, includeCancelled = false) {
                 const select = byId(selectId);
@@ -5359,6 +5760,19 @@
             initialiseSafeDates();
             initialiseHeaderControls();
             applyDemoProfile();
+            const requestForm = byId("form");
+            requestForm.addEventListener("input", (event) => {
+                if (event.target.matches("input, select, textarea")) syncRequestRequirements();
+            });
+            if (initialView === "form") {
+                const request = requestById(state.ui.selectedRequestId);
+                const tenant = request && tenantById(request.tenantId);
+                const draft = request && state.ui.draft?.requestId !== request.id && tenant
+                    ? formDraftFromTenant(tenant, request)
+                    : state.ui.draft || {};
+                state.ui.draft = draft;
+                fillRequestForm(draft);
+            }
             showView(initialView, { sync: false, scroll: false, tab: currentTenantTab });
             setInterval(updateAccessElapsedTimers, 1000);
         </script>
