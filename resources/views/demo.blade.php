@@ -2601,12 +2601,15 @@
                                 valores.
                             </p>
                         </div>
-                        <span
-                            id="selectionMode"
-                            class="tag amber"
-                            style="display: none"
-                            >MODO SELECCIÓN ACTIVO</span
-                        >
+                        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end">
+                            <span
+                                id="selectionMode"
+                                class="tag amber"
+                                style="display: none"
+                                >MODO SELECCIÓN ACTIVO</span
+                            >
+                            <button class="btn primary" type="button" onclick="openBoxModal()">＋ Agregar caja</button>
+                        </div>
                     </div>
                     <section class="panel">
                         <div class="toolbar">
@@ -3821,6 +3824,25 @@
                 </div>
             </section>
         </div>
+        <div id="boxModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="boxModalTitle">
+            <section class="invoice">
+                <p class="eyebrow">CAJAS · SIMULACIÓN</p>
+                <h2 id="boxModalTitle">Agregar caja</h2>
+                <p class="muted" style="margin-top: 8px">Se agrega únicamente a los datos locales de esta demostración.</p>
+                <div class="fields" style="margin-top: 20px">
+                    <div class="field"><label for="newBoxCode">CÓDIGO DE CAJA</label><input id="newBoxCode" maxlength="20" placeholder="Ej. D-401" /></div>
+                    <div class="field"><label for="newBoxSize">TAMAÑO</label><select id="newBoxSize"><option>S</option><option selected>M</option><option>L</option><option>XL</option></select></div>
+                    <div class="field wide"><label for="newBoxArea">UBICACIÓN</label><input id="newBoxArea" maxlength="60" placeholder="Ej. Nivel D" /></div>
+                    <div class="field"><label for="newBoxRent">RENTA MENSUAL (MXN)</label><input id="newBoxRent" type="number" min="0.01" step="0.01" inputmode="decimal" /></div>
+                    <div class="field"><label for="newBoxKeys">LLAVES ENTREGADAS</label><input id="newBoxKeys" type="number" min="1" max="9" step="1" inputmode="numeric" value="2" /></div>
+                    <div class="field wide"><label for="newBoxStatus">ESTADO INICIAL</label><select id="newBoxStatus"><option selected>Disponible</option><option>Mantenimiento</option></select></div>
+                </div>
+                <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:20px">
+                    <button class="btn outline" type="button" onclick="closeBoxModal()">Cancelar</button>
+                    <button class="btn primary" type="button" onclick="saveDemoBox()">Agregar caja</button>
+                </div>
+            </section>
+        </div>
         <div id="toast" class="toast"></div>
         <div id="documentViewerModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="documentViewerTitle">
             <section class="invoice" style="width:min(900px,100%);max-height:88vh;overflow:auto">
@@ -4349,6 +4371,46 @@
                 byId("boxAvailabilityRate").textContent = `${Math.round((available / Math.max(state.boxes.length, 1)) * 100)}%`;
                 byId("availabilityMap").innerHTML = filtered.map((box) => `<button class="availability-slot availability-slot--${esc(box.status)} ${draft.boxId === box.id ? "chosen" : ""}" ${box.status !== "Disponible" ? "disabled" : ""} onclick="selectBox('${box.id}')" title="${esc(`${box.code} · ${box.area} · ${box.size} · ${box.status}`)}">${esc(box.code)}<small>${esc(box.size)} · ${esc(box.area)}</small></button>`).join("") || `<div class="empty">No hay cajas para estos filtros.</div>`;
                 byId("boxGrid").innerHTML = filtered.map((box) => `<button class="box-card ${box.status === "Disponible" ? "available" : ""} ${draft.boxId === box.id ? "chosen" : ""}" ${box.status !== "Disponible" ? "disabled" : ""} onclick="selectBox('${box.id}')"><span class="tag ${tone(box.status)}">${esc(box.status)}</span><b>▣ ${esc(box.code)}</b><small class="muted">${esc(box.area)} · Tamaño ${esc(box.size)}</small><p style="margin:14px 0 0;border-top:1px solid #0000000b;padding-top:8px;font-size:12px">Renta base <strong style="float:right">${fmtCents(box.rentCents)}</strong></p></button>`).join("") || `<div class="empty">No hay cajas para este filtro.</div>`;
+            }
+            function closeBoxModal() {
+                byId("boxModal")?.classList.remove("on");
+            }
+            function openBoxModal() {
+                byId("newBoxCode").value = "";
+                byId("newBoxSize").value = "M";
+                byId("newBoxArea").value = "";
+                byId("newBoxRent").value = "1890.00";
+                byId("newBoxKeys").value = "2";
+                byId("newBoxStatus").value = "Disponible";
+                byId("boxModal").classList.add("on");
+                setTimeout(() => byId("newBoxCode")?.focus(), 0);
+            }
+            function saveDemoBox() {
+                const code = byId("newBoxCode").value.trim().replace(/\s+/g, "-").toUpperCase().slice(0, 20);
+                const size = byId("newBoxSize").value;
+                const area = byId("newBoxArea").value.trim().replace(/\s+/g, " ").slice(0, 60);
+                const rentCents = Math.round((Number(byId("newBoxRent").value) || 0) * 100);
+                const keys = Number(byId("newBoxKeys").value);
+                const status = byId("newBoxStatus").value;
+                const validSizes = ["S", "M", "L", "XL"];
+                const validStatuses = ["Disponible", "Mantenimiento"];
+
+                if (code.length < 3 || !area || !validSizes.includes(size) || !validStatuses.includes(status) || !Number.isSafeInteger(rentCents) || rentCents <= 0 || !Number.isInteger(keys) || keys < 1 || keys > 9) {
+                    return flash("Completa el código, ubicación, tamaño, renta y número de llaves de la caja.");
+                }
+                if (state.boxes.some((box) => box.code.toUpperCase() === code)) {
+                    return flash(`La caja ${code} ya existe en la demostración.`);
+                }
+
+                state.boxes.unshift({ id: createDemoId("box"), code, size, area, status, rentCents, keys });
+                logAudit("Agregó caja", `${code} · ${size} · ${area}`, status, false);
+                persistState();
+                closeBoxModal();
+                byId("boxStatus").value = "Todas";
+                byId("boxSize").value = "Todas";
+                renderBoxes();
+                renderHome();
+                flash(`Caja ${code} agregada como ${status.toLowerCase()} en la demostración.`);
             }
             function selectBox(id) {
                 const box = boxById(id);
@@ -5702,13 +5764,14 @@
                 byId("lifecycleConfirm").classList.remove("on");
                 closeInvoiceModal();
                 closeUserModal();
+                closeBoxModal();
                 applyDemoProfile();
                 persistState();
                 flash("Datos de demo restablecidos.");
                 showView("home");
             }
             document.addEventListener("keydown", (event) => {
-                if (event.key === "Escape") { closeContractConfirmation(); closeLifecycleConfirmation(); closeInvoiceModal(); closeUserModal(); closeDocumentViewer(); closeHeaderPanels(); }
+                if (event.key === "Escape") { closeContractConfirmation(); closeLifecycleConfirmation(); closeInvoiceModal(); closeUserModal(); closeBoxModal(); closeDocumentViewer(); closeHeaderPanels(); }
             });
             syncSelectionFromUrl();
             initialiseSafeDates();

@@ -49,6 +49,8 @@ class DemoRoutesTest extends TestCase
             ->assertSee('function grantC4Access')
             ->assertSee('function closeC4Door')
             ->assertSee('function initialiseHeaderControls')
+            ->assertSee('Agregar caja')
+            ->assertSee('function saveDemoBox')
             ->assertSee('nav.addEventListener("click"', false)
             ->assertSee('function renderRolePermissions');
     }
